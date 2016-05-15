@@ -1,0 +1,15 @@
+{
+  "name": "chat",
+  "version": "0.0.1",
+  "description": "a real-time chat application made with socket.io",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jeremy Arimado",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.4",
+    "handlebars": "^4.0.5"
+  }
+}
