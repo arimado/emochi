@@ -6,5 +6,5 @@ $('form').submit(function(){
     return false; // why this
 })
 socket.on('chat message', function (msg) {
-    $('#messages').append($('<li>').text(msg)); 
-});
+    $('#messages').append($('<li>').text(msg));
+}); 
