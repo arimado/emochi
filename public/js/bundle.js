@@ -19490,43 +19490,9 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 module.exports = require('./lib/React');
 
 },{"./lib/React":28}],168:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var FlashMessage = function () {
-    function FlashMessage(message) {
-        _classCallCheck(this, FlashMessage);
-
-        this.message = message;
-    }
-
-    _createClass(FlashMessage, [{
-        key: "display",
-        value: function display() {
-            alert(this.message);
-        }
-    }]);
-
-    return FlashMessage;
-}();
-
-exports.default = FlashMessage;
-
-},{}],169:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _flashMessage = require('./components/flash-message.js');
-
-var _flashMessage2 = _interopRequireDefault(_flashMessage);
 
 var _react = require('react');
 
@@ -19544,9 +19510,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var flash = new _flashMessage2.default("Gulp, Babel, Brow");
-
-flash.display();
+var data = [{ id: 1, author: "Pete DATA", text: "This is one DATA" }, { id: 2, author: "Jordan DATA", text: "This is *another* DATA" }];
 
 var CommentBox = function (_React$Component) {
     _inherits(CommentBox, _React$Component);
@@ -19554,7 +19518,14 @@ var CommentBox = function (_React$Component) {
     function CommentBox() {
         _classCallCheck(this, CommentBox);
 
-        return _possibleConstructorReturn(this, Object.getPrototypeOf(CommentBox).apply(this, arguments));
+        // WTF IS THIS MATE
+
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentBox).call(this));
+
+        _this.state = {
+            data: data
+        };
+        return _this;
     }
 
     _createClass(CommentBox, [{
@@ -19567,7 +19538,8 @@ var CommentBox = function (_React$Component) {
                     'h1',
                     null,
                     ' Composable Componenets '
-                )
+                ),
+                _react2.default.createElement(CommentList, { data: this.state.data })
             );
         }
     }]);
@@ -19575,14 +19547,70 @@ var CommentBox = function (_React$Component) {
     return CommentBox;
 }(_react2.default.Component);
 
-// class CommentList = React.Component {
-//     render() {
-//         return (
-//             <div
-//         )
-//     }
-// };
+var CommentList = function (_React$Component2) {
+    _inherits(CommentList, _React$Component2);
+
+    function CommentList() {
+        _classCallCheck(this, CommentList);
+
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(CommentList).apply(this, arguments));
+    }
+
+    _createClass(CommentList, [{
+        key: 'render',
+        value: function render() {
+            var commentNodes = this.props.data;
+            commentNodes.map(function (comment) {
+                return _react2.default.createElement(
+                    Comment,
+                    { author: comment.author, key: comment.id },
+                    comment.text,
+                    ';'
+                );
+            });
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'commentList' },
+                'React.createFragment(commentNodes)'
+            );
+        }
+    }]);
+
+    return CommentList;
+}(_react2.default.Component);
+
+;
+
+var Comment = function (_React$Component3) {
+    _inherits(Comment, _React$Component3);
+
+    function Comment() {
+        _classCallCheck(this, Comment);
+
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(Comment).apply(this, arguments));
+    }
+
+    _createClass(Comment, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'comment' },
+                _react2.default.createElement(
+                    'h2',
+                    { className: 'commentAuthor' },
+                    'author: hard coded author.'
+                )
+            );
+        }
+    }]);
+
+    return Comment;
+}(_react2.default.Component);
+
+;
 
 _reactDom2.default.render(_react2.default.createElement(CommentBox, null), document.getElementById('container'));
 
-},{"./components/flash-message.js":168,"react":167,"react-dom":2}]},{},[169]);
+},{"react":167,"react-dom":2}]},{},[168]);
