@@ -7,15 +7,12 @@ var data = [
 ];
 
 class CommentBox extends React.Component {
-
     constructor() {
         super(); // WTF IS THIS MATE
         this.state = {
             data: data
         };
     }
-
-
     render() {
         return (
             <div className="commentBox">
@@ -38,7 +35,7 @@ class CommentList extends React.Component {
             )
         });
     }
-
+    
     render() {
         var commentNodes = this._getComments();
         console.log(commentNodes);
@@ -55,8 +52,11 @@ class Comment extends React.Component {
         return (
             <div className="comment">
                 <h2 className="commentAuthor">
-                    author: hard coded author.
+                    author: {this.props.author}
                 </h2>
+                <p className="commentAuthor">
+                    {this.props.children}
+                </p>
             </div>
         )
     }

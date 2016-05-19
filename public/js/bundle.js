@@ -19605,7 +19605,13 @@ var Comment = function (_React$Component3) {
                 _react2.default.createElement(
                     'h2',
                     { className: 'commentAuthor' },
-                    'author: hard coded author.'
+                    'author: ',
+                    this.props.author
+                ),
+                _react2.default.createElement(
+                    'p',
+                    { className: 'commentAuthor' },
+                    this.props.children
                 )
             );
         }
