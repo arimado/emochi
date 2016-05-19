@@ -19523,7 +19523,7 @@ var CommentBox = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentBox).call(this));
 
         _this.state = {
-            data: data
+            data: []
         };
         return _this;
     }
@@ -19568,6 +19568,24 @@ var CommentList = function (_React$Component2) {
                     ';'
                 );
             });
+        }
+    }, {
+        key: '_loadCommentsFromServer',
+        value: function _loadCommentsFromServer() {
+            // $.ajax({
+            //     url      : this.props.url,
+            //     dataType : 'json',
+            //     cache    : false,
+            //     success  : (data) => { this.setState({data: data});
+            //                }.bind(this),
+            //     error    : (xhr, status, err) => { console.log('error');
+            //                }.bind(this)
+            // });
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            // this._loadCommentsFromServer();
         }
     }, {
         key: 'render',
@@ -19622,6 +19640,6 @@ var Comment = function (_React$Component3) {
 
 ;
 
-_reactDom2.default.render(_react2.default.createElement(CommentBox, null), document.getElementById('container'));
+_reactDom2.default.render(_react2.default.createElement(CommentBox, { url: '/api/data' }), document.getElementById('container'));
 
 },{"react":167,"react-dom":2}]},{},[168]);

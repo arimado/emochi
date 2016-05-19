@@ -10,7 +10,7 @@ class CommentBox extends React.Component {
     constructor() {
         super(); // WTF IS THIS MATE
         this.state = {
-            data: data
+            data: []
         };
     }
     render() {
@@ -27,7 +27,7 @@ class CommentList extends React.Component {
 
     _getComments() {
         var commentNodes = this.props.data;
-        return commentNodes.map(function(comment){
+        return commentNodes.map((comment) => {
             return (
                 <Comment author={comment.author} key={comment.id}>
                     {comment.text};
@@ -35,7 +35,23 @@ class CommentList extends React.Component {
             )
         });
     }
-    
+
+    _loadCommentsFromServer() {
+        // $.ajax({
+        //     url      : this.props.url,
+        //     dataType : 'json',
+        //     cache    : false,
+        //     success  : (data) => { this.setState({data: data});
+        //                }.bind(this),
+        //     error    : (xhr, status, err) => { console.log('error');
+        //                }.bind(this)
+        // });
+    }
+
+    componentDidMount() {
+        // this._loadCommentsFromServer();
+    }
+
     render() {
         var commentNodes = this._getComments();
         console.log(commentNodes);
@@ -62,4 +78,4 @@ class Comment extends React.Component {
     }
 };
 
-ReactDOM.render(<CommentBox />, document.getElementById('container'))
+ReactDOM.render(<CommentBox url="/api/data"/>, document.getElementById('container'))
