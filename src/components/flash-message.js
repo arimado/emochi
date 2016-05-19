@@ -7,4 +7,5 @@ class FlashMessage {
     }
 }
 
+
 export default FlashMessage;
