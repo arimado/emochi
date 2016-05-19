@@ -19557,10 +19557,10 @@ var CommentList = function (_React$Component2) {
     }
 
     _createClass(CommentList, [{
-        key: 'render',
-        value: function render() {
+        key: '_getComments',
+        value: function _getComments() {
             var commentNodes = this.props.data;
-            commentNodes.map(function (comment) {
+            return commentNodes.map(function (comment) {
                 return _react2.default.createElement(
                     Comment,
                     { author: comment.author, key: comment.id },
@@ -19568,11 +19568,16 @@ var CommentList = function (_React$Component2) {
                     ';'
                 );
             });
-
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var commentNodes = this._getComments();
+            console.log(commentNodes);
             return _react2.default.createElement(
                 'div',
                 { className: 'commentList' },
-                'React.createFragment(commentNodes)'
+                commentNodes
             );
         }
     }]);

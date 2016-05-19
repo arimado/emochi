@@ -30,18 +30,18 @@ class CommentList extends React.Component {
 
     _getComments() {
         var commentNodes = this.props.data;
-        commentNodes.map(function(comment){
+        return commentNodes.map(function(comment){
             return (
                 <Comment author={comment.author} key={comment.id}>
                     {comment.text};
                 </Comment>
             )
         });
-        return commentNodes
     }
 
     render() {
-        var commentNodes = _getComments();
+        var commentNodes = this._getComments();
+        console.log(commentNodes);
         return (
             <div className="commentList">
                 {commentNodes}
