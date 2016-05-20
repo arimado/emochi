@@ -19549,8 +19549,11 @@ var CommentBox = function (_React$Component) {
     }, {
         key: '_handleCommentSubmit',
         value: function _handleCommentSubmit(comment) {
-            console.log('_handleCommentSubmit--');
-            console.log(comment);
+
+            var comments = this.state.data;
+            var newComments = comments.concat([comment]);
+            this.setState({ data: newComments });
+
             $.ajax({
                 url: this.props.url,
                 dataType: 'json',
@@ -19560,6 +19563,7 @@ var CommentBox = function (_React$Component) {
                     this.setState({ data: data });
                 }.bind(this),
                 error: function (xhr, status, err) {
+                    this.setState({ data: newComments }); // PART OF OPTIMISTIC UPDATE
                     console.error(this.props.url, status, err.toString());
                 }.bind(this)
             });
