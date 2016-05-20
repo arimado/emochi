@@ -12,6 +12,8 @@ class CommentBox extends React.Component {
         this.state = {
             data: []
         };
+
+        this._handleCommentSubmit = this._handleCommentSubmit.bind(this);
     }
 
     _loadCommentsFromServer() {
@@ -53,7 +55,7 @@ class CommentBox extends React.Component {
             <div className="commentBox">
                 <h1> Composable Componenets </h1>
                 <CommentList data={this.state.data} />
-                <CommentForm onCommentSubmit={this.handleCommentSubmit} />
+                <CommentForm onCommentSubmit={this._handleCommentSubmit} />
             </div>
         );
     }
@@ -101,13 +103,16 @@ class Comment extends React.Component {
 class CommentForm extends React.Component {
 
     constructor() {
+
         super();
         this.state = {
             author: 'test',
             text: 'test'
         };
+
         this._handleAuthorChange = this._handleAuthorChange.bind(this);
         this._handleTextChange = this._handleTextChange.bind(this);
+        this._handleSubmit = this._handleSubmit.bind(this);
     }
 
     _handleAuthorChange(e) {

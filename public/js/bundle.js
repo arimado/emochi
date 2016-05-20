@@ -19525,6 +19525,8 @@ var CommentBox = function (_React$Component) {
         _this.state = {
             data: []
         };
+
+        _this._handleCommentSubmit = _this._handleCommentSubmit.bind(_this);
         return _this;
     }
 
@@ -19577,7 +19579,7 @@ var CommentBox = function (_React$Component) {
                     ' Composable Componenets '
                 ),
                 _react2.default.createElement(CommentList, { data: this.state.data }),
-                _react2.default.createElement(CommentForm, { onCommentSubmit: this.handleCommentSubmit })
+                _react2.default.createElement(CommentForm, { onCommentSubmit: this._handleCommentSubmit })
             );
         }
     }]);
@@ -19672,23 +19674,21 @@ var CommentForm = function (_React$Component4) {
             author: 'test',
             text: 'test'
         };
+
         _this4._handleAuthorChange = _this4._handleAuthorChange.bind(_this4);
         _this4._handleTextChange = _this4._handleTextChange.bind(_this4);
+        _this4._handleSubmit = _this4._handleSubmit.bind(_this4);
         return _this4;
     }
 
     _createClass(CommentForm, [{
         key: '_handleAuthorChange',
         value: function _handleAuthorChange(e) {
-            // Uncaught TypeError: Cannot read property 'state' of undefined
-            console.log(this.state.author);
             this.setState({ author: e.target.value });
         }
     }, {
         key: '_handleTextChange',
         value: function _handleTextChange(e) {
-            // Uncaught TypeError: Cannot read property 'state' of undefined
-            console.log(this.state.text);
             this.setState({ text: e.target.value });
         }
     }, {

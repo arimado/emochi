@@ -26,6 +26,33 @@ app.get('/api/data', function(req, res) {
     });
 });
 
+
+app.post('/api/data', function(req, res) {
+    fs.readFile(DATA_FILE, function(err, data) {
+        if (err) {
+          console.error(err);
+          process.exit(1);  // WHAT IS THIS?
+        }
+        // Get data
+        var comments = JSON.parse(data);
+        var newComment = {};
+        // Get comment
+        newComment.id = Date.now();
+        newComment.author = req.body.author;
+        newComment.text = req.body.text;
+        // Add comment to Get data
+        comments.push(push);
+        // Write to file
+        fs.writeFile(DATA_FILE, JSON.stringify(comments, null, 4), function (err) {
+            if (err) {
+                console.error(err);
+                process.exit(1);
+            }
+            res.json(comments);
+        })
+    });
+});
+
 io.on('connection', function (socket) {
     console.log('a user connected!');
 
