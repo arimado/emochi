@@ -11,13 +11,14 @@ var DATA_FILE = path.join(__dirname, './data/data.json');
 // SETUP VIEW ENGINE
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get('/', function (req, res) {
     res.render('index');
-});
+}); 
 
 app.get('/api/data', function(req, res) {
     fs.readFile(DATA_FILE, function(err, data) {
