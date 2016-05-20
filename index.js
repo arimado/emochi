@@ -4,17 +4,20 @@ var path = require('path'); //
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var fs = require('fs');
+var bodyParser = require('body-parser');
+
 var DATA_FILE = path.join(__dirname, './data/data.json');
 
 // SETUP VIEW ENGINE
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+app.use(bodyParser.json())
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.get('/', function (req, res) {
     res.render('index');
 });
-
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/api/data', function(req, res) {
     fs.readFile(DATA_FILE, function(err, data) {
@@ -28,7 +31,8 @@ app.get('/api/data', function(req, res) {
 
 
 app.post('/api/data', function(req, res) {
-    console.log(req.body);
+    console.log(req.body.author);
+    console.log(req.body.text);
     // fs.readFile(DATA_FILE, function(err, data) {
     //     if (err) {
     //       console.error(err);

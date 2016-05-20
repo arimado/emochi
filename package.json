@@ -9,6 +9,8 @@
   "author": "Jeremy Arimado",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.15.1",
+    "connect": "^3.4.1",
     "express": "^4.13.4",
     "hbs": "^4.0.0",
     "socket.io": "^1.4.6"
