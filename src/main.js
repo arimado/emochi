@@ -32,6 +32,8 @@ class CommentBox extends React.Component {
     }
 
     _handleCommentSubmit(comment) {
+        console.log('_handleCommentSubmit--');
+        console.log(comment);
         $.ajax({
           url: this.props.url,
           dataType: 'json',

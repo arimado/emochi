@@ -19549,6 +19549,8 @@ var CommentBox = function (_React$Component) {
     }, {
         key: '_handleCommentSubmit',
         value: function _handleCommentSubmit(comment) {
+            console.log('_handleCommentSubmit--');
+            console.log(comment);
             $.ajax({
                 url: this.props.url,
                 dataType: 'json',
