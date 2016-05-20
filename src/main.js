@@ -29,6 +29,21 @@ class CommentBox extends React.Component {
         });
     }
 
+    _handleCommentSubmit(comment) {
+        $.ajax({
+          url: this.props.url,
+          dataType: 'json',
+          type: 'POST',
+          data: comment,
+          success: function(data) {
+            this.setState({data: data});
+          }.bind(this),
+          error: function(xhr, status, err) {
+            console.error(this.props.url, status, err.toString());
+          }.bind(this)
+        });
+    }
+
     componentDidMount() {
         this._loadCommentsFromServer();
     }
@@ -38,6 +53,7 @@ class CommentBox extends React.Component {
             <div className="commentBox">
                 <h1> Composable Componenets </h1>
                 <CommentList data={this.state.data} />
+                <CommentForm onCommentSubmit={this.handleCommentSubmit} />
             </div>
         );
     }
@@ -79,6 +95,67 @@ class Comment extends React.Component {
                 </p>
             </div>
         )
+    }
+};
+
+class CommentForm extends React.Component {
+
+    constructor() {
+        super();
+        this.state = {
+            author: 'test',
+            text: 'test'
+        };
+    }
+
+    _handleAuthorChange(e) {
+        // console.log('author changing');
+        // console.log(this.state.bind(this))
+        this.setState({author: e.target.value});
+    }
+
+    _handleTextChange(e) {
+        // console.log('author changing');
+        console.log(this.state);
+        this.setState({text: e.target.value});
+    }
+
+    _handleSubmit(e) {
+        e.preventDefault();
+        var author = this.state.author.trim();
+        var text = this.state.text.trim();
+        if(!text || !author) {
+            return;
+        }
+        this.props.onCommentSubmit({author: author, text: text});
+        this.setState({author: '', text: ''});
+    }
+
+    componentDidMount() {
+        console.log(this.state);
+    }
+
+    render() {
+        return (
+            <form className="commentForm" onSubmit={this._handleSubmit}>
+                <input
+                    type="text"
+                    placeholder="Your name"
+                    value={this.state.author}
+                    onChange={this._handleAuthorChange}
+                />
+                <input
+                    type="text"
+                    placeholder="Say something..."
+                    value={this.state.text}
+                    onChange={this._handleTextChange}
+                />
+                <input
+                    type="submit"
+                    value="submit"
+                />
+            </form>
+        );
     }
 };
 
