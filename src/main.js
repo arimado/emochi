@@ -13,11 +13,31 @@ class CommentBox extends React.Component {
             data: []
         };
     }
+
+    _loadCommentsFromServer() {
+        $.ajax({
+              url: this.props.url,
+              dataType: 'json',
+              cache: false,
+              success: function(data) {
+                this.setState({data: data});
+              }.bind(this),
+              error: function(xhr, status, err) {
+                console.log('fail!')
+                console.error(this.props.url, status, err.toString());
+              }.bind(this)
+        });
+    }
+
+    componentDidMount() {
+        this._loadCommentsFromServer();
+    }
+
     render() {
         return (
             <div className="commentBox">
                 <h1> Composable Componenets </h1>
-                <CommentList data={this.state.data}/>
+                <CommentList data={this.state.data} />
             </div>
         );
     }
@@ -34,22 +54,6 @@ class CommentList extends React.Component {
                 </Comment>
             )
         });
-    }
-
-    _loadCommentsFromServer() {
-        // $.ajax({
-        //     url      : this.props.url,
-        //     dataType : 'json',
-        //     cache    : false,
-        //     success  : (data) => { this.setState({data: data});
-        //                }.bind(this),
-        //     error    : (xhr, status, err) => { console.log('error');
-        //                }.bind(this)
-        // });
-    }
-
-    componentDidMount() {
-        // this._loadCommentsFromServer();
     }
 
     render() {
@@ -78,4 +82,4 @@ class Comment extends React.Component {
     }
 };
 
-ReactDOM.render(<CommentBox url="/api/data"/>, document.getElementById('container'))
+ReactDOM.render(<CommentBox url="/api/data" />, document.getElementById('container'))
