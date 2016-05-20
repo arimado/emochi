@@ -19672,21 +19672,23 @@ var CommentForm = function (_React$Component4) {
             author: 'test',
             text: 'test'
         };
+        _this4._handleAuthorChange = _this4._handleAuthorChange.bind(_this4);
+        _this4._handleTextChange = _this4._handleTextChange.bind(_this4);
         return _this4;
     }
 
     _createClass(CommentForm, [{
         key: '_handleAuthorChange',
         value: function _handleAuthorChange(e) {
-            // console.log('author changing');
-            console.log(this.state.bind(this));
+            // Uncaught TypeError: Cannot read property 'state' of undefined
+            console.log(this.state.author);
             this.setState({ author: e.target.value });
         }
     }, {
         key: '_handleTextChange',
         value: function _handleTextChange(e) {
-            // console.log('author changing');
-            console.log(this.state);
+            // Uncaught TypeError: Cannot read property 'state' of undefined
+            console.log(this.state.text);
             this.setState({ text: e.target.value });
         }
     }, {

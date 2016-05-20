@@ -106,17 +106,15 @@ class CommentForm extends React.Component {
             author: 'test',
             text: 'test'
         };
+        this._handleAuthorChange = this._handleAuthorChange.bind(this);
+        this._handleTextChange = this._handleTextChange.bind(this);
     }
 
     _handleAuthorChange(e) {
-        // console.log('author changing');
-        // console.log(this.state.bind(this))
         this.setState({author: e.target.value});
     }
 
     _handleTextChange(e) {
-        // console.log('author changing');
-        console.log(this.state);
         this.setState({text: e.target.value});
     }
 
