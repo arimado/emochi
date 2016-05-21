@@ -5,7 +5,9 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var fs = require('fs');
 var bodyParser = require('body-parser');
+var MongoClient = require('mongodb').MongoClient;
 
+var URL = 'mongodb://localhost:27017/chat';
 var DATA_FILE = path.join(__dirname, './data/data.json');
 
 // SETUP VIEW ENGINE
@@ -23,12 +25,18 @@ app.get('/', function (req, res) {
 });
 
 app.get('/api/data', function(req, res) {
-    fs.readFile(DATA_FILE, function(err, data) {
-        if (err) {
-          console.error(err);
-          process.exit(1);  // WHAT IS THIS?
-        }
-        res.json(JSON.parse(data));
+
+    // GET FROM MONGO HERE.
+
+    MongoClient.connect(URL, function(err, db) {
+        if (err) return;
+        var comments = db.collection('comments');
+        comments.find({}).toArray(function(err, docs){
+            var clientComments = docs.map(function (doc){
+                return {author: doc.user, text: doc.text};
+            })
+            res.json(clientComments);
+        })
     });
 });
 
@@ -36,6 +44,15 @@ app.get('/api/data', function(req, res) {
 app.post('/api/data', function(req, res) {
     console.log(req.body.author);
     console.log(req.body.text);
+
+    // INSERT INTO MONGO HERE
+
+    MongoClient.connect(URL, function(err, db) {
+        if (err) return;
+        var comments = db.collection('comments');
+        comments.insert({user: req.body.author, text: req.body.text});
+    });
+
     fs.readFile(DATA_FILE, function(err, data) {
         if (err) {
           console.error(err);
