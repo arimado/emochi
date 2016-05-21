@@ -1,5 +1,7 @@
+import './socketio.js'
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 
 var data = [
     {id: 1, author: "Pete DATA", text: "This is one DATA"},
@@ -49,7 +51,7 @@ class CommentBox extends React.Component {
              this.setState({data: newComments});  // PART OF OPTIMISTIC UPDATE
             console.error(this.props.url, status, err.toString());
           }.bind(this)
-      }); 
+      });
 
     }
 

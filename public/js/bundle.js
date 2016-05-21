@@ -19675,6 +19675,8 @@ module.exports = require('./lib/React');
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+require('./socketio.js');
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -19928,4 +19930,30 @@ var CommentForm = function (_React$Component4) {
 
 _reactDom2.default.render(_react2.default.createElement(CommentBox, { url: '/api/data' }), document.getElementById('container'));
 
-},{"react":167,"react-dom":29}]},{},[168]);
+},{"./socketio.js":169,"react":167,"react-dom":29}],169:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function () {
+    var socket = io();
+
+    // emit to the server
+
+    $('form').submit(function () {
+        var chatMsg = $('#m').val();
+        socket.emit('chat message', chatMsg);
+        $('#m').val('');
+        return false; // why this
+    });
+
+    // receive change from server
+
+    socket.on('chat message', function (msg) {
+        $('#messages').append($('<li>').text(msg));
+    });
+};
+
+},{}]},{},[168]);
