@@ -34,15 +34,13 @@ app.get('/', function (req, res) {
 });
 
 app.get('/api/data', function(req, res) {
-
     var comments = db.get().collection('comments');
     comments.find({}).toArray(function(err, docs){
         var clientComments = docs.map(function (doc){
             return { _id: doc._id, author: doc.user, text: doc.text};
         })
         res.json(clientComments);
-    })
-
+    });
 });
 
 
