@@ -49,7 +49,8 @@ class CommentBox extends React.Component {
              this.setState({data: newComments});  // PART OF OPTIMISTIC UPDATE
             console.error(this.props.url, status, err.toString());
           }.bind(this)
-        });
+      }); 
+
     }
 
     componentDidMount() {

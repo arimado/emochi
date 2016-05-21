@@ -60,10 +60,11 @@ app.post('/api/data', function(req, res) {
 
 io.on('connection', function (socket) {
     console.log('a user connected!');
-
+    // receive from client
     socket.on('chat message', function (msg) {
         console.log('message: ' + msg);
-        io.emit('chat message', msg)
+        // emit to all clients
+        io.emit('chat message', msg);
     });
 
     socket.on('disconnect', function () {
