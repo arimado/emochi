@@ -75,7 +75,7 @@ class CommentList extends React.Component {
         var commentNodes = this.props.data;
         return commentNodes.map((comment) => {
             return (
-                <Comment author={comment.author} key={comment.id}>
+                <Comment author={comment.author} key={comment._id}>
                     {comment.text};
                 </Comment>
             )

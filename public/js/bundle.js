@@ -19609,7 +19609,7 @@ var CommentList = function (_React$Component2) {
             return commentNodes.map(function (comment) {
                 return _react2.default.createElement(
                     Comment,
-                    { author: comment.author, key: comment.id },
+                    { author: comment.author, key: comment._id },
                     comment.text,
                     ';'
                 );
