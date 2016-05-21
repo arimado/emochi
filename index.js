@@ -16,6 +16,8 @@ app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function (req, res) {
+    // find the command that will emit to the user
+    io.emit('chat message', {author: 'SERVER AUTHOR', text: 'SERVER TEXT'});
     res.render('index');
 });
 
