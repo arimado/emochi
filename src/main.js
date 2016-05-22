@@ -184,9 +184,10 @@ class ChatBox extends React.Component {
     render() {
         return (
             <div className="chatBoxContainer">
-                 <Link to="/register">Register</Link> | <Link to="/login">Login</Link>
-                <hr/>
-                <div class="mainContent">
+                 <div className="menu">
+                 <Link to="/">Home</Link> | <Link to="/register">Register</Link> | <Link to="/login">Login</Link>
+                 </div>
+                <div className="mainContent">
                     {this.props.children}
                 </div>
             </div>
@@ -207,8 +208,11 @@ class Home extends React.Component {
 class Register extends React.Component {
     render() {
         return (
-            <div className="homeContainer">
-                <p> Register page </p>
+            <div className="registerContainer growContainer">
+                <div className="growContent">
+                    <div> Register content </div>
+                </div>
+                <FullButton buttonVal="Register" />
             </div>
         )
     }
@@ -217,9 +221,22 @@ class Register extends React.Component {
 class Login extends React.Component {
     render() {
         return (
-            <div className="loginContainer">
-                <p> Login page</p>
+            <div className="loginContainer growContainer">
+                <div className="growContent">
+                    <div> Login content </div>
+                </div>
+                <FullButton buttonVal="Login" />
             </div>
+        )
+    }
+}
+
+class FullButton extends React.Component {
+    render() {
+        return (
+            <form className="bottomForm">
+                <input type="submit" value={this.props.buttonVal}/>
+            </form>
         )
     }
 }
@@ -229,7 +246,7 @@ const app = (
         <Redirect from="/" to="/home" />
         <Route path="/" component={ChatBox}>
             <Route path="home" component={Home} />
-            <Route path="Register" component={Register} />
+            <Route path="Register" component={Register} className="sup" />
             <Route path="Login" component={Login} />
         </Route>
     </Router>

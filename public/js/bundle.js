@@ -25076,20 +25076,29 @@ var ChatBox = function (_React$Component5) {
                 'div',
                 { className: 'chatBoxContainer' },
                 _react2.default.createElement(
-                    _reactRouter.Link,
-                    { to: '/register' },
-                    'Register'
+                    'div',
+                    { className: 'menu' },
+                    _react2.default.createElement(
+                        _reactRouter.Link,
+                        { to: '/' },
+                        'Home'
+                    ),
+                    ' | ',
+                    _react2.default.createElement(
+                        _reactRouter.Link,
+                        { to: '/register' },
+                        'Register'
+                    ),
+                    ' | ',
+                    _react2.default.createElement(
+                        _reactRouter.Link,
+                        { to: '/login' },
+                        'Login'
+                    )
                 ),
-                ' | ',
-                _react2.default.createElement(
-                    _reactRouter.Link,
-                    { to: '/login' },
-                    'Login'
-                ),
-                _react2.default.createElement('hr', null),
                 _react2.default.createElement(
                     'div',
-                    { 'class': 'mainContent' },
+                    { className: 'mainContent' },
                     this.props.children
                 )
             );
@@ -25140,12 +25149,17 @@ var Register = function (_React$Component7) {
         value: function render() {
             return _react2.default.createElement(
                 'div',
-                { className: 'homeContainer' },
+                { className: 'registerContainer growContainer' },
                 _react2.default.createElement(
-                    'p',
-                    null,
-                    ' Register page '
-                )
+                    'div',
+                    { className: 'growContent' },
+                    _react2.default.createElement(
+                        'div',
+                        null,
+                        ' Register content '
+                    )
+                ),
+                _react2.default.createElement(FullButton, { buttonVal: 'Register' })
             );
         }
     }]);
@@ -25167,17 +25181,45 @@ var Login = function (_React$Component8) {
         value: function render() {
             return _react2.default.createElement(
                 'div',
-                { className: 'loginContainer' },
+                { className: 'loginContainer growContainer' },
                 _react2.default.createElement(
-                    'p',
-                    null,
-                    ' Login page'
-                )
+                    'div',
+                    { className: 'growContent' },
+                    _react2.default.createElement(
+                        'div',
+                        null,
+                        ' Login content '
+                    )
+                ),
+                _react2.default.createElement(FullButton, { buttonVal: 'Login' })
             );
         }
     }]);
 
     return Login;
+}(_react2.default.Component);
+
+var FullButton = function (_React$Component9) {
+    _inherits(FullButton, _React$Component9);
+
+    function FullButton() {
+        _classCallCheck(this, FullButton);
+
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(FullButton).apply(this, arguments));
+    }
+
+    _createClass(FullButton, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'form',
+                { className: 'bottomForm' },
+                _react2.default.createElement('input', { type: 'submit', value: this.props.buttonVal })
+            );
+        }
+    }]);
+
+    return FullButton;
 }(_react2.default.Component);
 
 var app = _react2.default.createElement(
@@ -25188,7 +25230,7 @@ var app = _react2.default.createElement(
         _reactRouter.Route,
         { path: '/', component: ChatBox },
         _react2.default.createElement(_reactRouter.Route, { path: 'home', component: Home }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'Register', component: Register }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'Register', component: Register, className: 'sup' }),
         _react2.default.createElement(_reactRouter.Route, { path: 'Login', component: Login })
     )
 );
