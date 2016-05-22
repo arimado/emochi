@@ -55,15 +55,22 @@ app.post('/api/data', function(req, res) {
 });
 
 app.post('/api/register', function(req, res) {
-    console.log('post request fired');
-    // var users = db.get().collection('users');
-    // users.insert({username: req.body.username, password: req.body.password});
-
+    console.log('register post request fired');
     _auth.localReg(req.body.username, req.body.password, function (err, res){
-        if(err) console.log(err, res); 
+        if(err) console.log(err, res);
     })
 
 });
+
+app.post('/api/login', function(req, res) {
+    console.log('login post request fired');
+    _auth.localAuth(req.body.username, req.body.password, function (err, res){
+        if(err) console.log(err, res);
+    })
+
+});
+
+
 
 io.on('connection', function (socket) {
 

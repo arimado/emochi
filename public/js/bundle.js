@@ -25232,10 +25232,53 @@ var Login = function (_React$Component8) {
     function Login() {
         _classCallCheck(this, Login);
 
-        return _possibleConstructorReturn(this, Object.getPrototypeOf(Login).apply(this, arguments));
+        var _this8 = _possibleConstructorReturn(this, Object.getPrototypeOf(Login).call(this));
+
+        _this8.state = {
+            username: '',
+            password: ''
+        };
+
+        _this8._handlePasswordChange = _this8._handlePasswordChange.bind(_this8);
+        _this8._handleUsernameChange = _this8._handleUsernameChange.bind(_this8);
+        _this8._handleLoginSubmit = _this8._handleLoginSubmit.bind(_this8);
+        return _this8;
     }
 
     _createClass(Login, [{
+        key: '_handleUsernameChange',
+        value: function _handleUsernameChange(e) {
+            this.setState({ username: e.target.value });
+        }
+    }, {
+        key: '_handlePasswordChange',
+        value: function _handlePasswordChange(e) {
+            this.setState({ password: e.target.value });
+        }
+    }, {
+        key: '_handleLoginSubmit',
+        value: function _handleLoginSubmit(e) {
+            e.preventDefault();
+            console.log('login fired');
+
+            var user = { username: this.state.username, password: this.state.password };
+
+            $.ajax({
+                url: '/api/login',
+                dataType: 'json',
+                type: 'POST',
+                data: user,
+                success: function (data) {
+                    console.log('ajax success:'); //unsure why this does not fire
+                    this.setState({ data: user });
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    this.setState({ data: user }); // PART OF OPTIMISTIC UPDATE
+                    console.error(this.props.url, status, err.toString());
+                }.bind(this)
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
@@ -25250,16 +25293,20 @@ var Login = function (_React$Component8) {
                         _react2.default.createElement('input', {
                             type: 'text',
                             placeholder: 'name',
-                            className: 'registerField'
+                            className: 'loginField',
+                            value: this.state.username,
+                            onChange: this._handleUsernameChange
                         }),
                         _react2.default.createElement('input', {
                             type: 'text',
                             placeholder: 'password',
-                            className: 'registerField'
+                            className: 'loginField',
+                            value: this.state.password,
+                            onChange: this._handlePasswordChange
                         })
                     )
                 ),
-                _react2.default.createElement(FullButton, { buttonVal: 'Login' })
+                _react2.default.createElement(FullButton, { buttonVal: 'Login', _onSubmit: this._handleLoginSubmit })
             );
         }
     }]);
