@@ -210,7 +210,23 @@ class Register extends React.Component {
         return (
             <div className="registerContainer growContainer">
                 <div className="growContent">
-                    <div> Register content </div>
+                    <form className="bottomForm">
+                        <input
+                            type="text"
+                            placeholder="name"
+                            className="registerField"
+                        />
+                        <input
+                            type="text"
+                            placeholder="password"
+                            className="registerField"
+                        />
+                        <input
+                            type="text"
+                            placeholder="password"
+                            className="registerField"
+                        />
+                    </form>
                 </div>
                 <FullButton buttonVal="Register" />
             </div>
@@ -223,7 +239,18 @@ class Login extends React.Component {
         return (
             <div className="loginContainer growContainer">
                 <div className="growContent">
-                    <div> Login content </div>
+                <form className="bottomForm">
+                    <input
+                        type="text"
+                        placeholder="name"
+                        className="registerField"
+                    />
+                    <input
+                        type="text"
+                        placeholder="password"
+                        className="registerField"
+                    />
+                </form>
                 </div>
                 <FullButton buttonVal="Login" />
             </div>
@@ -238,7 +265,11 @@ class FullButton extends React.Component {
 
         return (
             <form className="bottomForm">
-                <input type="submit" value={this.props.buttonVal} className={buttonClass}/>
+                <input
+                    type="submit"
+                    value={this.props.buttonVal}
+                    className={buttonClass}
+                />
             </form>
         )
     }

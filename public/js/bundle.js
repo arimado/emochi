@@ -25154,9 +25154,23 @@ var Register = function (_React$Component7) {
                     'div',
                     { className: 'growContent' },
                     _react2.default.createElement(
-                        'div',
-                        null,
-                        ' Register content '
+                        'form',
+                        { className: 'bottomForm' },
+                        _react2.default.createElement('input', {
+                            type: 'text',
+                            placeholder: 'name',
+                            className: 'registerField'
+                        }),
+                        _react2.default.createElement('input', {
+                            type: 'text',
+                            placeholder: 'password',
+                            className: 'registerField'
+                        }),
+                        _react2.default.createElement('input', {
+                            type: 'text',
+                            placeholder: 'password',
+                            className: 'registerField'
+                        })
                     )
                 ),
                 _react2.default.createElement(FullButton, { buttonVal: 'Register' })
@@ -25186,9 +25200,18 @@ var Login = function (_React$Component8) {
                     'div',
                     { className: 'growContent' },
                     _react2.default.createElement(
-                        'div',
-                        null,
-                        ' Login content '
+                        'form',
+                        { className: 'bottomForm' },
+                        _react2.default.createElement('input', {
+                            type: 'text',
+                            placeholder: 'name',
+                            className: 'registerField'
+                        }),
+                        _react2.default.createElement('input', {
+                            type: 'text',
+                            placeholder: 'password',
+                            className: 'registerField'
+                        })
                     )
                 ),
                 _react2.default.createElement(FullButton, { buttonVal: 'Login' })
@@ -25217,7 +25240,11 @@ var FullButton = function (_React$Component9) {
             return _react2.default.createElement(
                 'form',
                 { className: 'bottomForm' },
-                _react2.default.createElement('input', { type: 'submit', value: this.props.buttonVal, className: buttonClass })
+                _react2.default.createElement('input', {
+                    type: 'submit',
+                    value: this.props.buttonVal,
+                    className: buttonClass
+                })
             );
         }
     }]);
