@@ -19572,15 +19572,19 @@ var CommentBox = function (_React$Component) {
             });
         }
     }, {
+        key: '_thisIsMethod',
+        value: function _thisIsMethod() {
+            console.log('thisIsMethod called');
+        }
+    }, {
         key: '_initialize',
-        value: function _initialize(source) {
-            console.log('this is initialize was called from: ' + source);
+        value: function _initialize(init) {
+            return init;
         }
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            this._loadCommentsFromServer();
-            socket.on('init', this._initialize);
+            socket.on('init', this._initialize(this._loadCommentsFromServer.bind(this)));
         }
     }, {
         key: 'render',

@@ -57,13 +57,16 @@ class CommentBox extends React.Component {
 
     }
 
-    _initialize(source) {
-        console.log('this is initialize was called from: ' + source);
+    _thisIsMethod() {
+        console.log('thisIsMethod called');
+    }
+
+    _initialize(init) {
+        return init
     }
 
     componentDidMount() {
-        this._loadCommentsFromServer();
-        socket.on('init', this._initialize);
+        socket.on('init', this._initialize(this._loadCommentsFromServer.bind(this)));
     }
 
     render() {
