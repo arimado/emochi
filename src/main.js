@@ -214,17 +214,15 @@ class Home extends React.Component {
 class Register extends React.Component {
 
     constructor() {
-
         super();
-
         this.state = {
                 user: '',
             password: ''
         };
 
-        this._handlePasswordChange.bind(this);
-        this._handleUsernameChange.bind(this);
-        this._handleRegisterSubmit.bind(this);
+        this._handlePasswordChange = this._handlePasswordChange.bind(this);
+        this._handleUsernameChange = this._handleUsernameChange.bind(this);
+        this._handleRegisterSubmit = this._handleRegisterSubmit.bind(this);
     }
 
     _handleUsernameChange(e) {
@@ -237,17 +235,7 @@ class Register extends React.Component {
 
     _handleRegisterSubmit(e) {
         e.preventDefault();
-
         console.log('submit clicked');
-
-        // i need to make an API call to the server
-        // OPTIMISTIC UPDATE
-
-        // 1 client.log the user on submit
-        // 2 server.log the user on submit
-        // 3. auth
-        // profit
-
         console.log(this.state);
     }
 

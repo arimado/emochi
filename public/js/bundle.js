@@ -25151,9 +25151,9 @@ var Register = function (_React$Component7) {
             password: ''
         };
 
-        _this7._handlePasswordChange.bind(_this7);
-        _this7._handleUsernameChange.bind(_this7);
-        _this7._handleRegisterSubmit.bind(_this7);
+        _this7._handlePasswordChange = _this7._handlePasswordChange.bind(_this7);
+        _this7._handleUsernameChange = _this7._handleUsernameChange.bind(_this7);
+        _this7._handleRegisterSubmit = _this7._handleRegisterSubmit.bind(_this7);
         return _this7;
     }
 
@@ -25171,17 +25171,7 @@ var Register = function (_React$Component7) {
         key: '_handleRegisterSubmit',
         value: function _handleRegisterSubmit(e) {
             e.preventDefault();
-
             console.log('submit clicked');
-
-            // i need to make an API call to the server
-            // OPTIMISTIC UPDATE
-
-            // 1 client.log the user on submit
-            // 2 server.log the user on submit
-            // 3. auth
-            // profit
-
             console.log(this.state);
         }
     }, {
