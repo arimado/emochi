@@ -25171,8 +25171,24 @@ var Register = function (_React$Component7) {
         key: '_handleRegisterSubmit',
         value: function _handleRegisterSubmit(e) {
             e.preventDefault();
-            console.log('submit clicked');
-            console.log(this.state);
+            console.log('submit fired');
+
+            var user = { user: this.state.user, password: this.state.password };
+
+            $.ajax({
+                url: '/api/register',
+                dataType: 'json',
+                type: 'POST',
+                data: user,
+                success: function (data) {
+                    console.log('ajax success:'); //unsure why this does not fire
+                    this.setState({ data: user });
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    this.setState({ data: user }); // PART OF OPTIMISTIC UPDATE
+                    console.error(this.props.url, status, err.toString());
+                }.bind(this)
+            });
         }
     }, {
         key: 'render',

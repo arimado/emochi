@@ -37,19 +37,19 @@ class CommentBox extends React.Component {
         this.setState({data: newComments});
 
         $.ajax({
-          url: this.props.url,
-          dataType: 'json',
-          type: 'POST',
-          data: comment,
-          success: function(data) {
+            url: this.props.url,
+            dataType: 'json',
+            type: 'POST',
+            data: comment,
+            success: function(data) {
             console.log('ajax success:') //unsure why this does not fire
             this.setState({data: data});
-          }.bind(this),
-          error: function(xhr, status, err) {
+            }.bind(this),
+            error: function(xhr, status, err) {
              this.setState({data: newComments});  // PART OF OPTIMISTIC UPDATE
             console.error(this.props.url, status, err.toString());
-          }.bind(this)
-      });
+            }.bind(this)
+        });
 
     }
 
@@ -235,8 +235,24 @@ class Register extends React.Component {
 
     _handleRegisterSubmit(e) {
         e.preventDefault();
-        console.log('submit clicked');
-        console.log(this.state);
+        console.log('submit fired')
+
+        var user = {user: this.state.user, password: this.state.password};
+
+        $.ajax({
+            url: '/api/register',
+            dataType: 'json',
+            type: 'POST',
+            data: user,
+            success: function(data) {
+            console.log('ajax success:') //unsure why this does not fire
+            this.setState({data: user});
+            }.bind(this),
+            error: function(xhr, status, err) {
+             this.setState({data: user});  // PART OF OPTIMISTIC UPDATE
+            console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
     }
 
 

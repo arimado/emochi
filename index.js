@@ -53,6 +53,12 @@ app.post('/api/data', function(req, res) {
     });
 });
 
+app.post('/api/register', function(req, res) {
+    console.log('post request fired');
+    var users = db.get().collection('users');
+    users.insert({user: req.body.user, text: req.body.password}); 
+});
+
 io.on('connection', function (socket) {
 
     console.log('a user connected!');
