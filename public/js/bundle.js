@@ -25211,10 +25211,13 @@ var FullButton = function (_React$Component9) {
     _createClass(FullButton, [{
         key: 'render',
         value: function render() {
+
+            var buttonClass = 'button' + this.props.buttonVal + ' fullButton';
+
             return _react2.default.createElement(
                 'form',
                 { className: 'bottomForm' },
-                _react2.default.createElement('input', { type: 'submit', value: this.props.buttonVal })
+                _react2.default.createElement('input', { type: 'submit', value: this.props.buttonVal, className: buttonClass })
             );
         }
     }]);
@@ -25230,7 +25233,7 @@ var app = _react2.default.createElement(
         _reactRouter.Route,
         { path: '/', component: ChatBox },
         _react2.default.createElement(_reactRouter.Route, { path: 'home', component: Home }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'Register', component: Register, className: 'sup' }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'Register', component: Register }),
         _react2.default.createElement(_reactRouter.Route, { path: 'Login', component: Login })
     )
 );

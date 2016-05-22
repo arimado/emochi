@@ -233,9 +233,12 @@ class Login extends React.Component {
 
 class FullButton extends React.Component {
     render() {
+
+        var buttonClass = 'button' + this.props.buttonVal + ' fullButton';
+
         return (
             <form className="bottomForm">
-                <input type="submit" value={this.props.buttonVal}/>
+                <input type="submit" value={this.props.buttonVal} className={buttonClass}/>
             </form>
         )
     }
@@ -246,7 +249,7 @@ const app = (
         <Redirect from="/" to="/home" />
         <Route path="/" component={ChatBox}>
             <Route path="home" component={Home} />
-            <Route path="Register" component={Register} className="sup" />
+            <Route path="Register" component={Register}/>
             <Route path="Login" component={Login} />
         </Route>
     </Router>
