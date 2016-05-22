@@ -134,6 +134,11 @@ body {
     color: white;
 }
 
+.fullButton:hover {
+    background: rgb(172, 172, 172);
+}
+
+
 .bottomForm {
     display: flex;
     flex-direction: column;

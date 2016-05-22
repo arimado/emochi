@@ -25066,7 +25066,10 @@ var ChatBox = function (_React$Component5) {
     function ChatBox() {
         _classCallCheck(this, ChatBox);
 
-        return _possibleConstructorReturn(this, Object.getPrototypeOf(ChatBox).apply(this, arguments));
+        var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(ChatBox).call(this));
+
+        _this5.state = {};
+        return _this5;
     }
 
     _createClass(ChatBox, [{
@@ -25141,10 +25144,47 @@ var Register = function (_React$Component7) {
     function Register() {
         _classCallCheck(this, Register);
 
-        return _possibleConstructorReturn(this, Object.getPrototypeOf(Register).apply(this, arguments));
+        var _this7 = _possibleConstructorReturn(this, Object.getPrototypeOf(Register).call(this));
+
+        _this7.state = {
+            user: '',
+            password: ''
+        };
+
+        _this7._handlePasswordChange.bind(_this7);
+        _this7._handleUsernameChange.bind(_this7);
+        _this7._handleRegisterSubmit.bind(_this7);
+        return _this7;
     }
 
     _createClass(Register, [{
+        key: '_handleUsernameChange',
+        value: function _handleUsernameChange(e) {
+            this.setState({ user: e.target.value });
+        }
+    }, {
+        key: '_handlePasswordChange',
+        value: function _handlePasswordChange(e) {
+            this.setState({ password: e.target.value });
+        }
+    }, {
+        key: '_handleRegisterSubmit',
+        value: function _handleRegisterSubmit(e) {
+            e.preventDefault();
+
+            console.log('submit clicked');
+
+            // i need to make an API call to the server
+            // OPTIMISTIC UPDATE
+
+            // 1 client.log the user on submit
+            // 2 server.log the user on submit
+            // 3. auth
+            // profit
+
+            console.log(this.state);
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
@@ -25155,25 +25195,24 @@ var Register = function (_React$Component7) {
                     { className: 'growContent' },
                     _react2.default.createElement(
                         'form',
-                        { className: 'bottomForm' },
+                        { className: 'bottomForm', onSubmit: this._handleRegisterSubmit },
                         _react2.default.createElement('input', {
                             type: 'text',
                             placeholder: 'name',
-                            className: 'registerField'
+                            className: 'registerField',
+                            value: this.state.user,
+                            onChange: this._handleUsernameChange
                         }),
                         _react2.default.createElement('input', {
                             type: 'text',
                             placeholder: 'password',
-                            className: 'registerField'
-                        }),
-                        _react2.default.createElement('input', {
-                            type: 'text',
-                            placeholder: 'password',
-                            className: 'registerField'
+                            className: 'registerField',
+                            value: this.state.password,
+                            onChange: this._handlePasswordChange
                         })
                     )
                 ),
-                _react2.default.createElement(FullButton, { buttonVal: 'Register' })
+                _react2.default.createElement(FullButton, { buttonVal: 'Register', _onSubmit: this._handleRegisterSubmit })
             );
         }
     }]);
@@ -25239,7 +25278,7 @@ var FullButton = function (_React$Component9) {
 
             return _react2.default.createElement(
                 'form',
-                { className: 'bottomForm' },
+                { className: 'bottomForm', onSubmit: this.props._onSubmit },
                 _react2.default.createElement('input', {
                     type: 'submit',
                     value: this.props.buttonVal,

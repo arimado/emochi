@@ -181,6 +181,12 @@ class CommentForm extends React.Component {
 
 
 class ChatBox extends React.Component {
+
+    constructor() {
+        super();
+        this.state = {};
+    }
+
     render() {
         return (
             <div className="chatBoxContainer">
@@ -206,29 +212,68 @@ class Home extends React.Component {
 }
 
 class Register extends React.Component {
+
+    constructor() {
+
+        super();
+
+        this.state = {
+                user: '',
+            password: ''
+        };
+
+        this._handlePasswordChange.bind(this);
+        this._handleUsernameChange.bind(this);
+        this._handleRegisterSubmit.bind(this);
+    }
+
+    _handleUsernameChange(e) {
+        this.setState({user: e.target.value});
+    }
+
+    _handlePasswordChange(e) {
+        this.setState({password: e.target.value});
+    }
+
+    _handleRegisterSubmit(e) {
+        e.preventDefault();
+
+        console.log('submit clicked');
+
+        // i need to make an API call to the server
+        // OPTIMISTIC UPDATE
+
+        // 1 client.log the user on submit
+        // 2 server.log the user on submit
+        // 3. auth
+        // profit
+
+        console.log(this.state);
+    }
+
+
     render() {
         return (
             <div className="registerContainer growContainer">
                 <div className="growContent">
-                    <form className="bottomForm">
+                    <form className="bottomForm" onSubmit={this._handleRegisterSubmit}>
                         <input
                             type="text"
                             placeholder="name"
                             className="registerField"
+                            value={this.state.user}
+                            onChange={this._handleUsernameChange}
                         />
                         <input
                             type="text"
                             placeholder="password"
                             className="registerField"
-                        />
-                        <input
-                            type="text"
-                            placeholder="password"
-                            className="registerField"
+                            value={this.state.password}
+                            onChange={this._handlePasswordChange}
                         />
                     </form>
                 </div>
-                <FullButton buttonVal="Register" />
+                <FullButton buttonVal="Register" _onSubmit={this._handleRegisterSubmit}/>
             </div>
         )
     }
@@ -264,7 +309,7 @@ class FullButton extends React.Component {
         var buttonClass = 'button' + this.props.buttonVal + ' fullButton';
 
         return (
-            <form className="bottomForm">
+            <form className="bottomForm" onSubmit={this.props._onSubmit}>
                 <input
                     type="submit"
                     value={this.props.buttonVal}
