@@ -25078,8 +25078,10 @@ var ChatBox = function (_React$Component5) {
                 _react2.default.createElement(
                     'p',
                     null,
-                    ' hello '
-                )
+                    ' ChatBox container '
+                ),
+                _react2.default.createElement('hr', null),
+                this.props.children
             );
         }
     }]);
@@ -25087,10 +25089,42 @@ var ChatBox = function (_React$Component5) {
     return ChatBox;
 }(_react2.default.Component);
 
+var Home = function (_React$Component6) {
+    _inherits(Home, _React$Component6);
+
+    function Home() {
+        _classCallCheck(this, Home);
+
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(Home).apply(this, arguments));
+    }
+
+    _createClass(Home, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'homeContainer' },
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    ' Home page '
+                )
+            );
+        }
+    }]);
+
+    return Home;
+}(_react2.default.Component);
+
 var app = _react2.default.createElement(
     _reactRouter.Router,
     null,
-    _react2.default.createElement(_reactRouter.Route, { path: '/', component: ChatBox })
+    _react2.default.createElement(_reactRouter.Redirect, { from: '/', to: '/home' }),
+    _react2.default.createElement(
+        _reactRouter.Route,
+        { path: '/', component: ChatBox },
+        _react2.default.createElement(_reactRouter.Route, { path: 'home', component: Home })
+    )
 );
 
 _reactDom2.default.render(app, document.getElementById('container'));

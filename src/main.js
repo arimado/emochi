@@ -184,15 +184,29 @@ class ChatBox extends React.Component {
     render() {
         return (
             <div className="chatBoxContainer">
-                <p> hello </p>
+                <p> ChatBox container </p>
+                <hr/> 
+                {this.props.children}
             </div>
         );
     }
 }
 
+class Home extends React.Component {
+    render() {
+        return (
+            <div className="homeContainer">
+                <p> Home page </p>
+            </div>
+        )
+    }
+}
+
 const app = (
     <Router>
+        <Redirect from="/" to="/home" />
         <Route path="/" component={ChatBox}>
+            <Route path="home" component={Home} />
         </Route>
     </Router>
 )
