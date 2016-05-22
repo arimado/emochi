@@ -1,11 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-
-var data = [
-    {id: 1, author: "Pete DATA", text: "This is one DATA"},
-    {id: 2, author: "Jordan DATA", text: "This is *another* DATA"}
-];
+import { hashHistory, Router, Route, Redirect, Link } from 'react-router';
 
 class CommentBox extends React.Component {
     constructor() {
@@ -182,4 +177,27 @@ class CommentForm extends React.Component {
     }
 };
 
-ReactDOM.render(<CommentBox url="/api/data" />, document.getElementById('container'))
+// CHAT App starts here ----------------------------
+
+
+class ChatBox extends React.Component {
+    render() {
+        return (
+            <div className="chatBoxContainer">
+                <p> hello </p>
+            </div>
+        );
+    }
+}
+
+const app = (
+    <Router>
+        <Route path="/" component={ChatBox}>
+        </Route>
+    </Router>
+)
+
+
+
+
+ReactDOM.render( app, document.getElementById('container'))
