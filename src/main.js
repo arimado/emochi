@@ -37,7 +37,6 @@ class CommentBox extends React.Component {
         // OPTIMISTIC UPDATE
         var comments = this.state.data;
         var newComment = comment;
-        console.log(newComment);
         newComment._id = new Date().getTime() + Math.round(Math.random() * 100) + Math.round(Math.random() * 10)
         var newComments = comments.concat([newComment]);
         this.setState({data: newComments});
@@ -58,8 +57,13 @@ class CommentBox extends React.Component {
 
     }
 
+    _initialize(source) {
+        console.log('this is initialize was called from: ' + source);
+    }
+
     componentDidMount() {
         this._loadCommentsFromServer();
+        socket.on('init', this._initialize);
     }
 
     render() {
@@ -78,8 +82,6 @@ class CommentList extends React.Component {
     _getComments() {
         var commentNodes = this.props.data;
         return commentNodes.map((comment) => {
-            console.log('comment id');
-            console.log(comment);
             return (
                 <Comment author={comment.author} key={comment._id}>
                     {comment.text};

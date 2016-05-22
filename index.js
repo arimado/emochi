@@ -29,12 +29,12 @@ db.connect(DB_URL, function(err) {
 app.get('/', function (req, res) {
     // find the command that will emit to the user
     // stuck on io.emit here
-    io.emit('chat message', {author: 'SERVER AUTHOR', text: 'SERVER TEXT'});
+    io.emit('chat message', 'recieved from socket emit');
     res.render('index');
 });
 
 app.get('/api/data', function(req, res) {
-    console.log('serving new data'); 
+    console.log('serving new data');
     var comments = db.get().collection('comments');
     comments.find({}).toArray(function(err, docs){
         var clientComments = docs.map(function (doc){
@@ -54,12 +54,14 @@ app.post('/api/data', function(req, res) {
 });
 
 io.on('connection', function (socket) {
+
     console.log('a user connected!');
     // receive from client
     socket.on('chat message', function (msg) {
         console.log('message: ' + msg);
         // emit to all clients
         io.emit('chat message', msg);
+        io.emit('init', 'SERVER');
     });
 
     socket.on('disconnect', function () {
