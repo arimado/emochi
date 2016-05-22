@@ -184,9 +184,11 @@ class ChatBox extends React.Component {
     render() {
         return (
             <div className="chatBoxContainer">
-                <p> ChatBox container </p>
-                <hr/> 
-                {this.props.children}
+                 <Link to="/register">Register</Link> | <Link to="/login">Login</Link>
+                <hr/>
+                <div class="mainContent">
+                    {this.props.children}
+                </div>
             </div>
         );
     }
@@ -202,11 +204,33 @@ class Home extends React.Component {
     }
 }
 
+class Register extends React.Component {
+    render() {
+        return (
+            <div className="homeContainer">
+                <p> Register page </p>
+            </div>
+        )
+    }
+}
+
+class Login extends React.Component {
+    render() {
+        return (
+            <div className="loginContainer">
+                <p> Login page</p>
+            </div>
+        )
+    }
+}
+
 const app = (
     <Router>
         <Redirect from="/" to="/home" />
         <Route path="/" component={ChatBox}>
             <Route path="home" component={Home} />
+            <Route path="Register" component={Register} />
+            <Route path="Login" component={Login} />
         </Route>
     </Router>
 )

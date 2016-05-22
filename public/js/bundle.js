@@ -25076,12 +25076,22 @@ var ChatBox = function (_React$Component5) {
                 'div',
                 { className: 'chatBoxContainer' },
                 _react2.default.createElement(
-                    'p',
-                    null,
-                    ' ChatBox container '
+                    _reactRouter.Link,
+                    { to: '/register' },
+                    'Register'
+                ),
+                ' | ',
+                _react2.default.createElement(
+                    _reactRouter.Link,
+                    { to: '/login' },
+                    'Login'
                 ),
                 _react2.default.createElement('hr', null),
-                this.props.children
+                _react2.default.createElement(
+                    'div',
+                    { 'class': 'mainContent' },
+                    this.props.children
+                )
             );
         }
     }]);
@@ -25116,6 +25126,60 @@ var Home = function (_React$Component6) {
     return Home;
 }(_react2.default.Component);
 
+var Register = function (_React$Component7) {
+    _inherits(Register, _React$Component7);
+
+    function Register() {
+        _classCallCheck(this, Register);
+
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(Register).apply(this, arguments));
+    }
+
+    _createClass(Register, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'homeContainer' },
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    ' Register page '
+                )
+            );
+        }
+    }]);
+
+    return Register;
+}(_react2.default.Component);
+
+var Login = function (_React$Component8) {
+    _inherits(Login, _React$Component8);
+
+    function Login() {
+        _classCallCheck(this, Login);
+
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(Login).apply(this, arguments));
+    }
+
+    _createClass(Login, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'loginContainer' },
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    ' Login page'
+                )
+            );
+        }
+    }]);
+
+    return Login;
+}(_react2.default.Component);
+
 var app = _react2.default.createElement(
     _reactRouter.Router,
     null,
@@ -25123,7 +25187,9 @@ var app = _react2.default.createElement(
     _react2.default.createElement(
         _reactRouter.Route,
         { path: '/', component: ChatBox },
-        _react2.default.createElement(_reactRouter.Route, { path: 'home', component: Home })
+        _react2.default.createElement(_reactRouter.Route, { path: 'home', component: Home }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'Register', component: Register }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'Login', component: Login })
     )
 );
 
