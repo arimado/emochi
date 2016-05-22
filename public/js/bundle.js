@@ -19550,9 +19550,20 @@ var CommentBox = function (_React$Component) {
         key: '_handleCommentSubmit',
         value: function _handleCommentSubmit(comment) {
 
+            // OPTIMISTIC UPDATE
             var comments = this.state.data;
-            var newComments = comments.concat([comment]);
+            var newComment = comment;
+            console.log(newComment);
+            newComment._id = new Date().getTime() + Math.round(Math.random() * 100) + Math.round(Math.random() * 10);
+            var newComments = comments.concat([newComment]);
             this.setState({ data: newComments });
+
+            // What it's doing
+            // - adding the comment to the compnonent state data
+            // - then adds it to DB
+            // - but there is no ID on the state data instance of the comment
+            // - and we cannot append a child without a unique key
+            // - we could generate a random key on it?
 
             $.ajax({
                 url: this.props.url,
@@ -19608,7 +19619,7 @@ var CommentList = function (_React$Component2) {
             var commentNodes = this.props.data;
             return commentNodes.map(function (comment) {
                 console.log('comment id');
-                console.log(comment._id);
+                console.log(comment);
                 return _react2.default.createElement(
                     Comment,
                     { author: comment.author, key: comment._id },

@@ -34,8 +34,12 @@ class CommentBox extends React.Component {
 
     _handleCommentSubmit(comment) {
 
+        // OPTIMISTIC UPDATE
         var comments = this.state.data;
-        var newComments = comments.concat([comment]);
+        var newComment = comment;
+        console.log(newComment);
+        newComment._id = new Date().getTime() + Math.round(Math.random() * 100) + Math.round(Math.random() * 10)
+        var newComments = comments.concat([newComment]);
         this.setState({data: newComments});
 
         $.ajax({
@@ -75,7 +79,7 @@ class CommentList extends React.Component {
         var commentNodes = this.props.data;
         return commentNodes.map((comment) => {
             console.log('comment id');
-            console.log(comment._id);
+            console.log(comment);
             return (
                 <Comment author={comment.author} key={comment._id}>
                     {comment.text};
