@@ -19607,6 +19607,8 @@ var CommentList = function (_React$Component2) {
         value: function _getComments() {
             var commentNodes = this.props.data;
             return commentNodes.map(function (comment) {
+                console.log('comment id');
+                console.log(comment._id);
                 return _react2.default.createElement(
                     Comment,
                     { author: comment.author, key: comment._id },

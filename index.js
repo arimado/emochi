@@ -34,6 +34,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/api/data', function(req, res) {
+    console.log('serving new data'); 
     var comments = db.get().collection('comments');
     comments.find({}).toArray(function(err, docs){
         var clientComments = docs.map(function (doc){
