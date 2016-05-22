@@ -25147,7 +25147,7 @@ var Register = function (_React$Component7) {
         var _this7 = _possibleConstructorReturn(this, Object.getPrototypeOf(Register).call(this));
 
         _this7.state = {
-            user: '',
+            username: '',
             password: ''
         };
 
@@ -25160,7 +25160,7 @@ var Register = function (_React$Component7) {
     _createClass(Register, [{
         key: '_handleUsernameChange',
         value: function _handleUsernameChange(e) {
-            this.setState({ user: e.target.value });
+            this.setState({ username: e.target.value });
         }
     }, {
         key: '_handlePasswordChange',
@@ -25173,7 +25173,7 @@ var Register = function (_React$Component7) {
             e.preventDefault();
             console.log('submit fired');
 
-            var user = { user: this.state.user, password: this.state.password };
+            var user = { username: this.state.username, password: this.state.password };
 
             $.ajax({
                 url: '/api/register',
@@ -25206,7 +25206,7 @@ var Register = function (_React$Component7) {
                             type: 'text',
                             placeholder: 'name',
                             className: 'registerField',
-                            value: this.state.user,
+                            value: this.state.username,
                             onChange: this._handleUsernameChange
                         }),
                         _react2.default.createElement('input', {

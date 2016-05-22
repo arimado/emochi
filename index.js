@@ -7,6 +7,7 @@ var fs = require('fs');
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 var db = require('./db.js');
+var _auth = require('./auth.js');
 
 var DB_URL = 'mongodb://localhost:27017/chat';
 var DATA_FILE = path.join(__dirname, './data/data.json');
@@ -55,8 +56,13 @@ app.post('/api/data', function(req, res) {
 
 app.post('/api/register', function(req, res) {
     console.log('post request fired');
-    var users = db.get().collection('users');
-    users.insert({user: req.body.user, text: req.body.password}); 
+    // var users = db.get().collection('users');
+    // users.insert({username: req.body.username, password: req.body.password});
+
+    _auth.localReg(req.body.username, req.body.password, function (err, res){
+        if(err) console.log(err, res); 
+    })
+
 });
 
 io.on('connection', function (socket) {

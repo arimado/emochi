@@ -216,7 +216,7 @@ class Register extends React.Component {
     constructor() {
         super();
         this.state = {
-                user: '',
+            username: '',
             password: ''
         };
 
@@ -226,7 +226,7 @@ class Register extends React.Component {
     }
 
     _handleUsernameChange(e) {
-        this.setState({user: e.target.value});
+        this.setState({username: e.target.value});
     }
 
     _handlePasswordChange(e) {
@@ -237,7 +237,7 @@ class Register extends React.Component {
         e.preventDefault();
         console.log('submit fired')
 
-        var user = {user: this.state.user, password: this.state.password};
+        var user = {username: this.state.username, password: this.state.password};
 
         $.ajax({
             url: '/api/register',
@@ -265,7 +265,7 @@ class Register extends React.Component {
                             type="text"
                             placeholder="name"
                             className="registerField"
-                            value={this.state.user}
+                            value={this.state.username}
                             onChange={this._handleUsernameChange}
                         />
                         <input
