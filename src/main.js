@@ -47,6 +47,7 @@ class CommentBox extends React.Component {
           type: 'POST',
           data: comment,
           success: function(data) {
+            console.log('ajax success:') //unsure why this does not fire
             this.setState({data: data});
           }.bind(this),
           error: function(xhr, status, err) {
