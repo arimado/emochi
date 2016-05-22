@@ -46,11 +46,11 @@ app.get('/api/data', function(req, res) {
 
 
 app.post('/api/data', function(req, res) {
-    console.log(req.body.author);
-    console.log(req.body.text);
+    console.log('post request fired');
     var comments = db.get().collection('comments');
-    comments.insert({user: req.body.author, text: req.body.text});
-
+    comments.insert({user: req.body.author, text: req.body.text}, function (){
+        io.emit('init', 'SERVER');
+    });
 });
 
 io.on('connection', function (socket) {
@@ -58,11 +58,17 @@ io.on('connection', function (socket) {
     console.log('a user connected!');
     // receive from client
     socket.on('chat message', function (msg) {
-        console.log('message: ' + msg);
         // emit to all clients
         io.emit('chat message', msg);
         io.emit('init', 'SERVER');
     });
+
+    socket.on('user:comment', function (comment) {
+        console.log('received comment emit')
+        // every time a receive a comment
+        // im going to emit it to everyone
+        io.emit('init', 'SERVER');
+    })
 
     socket.on('disconnect', function () {
         console.log('user disconnected');

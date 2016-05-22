@@ -19569,6 +19569,12 @@ var CommentBox = function (_React$Component) {
                     this.setState({ data: newComments }); // PART OF OPTIMISTIC UPDATE
                     console.error(this.props.url, status, err.toString());
                 }.bind(this)
+            }).done(function () {
+                console.log('complete');
+            }.bind(this)).fail(function () {
+                console.log('error');
+            }.bind(this)).always(function () {
+                console.log('always');
             });
         }
     }, {
