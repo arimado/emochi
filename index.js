@@ -8,6 +8,9 @@ var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 var db = require('./db.js');
 var _auth = require('./auth.js');
+var passport = require('passport');
+var LocalStrategy = require('passport-local');
+var session = require('express-session');
 
 var DB_URL = 'mongodb://localhost:27017/chat';
 var DATA_FILE = path.join(__dirname, './data/data.json');
@@ -18,6 +21,25 @@ app.set('view engine', 'hbs');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({secret: 'supernova', saveUninitialized: true, resave: true}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(function(req, res, next) {
+    var err = req.session.error;
+    var msg = req.session.notice;
+    var success = req.session.success;
+
+    delete req.session.error;
+    delete req.session.success;
+    delete req.session.notice;
+
+    if (err) res.locals.error = err;
+    if (msg) res.locals.notice = msg;
+    if (success) res.locals.success = success;
+    next();
+});
 
 db.connect(DB_URL, function(err) {
     if (err) {
@@ -30,6 +52,8 @@ db.connect(DB_URL, function(err) {
 app.get('/', function (req, res) {
     // find the command that will emit to the user
     // stuck on io.emit here
+    console.log('req.user: -- ');
+    console.log(req.user)
     io.emit('chat message', 'recieved from socket emit');
     res.render('index');
 });
@@ -45,6 +69,9 @@ app.get('/api/data', function(req, res) {
     });
 });
 
+app.get('/api/user', function(req, res) {
+    res.json(req.user);
+});
 
 app.post('/api/data', function(req, res) {
     console.log('post request fired');
@@ -59,7 +86,6 @@ app.post('/api/register', function(req, res) {
     _auth.localReg(req.body.username, req.body.password, function (err, res){
         if(err) console.log(err, res);
     })
-
 });
 
 app.post('/api/login', function(req, res) {
@@ -69,8 +95,6 @@ app.post('/api/login', function(req, res) {
     })
 
 });
-
-
 
 io.on('connection', function (socket) {
 
