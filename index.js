@@ -41,6 +41,43 @@ app.use(function(req, res, next) {
     next();
 });
 
+passport.serializeUser(function(user, done) {
+    console.log(user);
+    console.log("serializing " + user.username);
+    done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+    console.log("deserializing " + obj);
+    console.log(JSON.stringify(obj));
+    done(null, obj);
+})
+
+passport.use('local-signup', new LocalStrategy ({ passReqToCallback: true },
+    function (req, username, password, done) {
+        _auth.localReg(username, password,
+            function (err, result) {
+                var user;
+                if (result) {
+                    // looks like this result needs to be the document passed in
+                    // maybe with just the user name
+                    user = result.ops[0];
+                    console.log('REGISTERED SUCCESS FOR: ' + user.username);
+                    req.session.success = 'You are logged in as ' + user.username;
+                    done(null, user);
+                } else if (!result) {
+                    console.log('REGISTERED FAILURE');
+                    req.session.error = 'That username is already in use';
+                    done(null, user);
+                } else {
+                    console.log('something messed up here');
+                    console.log(err);
+                }
+            }
+        );
+    })
+);
+
 db.connect(DB_URL, function(err) {
     if (err) {
         console.log('could not connect to DB');
@@ -49,11 +86,39 @@ db.connect(DB_URL, function(err) {
     }
 });
 
+// app.post('/api/register', function(req, res) {
+//     console.log('register post request fired');
+//     _auth.localReg(req.body.username, req.body.password, function (err, res){
+//         if(err) console.log(err, res);
+//     })
+// });
+
+// app.post('/api/register', function(req, res) {
+//     console.log('register post request fired');
+//     _auth.localReg(req.body.username, req.body.password, function (err, res){
+//         if(err) console.log(err, res);
+//     })
+// });
+
+app.post('/api/register', passport.authenticate('local-signup', {
+    successRedirect: '/',
+    failureRedirect: '/login'
+}))
+
+
+app.post('/api/login', function(req, res) {
+    console.log('login post request fired');
+    _auth.localAuth(req.body.username, req.body.password, function (err, res){
+        if(err) console.log(err, res);
+    })
+
+});
+
 app.get('/', function (req, res) {
     // find the command that will emit to the user
     // stuck on io.emit here
     console.log('req.user: -- ');
-    console.log(req.user)
+    console.log(req.user.username)
     io.emit('chat message', 'recieved from socket emit');
     res.render('index');
 });
@@ -81,20 +146,7 @@ app.post('/api/data', function(req, res) {
     });
 });
 
-app.post('/api/register', function(req, res) {
-    console.log('register post request fired');
-    _auth.localReg(req.body.username, req.body.password, function (err, res){
-        if(err) console.log(err, res);
-    })
-});
 
-app.post('/api/login', function(req, res) {
-    console.log('login post request fired');
-    _auth.localAuth(req.body.username, req.body.password, function (err, res){
-        if(err) console.log(err, res);
-    })
-
-});
 
 io.on('connection', function (socket) {
 
