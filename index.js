@@ -78,6 +78,31 @@ passport.use('local-signup', new LocalStrategy ({ passReqToCallback: true },
     })
 );
 
+passport.use('local-login', new LocalStrategy ({ passReqToCallback: true },
+    function (req, username, password, done) {
+        _auth.localAuth(username, password,
+            function (err, result) {
+                var user;
+                if (result) {
+                    // looks like this result needs to be the document passed in
+                    // maybe with just the user name
+                    user = result;
+                    console.log('LOGIN SUCCESS FOR: ' + user.username);
+                    req.session.success = 'You are logged in as ' + user.username;
+                    done(null, result);
+                } else if (!result) {
+                    console.log('LOGIN FAILURE');
+                    req.session.error = 'Could not log in';
+                    done(null, result);
+                } else {
+                    console.log('something messed up here');
+                    console.log(err);
+                }
+            }
+        );
+    })
+);
+
 db.connect(DB_URL, function(err) {
     if (err) {
         console.log('could not connect to DB');
@@ -85,20 +110,6 @@ db.connect(DB_URL, function(err) {
         console.log('connected to DB');
     }
 });
-
-// app.post('/api/register', function(req, res) {
-//     console.log('register post request fired');
-//     _auth.localReg(req.body.username, req.body.password, function (err, res){
-//         if(err) console.log(err, res);
-//     })
-// });
-
-// app.post('/api/register', function(req, res) {
-//     console.log('register post request fired');
-//     _auth.localReg(req.body.username, req.body.password, function (err, res){
-//         if(err) console.log(err, res);
-//     })
-// });
 
 app.post('/api/register', passport.authenticate('local-signup', {
     successRedirect: '/',
@@ -114,13 +125,18 @@ app.get('/logout', function(req, res) {
 });
 
 
-app.post('/api/login', function(req, res) {
-    console.log('login post request fired');
-    _auth.localAuth(req.body.username, req.body.password, function (err, res){
-        if(err) console.log(err, res);
-    })
+// app.post('/api/login', function(req, res) {
+//     console.log('login post request fired');
+//     _auth.localAuth(req.body.username, req.body.password, function (err, res){
+//         if(err) console.log(err, res);
+//     })
+// });
 
-});
+app.post('/api/login',  passport.authenticate('local-login', {
+        successRedirect: '/create',
+        failureRedirect: '/login'
+    })
+);
 
 app.get('/', function (req, res) {
     // find the command that will emit to the user
