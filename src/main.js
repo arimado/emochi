@@ -188,12 +188,11 @@ class ChatBox extends React.Component {
             username: 'no one'
         };
         this._getCurrentUser = this._getCurrentUser.bind(this);
+        this._logOut = this._logOut.bind(this);
     }
 
     _getCurrentUser() {
-
         console.log('get current user fired');
-
         $.ajax({
               url: '/api/user',
               dataType: 'json',
@@ -203,9 +202,26 @@ class ChatBox extends React.Component {
               }.bind(this),
               error: function(xhr, status, err) {
                 console.log('fail!')
-                console.error(this.props.url, status, err.toString());
+                this.setState({username: 'no one'});
+                console.error('/api/user', status, err.toString());
               }.bind(this)
         });
+    }
+
+    _logOut() {
+        $.ajax({
+              url: '/logout',
+              dataType: 'json',
+              cache: false,
+              success: function(data) {
+                  this._getCurrentUser();
+              }.bind(this),
+              error: function(xhr, status, err) {
+                console.log('fail!')
+                console.error('/logout', status, err.toString());
+              }.bind(this)
+        });
+
     }
 
     componentDidMount() {
@@ -215,7 +231,7 @@ class ChatBox extends React.Component {
     render() {
         return (
             <div className="chatBoxContainer">
-                <Menu name={this.state.username} getUser={this._getCurrentUser}/>
+                <Menu name={this.state.username} getUser={this._logOut}/>
                 <div className="mainContent">
                     {this.props.children}
                 </div>

@@ -120,8 +120,9 @@ app.get('/logout', function(req, res) {
     var name = req.user.username;
     console.log('LOGGING OUT: ' + name);
     req.logout();                                   // where did this come from?
-    res.redirect('/');
     req.session.notice = "You have been logged out of: " + name;
+    res.json();
+    // im going to return a json with true in it because lets hope that doesnt throw an error! lol, you probably should be using a callback but whatever!
 });
 
 app.post('/api/login',  passport.authenticate('local-login', {

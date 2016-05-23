@@ -25071,17 +25071,15 @@ var ChatBox = function (_React$Component5) {
         _this5.state = {
             username: 'no one'
         };
-
         _this5._getCurrentUser = _this5._getCurrentUser.bind(_this5);
+        _this5._logOut = _this5._logOut.bind(_this5);
         return _this5;
     }
 
     _createClass(ChatBox, [{
         key: '_getCurrentUser',
         value: function _getCurrentUser() {
-
             console.log('get current user fired');
-
             $.ajax({
                 url: '/api/user',
                 dataType: 'json',
@@ -25091,7 +25089,24 @@ var ChatBox = function (_React$Component5) {
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.log('fail!');
-                    console.error(this.props.url, status, err.toString());
+                    this.setState({ username: 'no one' });
+                    console.error('/api/user', status, err.toString());
+                }.bind(this)
+            });
+        }
+    }, {
+        key: '_logOut',
+        value: function _logOut() {
+            $.ajax({
+                url: '/logout',
+                dataType: 'json',
+                cache: false,
+                success: function (data) {
+                    this._getCurrentUser();
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.log('fail!');
+                    console.error('/logout', status, err.toString());
                 }.bind(this)
             });
         }
@@ -25106,7 +25121,7 @@ var ChatBox = function (_React$Component5) {
             return _react2.default.createElement(
                 'div',
                 { className: 'chatBoxContainer' },
-                _react2.default.createElement(Menu, { name: this.state.username, getUser: this._getCurrentUser }),
+                _react2.default.createElement(Menu, { name: this.state.username, getUser: this._logOut }),
                 _react2.default.createElement(
                     'div',
                     { className: 'mainContent' },
