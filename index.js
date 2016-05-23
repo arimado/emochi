@@ -124,14 +124,6 @@ app.get('/logout', function(req, res) {
     req.session.notice = "You have been logged out of: " + name;
 });
 
-
-// app.post('/api/login', function(req, res) {
-//     console.log('login post request fired');
-//     _auth.localAuth(req.body.username, req.body.password, function (err, res){
-//         if(err) console.log(err, res);
-//     })
-// });
-
 app.post('/api/login',  passport.authenticate('local-login', {
         successRedirect: '/create',
         failureRedirect: '/login'
