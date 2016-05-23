@@ -184,21 +184,53 @@ class ChatBox extends React.Component {
 
     constructor() {
         super();
-        this.state = {};
+        this.state = {
+            username: 'no one'
+        };
+        this._getCurrentUser = this._getCurrentUser.bind(this);
+    }
+
+    _getCurrentUser() {
+
+        console.log('get current user fired');
+
+        $.ajax({
+              url: '/api/user',
+              dataType: 'json',
+              cache: false,
+              success: function(data) {
+                this.setState({username: data.username});
+              }.bind(this),
+              error: function(xhr, status, err) {
+                console.log('fail!')
+                console.error(this.props.url, status, err.toString());
+              }.bind(this)
+        });
+    }
+
+    componentDidMount() {
+        this._getCurrentUser()
     }
 
     render() {
         return (
             <div className="chatBoxContainer">
-                 <div className="menu">
-                 <Link to="/">Home</Link> | <Link to="/register">Register</Link> | <Link to="/login">Login</Link>
-                 </div>
+                <Menu name={this.state.username} getUser={this._getCurrentUser}/>
                 <div className="mainContent">
                     {this.props.children}
                 </div>
             </div>
         );
     }
+}
+
+
+const Menu = (props) => {
+    return (
+        <div className="menu">
+            <Link to="/">Home</Link> | <Link to="/register">Register</Link> | <Link to="/login">Login</Link> | <Link to="/" onClick={props.getUser} >Logout</Link> | Logged in as {props.name}
+        </div>
+    )
 }
 
 class Home extends React.Component {

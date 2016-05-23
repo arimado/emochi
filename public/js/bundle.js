@@ -25068,37 +25068,45 @@ var ChatBox = function (_React$Component5) {
 
         var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(ChatBox).call(this));
 
-        _this5.state = {};
+        _this5.state = {
+            username: 'no one'
+        };
+
+        _this5._getCurrentUser = _this5._getCurrentUser.bind(_this5);
         return _this5;
     }
 
     _createClass(ChatBox, [{
+        key: '_getCurrentUser',
+        value: function _getCurrentUser() {
+
+            console.log('get current user fired');
+
+            $.ajax({
+                url: '/api/user',
+                dataType: 'json',
+                cache: false,
+                success: function (data) {
+                    this.setState({ username: data.username });
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.log('fail!');
+                    console.error(this.props.url, status, err.toString());
+                }.bind(this)
+            });
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this._getCurrentUser();
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
                 'div',
                 { className: 'chatBoxContainer' },
-                _react2.default.createElement(
-                    'div',
-                    { className: 'menu' },
-                    _react2.default.createElement(
-                        _reactRouter.Link,
-                        { to: '/' },
-                        'Home'
-                    ),
-                    ' | ',
-                    _react2.default.createElement(
-                        _reactRouter.Link,
-                        { to: '/register' },
-                        'Register'
-                    ),
-                    ' | ',
-                    _react2.default.createElement(
-                        _reactRouter.Link,
-                        { to: '/login' },
-                        'Login'
-                    )
-                ),
+                _react2.default.createElement(Menu, { name: this.state.username, getUser: this._getCurrentUser }),
                 _react2.default.createElement(
                     'div',
                     { className: 'mainContent' },
@@ -25110,6 +25118,38 @@ var ChatBox = function (_React$Component5) {
 
     return ChatBox;
 }(_react2.default.Component);
+
+var Menu = function Menu(props) {
+    return _react2.default.createElement(
+        'div',
+        { className: 'menu' },
+        _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/' },
+            'Home'
+        ),
+        ' | ',
+        _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/register' },
+            'Register'
+        ),
+        ' | ',
+        _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/login' },
+            'Login'
+        ),
+        ' | ',
+        _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/', onClick: props.getUser },
+            'Logout'
+        ),
+        ' | Logged in as ',
+        props.name
+    );
+};
 
 var Home = function (_React$Component6) {
     _inherits(Home, _React$Component6);
