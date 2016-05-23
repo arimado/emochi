@@ -105,6 +105,14 @@ app.post('/api/register', passport.authenticate('local-signup', {
     failureRedirect: '/login'
 }))
 
+app.get('/logout', function(req, res) {
+    var name = req.user.username;
+    console.log('LOGGING OUT: ' + name);
+    req.logout();                                   // where did this come from?
+    res.redirect('/');
+    req.session.notice = "You have been logged out of: " + name;
+});
+
 
 app.post('/api/login', function(req, res) {
     console.log('login post request fired');
@@ -117,8 +125,6 @@ app.post('/api/login', function(req, res) {
 app.get('/', function (req, res) {
     // find the command that will emit to the user
     // stuck on io.emit here
-    console.log('req.user: -- ');
-    console.log(req.user.username)
     io.emit('chat message', 'recieved from socket emit');
     res.render('index');
 });
