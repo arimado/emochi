@@ -189,6 +189,11 @@ class ChatBox extends React.Component {
         };
         this._getCurrentUser = this._getCurrentUser.bind(this);
         this._logOut = this._logOut.bind(this);
+        this._consolePrint = this._consolePrint.bind(this);
+    }
+
+    _consolePrint() {
+        console.log('print')
     }
 
     _getCurrentUser() {
@@ -221,7 +226,6 @@ class ChatBox extends React.Component {
                 console.error('/logout', status, err.toString());
               }.bind(this)
         });
-
     }
 
     componentDidMount() {
@@ -229,27 +233,40 @@ class ChatBox extends React.Component {
     }
 
     render() {
+
+        const childrenWithProps = React.Children.map(this.props.children,
+            (child) => React.cloneElement(child, {
+                getUser: this.getCurrentUser,
+
+            })
+        );
+
         return (
             <div className="chatBoxContainer">
-                <Menu name={this.state.username} getUser={this._logOut}/>
+                <Menu name={this.state.username} logOut={this._logOut} getUser={this._getCurrentUser}/>
                 <div className="mainContent">
-                    {this.props.children}
+                    {childrenWithProps}
                 </div>
             </div>
         );
     }
 }
 
-
 const Menu = (props) => {
     return (
         <div className="menu">
-            <Link to="/">Home</Link> | <Link to="/register">Register</Link> | <Link to="/login">Login</Link> | <Link to="/" onClick={props.getUser} >Logout</Link> | Logged in as {props.name}
+            <Link to="/">Home</Link> | <Link to="/register">Register</Link> | <Link to="/login">Login</Link> | <Link to="/" onClick={props.logOut} >Logout</Link> | Logged in <a href="#" onClick={props.getUser}>as</a> {props.name}
         </div>
     )
 }
 
 class Home extends React.Component {
+
+    componentDidMount() {
+        this.props.getUser();
+        this.props.consolePrint(); 
+    }
+
     render() {
         return (
             <div className="homeContainer">
@@ -295,6 +312,7 @@ class Register extends React.Component {
             success: function(data) {
             console.log('ajax success:') //unsure why this does not fire
             this.setState({data: user});
+            this.props.getUser();
             }.bind(this),
             error: function(xhr, status, err) {
              this.setState({data: user});  // PART OF OPTIMISTIC UPDATE
