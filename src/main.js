@@ -384,10 +384,9 @@ class Login extends React.Component {
                 data: user,
                 success: function(data) {
                     console.log('ajax success:') //unsure why this does not fire
-                    this.setState({username: data.username, password: data.password});
+                    this.props.getUser(); 
                 }.bind(this),
                 error: function(xhr, status, err) {
-                 this.setState({username: this.state.username, password: this.state.password});  // PART OF OPTIMISTIC UPDATE
                 console.error('/api/login', status, err.toString());
                 }.bind(this)
             });

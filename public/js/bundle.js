@@ -25354,10 +25354,9 @@ var Login = function (_React$Component8) {
                 data: user,
                 success: function (data) {
                     console.log('ajax success:'); //unsure why this does not fire
-                    this.setState({ username: data.username, password: data.password });
+                    this.props.getUser();
                 }.bind(this),
                 error: function (xhr, status, err) {
-                    this.setState({ username: this.state.username, password: this.state.password }); // PART OF OPTIMISTIC UPDATE
                     console.error('/api/login', status, err.toString());
                 }.bind(this)
             });
@@ -25410,7 +25409,6 @@ var FullButton = function (_React$Component9) {
     _createClass(FullButton, [{
         key: 'render',
         value: function render() {
-
             var buttonClass = 'button' + this.props.buttonVal + ' fullButton';
 
             return _react2.default.createElement(
