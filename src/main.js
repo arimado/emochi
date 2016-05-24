@@ -190,6 +190,7 @@ class ChatBox extends React.Component {
         this._getCurrentUser = this._getCurrentUser.bind(this);
         this._logOut = this._logOut.bind(this);
         this._consolePrint = this._consolePrint.bind(this);
+        this._getUsers = this._getUsers.bind(this);
     }
 
     _consolePrint() {
@@ -231,6 +232,20 @@ class ChatBox extends React.Component {
 
     _getUsers() {
         // Make an api call to get users
+
+        var users;
+
+        $.ajax({
+              url: '/api/users',
+              dataType: 'json',
+              cache: false,
+              success: function(data) {
+
+              }.bind(this),
+              error: function(xhr, status, err) {
+                
+              }.bind(this)
+        });
     }
 
     componentDidMount() {
@@ -242,6 +257,7 @@ class ChatBox extends React.Component {
         const childrenWithProps = React.Children.map(this.props.children,
             (child) => React.cloneElement(child, {
                 getUser: this._getCurrentUser,
+                getUsers: this._getUsers,
                 consolePrint: this._consolePrint
             })
         );
@@ -445,6 +461,9 @@ class FullButton extends React.Component {
 }
 
 const UserList = (props) => {
+
+    var
+
     return (
         <div className="users">
             users
