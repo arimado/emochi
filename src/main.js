@@ -311,16 +311,15 @@ class Register extends React.Component {
             data: user,
             success: function(data) {
             console.log('ajax success:') //unsure why this does not fire
-            this.setState({data: user});
-            this.props.getUser();
+                this.setState({data: user});
+                this.props.getUser();
             }.bind(this),
             error: function(xhr, status, err) {
-             this.setState({data: user});  // PART OF OPTIMISTIC UPDATE
+                this.setState({data: user});  // PART OF OPTIMISTIC UPDATE
             console.error(this.props.url, status, err.toString());
             }.bind(this)
         });
     }
-
 
     render() {
         return (
