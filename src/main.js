@@ -229,6 +229,10 @@ class ChatBox extends React.Component {
         });
     }
 
+    _getUsers() {
+        // Make an api call to get users
+    }
+
     componentDidMount() {
         this._getCurrentUser()
     }
@@ -256,7 +260,7 @@ class ChatBox extends React.Component {
 const Menu = (props) => {
     return (
         <div className="menu">
-            <Link to="/">Home</Link> | 
+            <Link to="/">Home</Link> |
             <Link to="/register">Register</Link> |
             <Link to="/login">Login</Link> |
             <Link to="/" onClick={props.logOut}>Logout</Link> |

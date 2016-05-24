@@ -128,7 +128,7 @@ app.get('/logout', function(req, res) {
 app.post('/api/login',
     passport.authenticate('local-login'),
     function(req, res) {
-        res.json(req.user.username); 
+        res.json(req.user.username);
     })
 
 app.get('/', function (req, res) {
@@ -151,6 +151,14 @@ app.get('/api/data', function(req, res) {
 
 app.get('/api/user', function(req, res) {
     res.json(req.user);
+});
+
+app.get('/api/users', function(req, res) {
+    var usersArray;
+    var usersCollection = db.get().collection('users').find({}, {password: false, _id: false}).toArray(function(err, users) {
+        usersArray = users;
+        res.json(users);
+    });
 });
 
 app.post('/api/data', function(req, res) {
