@@ -25159,32 +25159,37 @@ var Menu = function Menu(props) {
             { to: '/' },
             'Home'
         ),
-        ' | ',
+        ' |',
         _react2.default.createElement(
             _reactRouter.Link,
             { to: '/register' },
-            'Register'
+            ' Register'
         ),
-        ' | ',
+        ' |',
         _react2.default.createElement(
             _reactRouter.Link,
             { to: '/login' },
-            'Login'
+            ' Login'
         ),
-        ' | ',
+        ' |',
         _react2.default.createElement(
             _reactRouter.Link,
             { to: '/', onClick: props.logOut },
-            'Logout'
+            ' Logout'
         ),
-        ' | Logged in ',
+        ' |',
         _react2.default.createElement(
-            'a',
-            { href: '#', onClick: props.getUser },
-            'as'
+            _reactRouter.Link,
+            { to: '/users' },
+            ' Users'
         ),
-        ' ',
-        props.name
+        _react2.default.createElement(
+            'p',
+            null,
+            '  Logged in as ',
+            props.name,
+            ' '
+        )
     );
 };
 
@@ -25372,7 +25377,7 @@ var Login = function (_React$Component8) {
                     { className: 'growContent' },
                     _react2.default.createElement(
                         'form',
-                        { className: 'bottomForm' },
+                        { className: 'bottomForm', onSubmit: this._handleLoginSubmit },
                         _react2.default.createElement('input', {
                             type: 'text',
                             placeholder: 'name',
@@ -25426,6 +25431,14 @@ var FullButton = function (_React$Component9) {
     return FullButton;
 }(_react2.default.Component);
 
+var UserList = function UserList(props) {
+    return _react2.default.createElement(
+        'div',
+        { className: 'users' },
+        'users'
+    );
+};
+
 var app = _react2.default.createElement(
     _reactRouter.Router,
     null,
@@ -25434,8 +25447,9 @@ var app = _react2.default.createElement(
         _reactRouter.Route,
         { path: '/', component: ChatBox },
         _react2.default.createElement(_reactRouter.Route, { path: 'home', component: Home }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'Register', component: Register }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'Login', component: Login })
+        _react2.default.createElement(_reactRouter.Route, { path: 'register', component: Register }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'login', component: Login }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'users', component: UserList })
     )
 );
 

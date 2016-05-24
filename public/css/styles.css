@@ -105,6 +105,16 @@ body {
     flex-grow: 1;
 }
 
+.menu {
+	padding: 20px;
+	border-bottom: 1px solid rgb(180, 180, 180);
+}
+
+.menu p {
+	padding: 5px 0px 0px 0px;
+	font-size: 12px;
+}
+
 .mainContent {
     display: flex;
     flex-direction: column;

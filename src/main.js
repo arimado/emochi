@@ -256,7 +256,12 @@ class ChatBox extends React.Component {
 const Menu = (props) => {
     return (
         <div className="menu">
-            <Link to="/">Home</Link> | <Link to="/register">Register</Link> | <Link to="/login">Login</Link> | <Link to="/" onClick={props.logOut} >Logout</Link> | Logged in <a href="#" onClick={props.getUser}>as</a> {props.name}
+            <Link to="/">Home</Link> | 
+            <Link to="/register">Register</Link> |
+            <Link to="/login">Login</Link> |
+            <Link to="/" onClick={props.logOut}>Logout</Link> |
+            <Link to="/users">Users</Link>
+            <p>  Logged in as {props.name} </p>
         </div>
     )
 }
@@ -384,7 +389,7 @@ class Login extends React.Component {
                 data: user,
                 success: function(data) {
                     console.log('ajax success:') //unsure why this does not fire
-                    this.props.getUser(); 
+                    this.props.getUser();
                 }.bind(this),
                 error: function(xhr, status, err) {
                 console.error('/api/login', status, err.toString());
@@ -396,7 +401,7 @@ class Login extends React.Component {
         return (
             <div className="loginContainer growContainer">
                 <div className="growContent">
-                <form className="bottomForm">
+                <form className="bottomForm" onSubmit={this._handleLoginSubmit}>
                     <input
                         type="text"
                         placeholder="name"
@@ -435,18 +440,24 @@ class FullButton extends React.Component {
     }
 }
 
+const UserList = (props) => {
+    return (
+        <div className="users">
+            users
+        </div>
+    )
+}
+
 const app = (
     <Router>
         <Redirect from="/" to="/home" />
         <Route path="/" component={ChatBox}>
             <Route path="home" component={Home} />
-            <Route path="Register" component={Register}/>
-            <Route path="Login" component={Login} />
+            <Route path="register" component={Register}/>
+            <Route path="login" component={Login} />
+            <Route path="users" component={UserList} />
         </Route>
     </Router>
 )
-
-
-
 
 ReactDOM.render( app, document.getElementById('container'))
