@@ -236,8 +236,8 @@ class ChatBox extends React.Component {
 
         const childrenWithProps = React.Children.map(this.props.children,
             (child) => React.cloneElement(child, {
-                getUser: this.getCurrentUser,
-
+                getUser: this._getCurrentUser,
+                consolePrint: this._consolePrint
             })
         );
 
@@ -263,8 +263,8 @@ const Menu = (props) => {
 class Home extends React.Component {
 
     componentDidMount() {
+        this.props.consolePrint();
         this.props.getUser();
-        this.props.consolePrint(); 
     }
 
     render() {

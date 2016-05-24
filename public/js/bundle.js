@@ -25309,8 +25309,8 @@ var ChatBox = function (_React$Component5) {
 
             var childrenWithProps = _react2.default.Children.map(this.props.children, function (child) {
                 return _react2.default.cloneElement(child, {
-                    getUser: _this6.getCurrentUser
-
+                    getUser: _this6._getCurrentUser,
+                    consolePrint: _this6._consolePrint
                 });
             });
 
@@ -25380,8 +25380,8 @@ var Home = function (_React$Component6) {
     _createClass(Home, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            this.props.getUser();
             this.props.consolePrint();
+            this.props.getUser();
         }
     }, {
         key: 'render',
