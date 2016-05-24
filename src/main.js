@@ -21,7 +21,7 @@ class CommentBox extends React.Component {
                 this.setState({data: data});
               }.bind(this),
               error: function(xhr, status, err) {
-                console.log('fail!')
+                console.log('fail!');
                 console.error(this.props.url, status, err.toString());
               }.bind(this)
         });
@@ -203,6 +203,7 @@ class ChatBox extends React.Component {
               dataType: 'json',
               cache: false,
               success: function(data) {
+                console.log('user set')
                 this.setState({username: data.username});
               }.bind(this),
               error: function(xhr, status, err) {
@@ -382,12 +383,12 @@ class Login extends React.Component {
                 type: 'POST',
                 data: user,
                 success: function(data) {
-                console.log('ajax success:') //unsure why this does not fire
-                this.setState({data: user});
+                    console.log('ajax success:') //unsure why this does not fire
+                    this.setState({username: data.username, password: data.password});
                 }.bind(this),
                 error: function(xhr, status, err) {
-                 this.setState({data: user});  // PART OF OPTIMISTIC UPDATE
-                console.error(this.props.url, status, err.toString());
+                 this.setState({username: this.state.username, password: this.state.password});  // PART OF OPTIMISTIC UPDATE
+                console.error('/api/login', status, err.toString());
                 }.bind(this)
             });
         }
@@ -421,7 +422,6 @@ class Login extends React.Component {
 
 class FullButton extends React.Component {
     render() {
-
         var buttonClass = 'button' + this.props.buttonVal + ' fullButton';
 
         return (

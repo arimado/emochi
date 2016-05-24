@@ -125,11 +125,11 @@ app.get('/logout', function(req, res) {
     // im going to return a json with true in it because lets hope that doesnt throw an error! lol, you probably should be using a callback but whatever!
 });
 
-app.post('/api/login',  passport.authenticate('local-login', {
-        successRedirect: '/create',
-        failureRedirect: '/login'
+app.post('/api/login',
+    passport.authenticate('local-login'),
+    function(req, res) {
+        res.json(req.user.username); 
     })
-);
 
 app.get('/', function (req, res) {
     // find the command that will emit to the user
