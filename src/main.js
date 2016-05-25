@@ -207,7 +207,7 @@ class ChatBox extends React.Component {
               success: function(data) {
                 console.log('user set')
                 this.setState({username: data.username});
-                done();
+                if (done) done(); 
               }.bind(this),
               error: function(xhr, status, err) {
                 console.log('fail!')
@@ -233,11 +233,8 @@ class ChatBox extends React.Component {
     }
 
     _getUsers() {
-
         // Make an api call to get users
-
-        console.log('getting users'); 
-
+        console.log('getting users');
         $.ajax({
               url: '/api/users',
               dataType: 'json',
@@ -466,19 +463,15 @@ class FullButton extends React.Component {
 
 const UserList = (props) => {
 
-    // generate a list of users
-    // from the json array
-    // do a map
-
     var userList = props.users.map((user) => {
         return (
-            <li> {user.username} </li>
+            <li key={user._id}> {user.username} </li>
         )
     })
 
     return (
         <div className="users">
-            {userList}
+            <ul>{userList}</ul>
         </div>
     )
 }

@@ -25095,7 +25095,7 @@ var ChatBox = function (_React$Component5) {
                 success: function (data) {
                     console.log('user set');
                     this.setState({ username: data.username });
-                    done();
+                    if (done) done();
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.log('fail!');
@@ -25123,11 +25123,8 @@ var ChatBox = function (_React$Component5) {
     }, {
         key: '_getUsers',
         value: function _getUsers() {
-
             // Make an api call to get users
-
             console.log('getting users');
-
             $.ajax({
                 url: '/api/users',
                 dataType: 'json',
@@ -25458,14 +25455,10 @@ var FullButton = function (_React$Component9) {
 
 var UserList = function UserList(props) {
 
-    // generate a list of users
-    // from the json array
-    // do a map
-
     var userList = props.users.map(function (user) {
         return _react2.default.createElement(
             'li',
-            null,
+            { key: user._id },
             ' ',
             user.username,
             ' '
@@ -25475,7 +25468,11 @@ var UserList = function UserList(props) {
     return _react2.default.createElement(
         'div',
         { className: 'users' },
-        userList
+        _react2.default.createElement(
+            'ul',
+            null,
+            userList
+        )
     );
 };
 

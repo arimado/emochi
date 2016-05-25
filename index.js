@@ -158,7 +158,7 @@ app.get('/api/user', function(req, res) {
 
 app.get('/api/users', function(req, res) {
     var usersArray;
-    var usersCollection = db.get().collection('users').find({}, {password: false, _id: false}).toArray(function(err, users) {
+    var usersCollection = db.get().collection('users').find({}, {password: false}).toArray(function(err, users) {
         usersArray = users;
         res.json(users);
     });

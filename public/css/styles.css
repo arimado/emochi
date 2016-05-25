@@ -89,6 +89,7 @@ body {
     flex-direction: column;
     flex-grow: 1;
     font-family: 'Roboto Condensed', sans-serif;
+	color: rgb(70, 70, 70);
 }
 
 /* MAIN ******************************************/
@@ -165,4 +166,21 @@ body {
     background-color: none;
     border-bottom: 2px solid black;
     outline: none;
+}
+
+
+/* USERLIST ******************************************/
+
+.users {
+
+}
+
+.users ul {
+	list-style-type: none;
+}
+
+.users ul li {
+	padding: 20px;
+	border-bottom: 1px solid rgb(244, 244, 244);
+
 }
