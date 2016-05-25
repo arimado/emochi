@@ -467,25 +467,10 @@ class FullButton extends React.Component {
 
 const UserList = (props) => {
 
-    const goToChat = () => {
-        return 'hi'
-    }
-
-    const logKey = (key) => {
-        return () => {
-            console.log(key);
-            console.log(userList);
-        }
-    }
-
-    const getSelectedItems = () => {
-
-    }
-
     const userList = props.users.map((user) => {
         return (
             <li key={user._id}>
-                <label> {user.username} </label><input key={user._id} onClick={getSelectedItems} type="checkbox" />
+                <label> {user.username} </label><input key={user._id} type="checkbox" onClick="" />
             </li>
         )
     })
@@ -493,7 +478,7 @@ const UserList = (props) => {
     return (
         <div className="users">
             <ul>{userList.reverse()}</ul>
-            <FullButton _onSubmit={goToChat} />
+            <FullButton />
         </div>
     )
 }
