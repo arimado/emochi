@@ -25477,8 +25477,17 @@ var UserList = function (_React$Component10) {
     _createClass(UserList, [{
         key: '_handleCheckChange',
         value: function _handleCheckChange(id, e) {
-            console.log(e.target);
-            console.log(id);
+            var checkbox = {};
+            if (this.state[id] === undefined) {
+                checkbox[id] = true;
+            } else if (this.state[id]) {
+                checkbox[id] = false;
+            } else {
+                checkbox[id] = true;
+            }
+            console.log(checkbox);
+            this.setState(checkbox);
+            console.log(this.state);
         }
     }, {
         key: 'render',
@@ -25494,7 +25503,7 @@ var UserList = function (_React$Component10) {
                         null,
                         user.username
                     ),
-                    _react2.default.createElement('input', { key: user._id, type: 'checkbox', onClick: _this12._handleCheckChange.bind(_this12, user._id) })
+                    _react2.default.createElement('input', { key: user._id, checked: _this12.state[user._id], type: 'checkbox', onClick: _this12._handleCheckChange.bind(_this12, user._id) })
                 );
             });
 

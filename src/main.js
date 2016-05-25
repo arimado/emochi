@@ -477,15 +477,24 @@ class UserList extends React.Component {
     }
 
     _handleCheckChange(id, e) {
-        console.log(e.target);
-        console.log(id);
+        const checkbox = {};
+        if (this.state[id] === undefined) {
+            checkbox[id] = true;
+        } else if (this.state[id]) {
+            checkbox[id] = false;
+        } else {
+            checkbox[id] = true;
+        }
+        console.log(checkbox);
+        this.setState(checkbox);
+        console.log(this.state);
     }
 
     render() {
         const userList = this.props.users.map((user) => {
             return (
                 <li key={user._id}>
-                    <label>{user.username}</label><input key={user._id} type="checkbox" onClick={this._handleCheckChange.bind(this, user._id)} />
+                    <label>{user.username}</label><input key={user._id} checked={this.state[user._id]} type="checkbox" onClick={this._handleCheckChange.bind(this, user._id)} />
                     {/* the onClick event solution came from --> https://github.com/facebook/react/issues/5674 */}
                 </li>
             )
