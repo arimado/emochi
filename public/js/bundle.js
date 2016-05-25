@@ -25141,7 +25141,6 @@ var ChatBox = function (_React$Component5) {
         key: '_addUsersToChat',
         value: function _addUsersToChat() {
             // print an array of users
-
         }
     }, {
         key: 'componentDidMount',
@@ -25459,52 +25458,61 @@ var FullButton = function (_React$Component9) {
     return FullButton;
 }(_react2.default.Component);
 
-var UserList = function UserList(props) {
+var UserList = function (_React$Component10) {
+    _inherits(UserList, _React$Component10);
 
-    var goToChat = function goToChat() {
-        return 'hi';
-    };
+    function UserList(props) {
+        _classCallCheck(this, UserList);
 
-    var logKey = function logKey(key) {
-        return function () {
-            console.log(key);
-            console.log(userList);
+        var _this11 = _possibleConstructorReturn(this, Object.getPrototypeOf(UserList).call(this));
+
+        _this11.state = {
+            data: []
         };
-    };
+        console.log('UserList constrictor = ');
+        console.log(props);
+        return _this11;
+    }
 
-    var getSelectedItems = function getSelectedItems() {
-        var selected = userList.filter(function (item) {
-            console.log(item.props.children[1]);
-        });
-        console.log(selected);
-    };
+    _createClass(UserList, [{
+        key: '_handleCheckChange',
+        value: function _handleCheckChange(id, e) {
+            console.log(e.target);
+            console.log(id);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this12 = this;
 
-    var userList = props.users.map(function (user) {
-        return _react2.default.createElement(
-            'li',
-            { key: user._id },
-            _react2.default.createElement(
-                'label',
-                null,
-                ' ',
-                user.username,
-                ' '
-            ),
-            _react2.default.createElement('input', { key: user._id, onClick: getSelectedItems, type: 'checkbox' })
-        );
-    });
+            var userList = this.props.users.map(function (user) {
+                return _react2.default.createElement(
+                    'li',
+                    { key: user._id },
+                    _react2.default.createElement(
+                        'label',
+                        null,
+                        user.username
+                    ),
+                    _react2.default.createElement('input', { key: user._id, type: 'checkbox', onClick: _this12._handleCheckChange.bind(_this12, user._id) })
+                );
+            });
 
-    return _react2.default.createElement(
-        'div',
-        { className: 'users' },
-        _react2.default.createElement(
-            'ul',
-            null,
-            userList.reverse()
-        ),
-        _react2.default.createElement(FullButton, { _onSubmit: goToChat })
-    );
-};
+            return _react2.default.createElement(
+                'div',
+                { className: 'users' },
+                _react2.default.createElement(
+                    'ul',
+                    null,
+                    userList.reverse()
+                ),
+                _react2.default.createElement(FullButton, null)
+            );
+        }
+    }]);
+
+    return UserList;
+}(_react2.default.Component);
 
 var app = _react2.default.createElement(
     _reactRouter.Router,

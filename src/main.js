@@ -465,22 +465,39 @@ class FullButton extends React.Component {
     }
 }
 
-const UserList = (props) => {
+class UserList extends React.Component {
 
-    const userList = props.users.map((user) => {
+    constructor(props) {
+        super();
+        this.state = {
+            data: []
+        };
+        console.log('UserList constrictor = ')
+        console.log(props);
+    }
+
+    _handleCheckChange(id, e) {
+        console.log(e.target);
+        console.log(id);
+    }
+
+    render() {
+        const userList = this.props.users.map((user) => {
+            return (
+                <li key={user._id}>
+                    <label>{user.username}</label><input key={user._id} type="checkbox" onClick={this._handleCheckChange.bind(this, user._id)} />
+                    {/* the onClick event solution came from --> https://github.com/facebook/react/issues/5674 */}
+                </li>
+            )
+        });
+
         return (
-            <li key={user._id}>
-                <label> {user.username} </label><input key={user._id} type="checkbox" onClick="" />
-            </li>
+            <div className="users">
+                <ul>{userList.reverse()}</ul>
+                <FullButton />
+            </div>
         )
-    })
-
-    return (
-        <div className="users">
-            <ul>{userList.reverse()}</ul>
-            <FullButton />
-        </div>
-    )
+    }
 }
 
 const app = (
