@@ -461,10 +461,20 @@ class FullButton extends React.Component {
 }
 
 const UserList = (props) => {
-    
+
+    // generate a list of users
+    // from the json array
+    // do a map
+
+    var userList = props.getUsers().map((name) => {
+        return (
+            <div> </div> 
+        )
+    });
+
     return (
         <div className="users">
-            users
+            props.getUsers();
         </div>
     )
 }
