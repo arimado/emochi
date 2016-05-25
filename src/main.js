@@ -465,7 +465,9 @@ const UserList = (props) => {
 
     const userList = props.users.map((user) => {
         return (
-            <li key={user._id}> {user.username} </li>
+            <li key={user._id}>
+                <label> {user.username} </label><input type="checkbox" /> 
+            </li>
         )
     })
 

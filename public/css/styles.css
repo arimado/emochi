@@ -187,7 +187,12 @@ body {
 }
 
 .users ul li {
+	display: flex;
+	flex-direction: row;
 	padding: 20px;
 	border-bottom: 1px solid rgb(244, 244, 244);
+}
 
+.users ul li input {
+	margin-left: auto; 
 }

@@ -25459,9 +25459,14 @@ var UserList = function UserList(props) {
         return _react2.default.createElement(
             'li',
             { key: user._id },
-            ' ',
-            user.username,
-            ' '
+            _react2.default.createElement(
+                'label',
+                null,
+                ' ',
+                user.username,
+                ' '
+            ),
+            _react2.default.createElement('input', { type: 'checkbox' })
         );
     });
 
