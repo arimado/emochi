@@ -82,6 +82,8 @@ html {
     display: flex;
     flex-direction: column;
     height: 100%;
+	position: relative;
+	overflow: auto;
 }
 
 body {
@@ -90,6 +92,8 @@ body {
     flex-grow: 1;
     font-family: 'Roboto Condensed', sans-serif;
 	color: rgb(70, 70, 70);
+	overflow: auto;
+	height: 100%;
 }
 
 /* MAIN ******************************************/
@@ -138,6 +142,15 @@ body {
 
 /* REGISTER + LOGIN BUTTON */
 
+.bottomForm {
+	display: fixed;
+	flex-direction: column;
+	position: absolute;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+}
+
 .fullButton {
     padding: 15px;
     width: 100%;
@@ -147,12 +160,6 @@ body {
 
 .fullButton:hover {
     background: rgb(172, 172, 172);
-}
-
-
-.bottomForm {
-    display: flex;
-    flex-direction: column;
 }
 
 .registerContainer form input[type=text] {

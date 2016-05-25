@@ -207,7 +207,7 @@ class ChatBox extends React.Component {
               success: function(data) {
                 console.log('user set')
                 this.setState({username: data.username});
-                if (done) done(); 
+                if (done) done();
               }.bind(this),
               error: function(xhr, status, err) {
                 console.log('fail!')
@@ -463,15 +463,20 @@ class FullButton extends React.Component {
 
 const UserList = (props) => {
 
-    var userList = props.users.map((user) => {
+    const userList = props.users.map((user) => {
         return (
             <li key={user._id}> {user.username} </li>
         )
     })
 
+    const goToChat = () => {
+        return 'hi'
+    }
+
     return (
         <div className="users">
             <ul>{userList}</ul>
+            <FullButton _onSubmit={goToChat} />
         </div>
     )
 }

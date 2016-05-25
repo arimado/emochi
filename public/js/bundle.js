@@ -25465,6 +25465,10 @@ var UserList = function UserList(props) {
         );
     });
 
+    var goToChat = function goToChat() {
+        return 'hi';
+    };
+
     return _react2.default.createElement(
         'div',
         { className: 'users' },
@@ -25472,7 +25476,8 @@ var UserList = function UserList(props) {
             'ul',
             null,
             userList
-        )
+        ),
+        _react2.default.createElement(FullButton, { _onSubmit: goToChat })
     );
 };
 
