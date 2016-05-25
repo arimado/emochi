@@ -243,7 +243,7 @@ class ChatBox extends React.Component {
 
               }.bind(this),
               error: function(xhr, status, err) {
-                
+
               }.bind(this)
         });
     }
@@ -461,9 +461,7 @@ class FullButton extends React.Component {
 }
 
 const UserList = (props) => {
-
-    var
-
+    
     return (
         <div className="users">
             users

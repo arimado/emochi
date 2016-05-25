@@ -129,7 +129,7 @@ app.post('/api/login',
     passport.authenticate('local-login'),
     function(req, res) {
         res.json(req.user.username);
-    })
+});
 
 app.get('/', function (req, res) {
     // find the command that will emit to the user
