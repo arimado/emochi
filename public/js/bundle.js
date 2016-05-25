@@ -25138,6 +25138,12 @@ var ChatBox = function (_React$Component5) {
             });
         }
     }, {
+        key: '_addUsersToChat',
+        value: function _addUsersToChat() {
+            // print an array of users
+
+        }
+    }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
             this._getCurrentUser();
@@ -25462,7 +25468,15 @@ var UserList = function UserList(props) {
     var logKey = function logKey(key) {
         return function () {
             console.log(key);
+            console.log(userList);
         };
+    };
+
+    var getSelectedItems = function getSelectedItems() {
+        var selected = userList.filter(function (item) {
+            console.log(item.props.children[1]);
+        });
+        console.log(selected);
     };
 
     var userList = props.users.map(function (user) {
@@ -25476,7 +25490,7 @@ var UserList = function UserList(props) {
                 user.username,
                 ' '
             ),
-            _react2.default.createElement('input', { key: user._id, onClick: logKey(user._id), type: 'checkbox' })
+            _react2.default.createElement('input', { key: user._id, onClick: getSelectedItems, type: 'checkbox' })
         );
     });
 

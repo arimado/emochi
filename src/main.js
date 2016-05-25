@@ -248,6 +248,10 @@ class ChatBox extends React.Component {
         });
     }
 
+    _addUsersToChat() {
+        // print an array of users
+    }
+
     componentDidMount() {
         this._getCurrentUser()
         this._getUsers()
@@ -470,13 +474,18 @@ const UserList = (props) => {
     const logKey = (key) => {
         return () => {
             console.log(key);
+            console.log(userList);
         }
+    }
+
+    const getSelectedItems = () => {
+
     }
 
     const userList = props.users.map((user) => {
         return (
             <li key={user._id}>
-                <label> {user.username} </label><input key={user._id} onClick={logKey(user._id)} type="checkbox" />
+                <label> {user.username} </label><input key={user._id} onClick={getSelectedItems} type="checkbox" />
             </li>
         )
     })
