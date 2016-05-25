@@ -463,21 +463,27 @@ class FullButton extends React.Component {
 
 const UserList = (props) => {
 
-    const userList = props.users.map((user) => {
-        return (
-            <li key={user._id}>
-                <label> {user.username} </label><input type="checkbox" /> 
-            </li>
-        )
-    })
-
     const goToChat = () => {
         return 'hi'
     }
 
+    const logKey = (key) => {
+        return () => {
+            console.log(key);
+        }
+    }
+
+    const userList = props.users.map((user) => {
+        return (
+            <li key={user._id}>
+                <label> {user.username} </label><input key={user._id} onClick={logKey(user._id)} type="checkbox" />
+            </li>
+        )
+    })
+
     return (
         <div className="users">
-            <ul>{userList}</ul>
+            <ul>{userList.reverse()}</ul>
             <FullButton _onSubmit={goToChat} />
         </div>
     )

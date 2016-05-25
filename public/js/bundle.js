@@ -25455,6 +25455,16 @@ var FullButton = function (_React$Component9) {
 
 var UserList = function UserList(props) {
 
+    var goToChat = function goToChat() {
+        return 'hi';
+    };
+
+    var logKey = function logKey(key) {
+        return function () {
+            console.log(key);
+        };
+    };
+
     var userList = props.users.map(function (user) {
         return _react2.default.createElement(
             'li',
@@ -25466,13 +25476,9 @@ var UserList = function UserList(props) {
                 user.username,
                 ' '
             ),
-            _react2.default.createElement('input', { type: 'checkbox' })
+            _react2.default.createElement('input', { key: user._id, onClick: logKey(user._id), type: 'checkbox' })
         );
     });
-
-    var goToChat = function goToChat() {
-        return 'hi';
-    };
 
     return _react2.default.createElement(
         'div',
@@ -25480,7 +25486,7 @@ var UserList = function UserList(props) {
         _react2.default.createElement(
             'ul',
             null,
-            userList
+            userList.reverse()
         ),
         _react2.default.createElement(FullButton, { _onSubmit: goToChat })
     );
