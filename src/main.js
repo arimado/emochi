@@ -250,6 +250,7 @@ class ChatBox extends React.Component {
 
     _addUsersToChat() {
         // print an array of users
+
     }
 
     componentDidMount() {
@@ -258,7 +259,6 @@ class ChatBox extends React.Component {
     }
 
     render() {
-
         const childrenWithProps = React.Children.map(this.props.children,
             (child) => React.cloneElement(child, {
                 getUser: this._getCurrentUser,
@@ -267,7 +267,6 @@ class ChatBox extends React.Component {
                 consolePrint: this._consolePrint
             })
         );
-
         return (
             <div className="chatBoxContainer">
                 <Menu name={this.state.username} logOut={this._logOut} getUser={this._getCurrentUser}/>
@@ -469,11 +468,9 @@ class UserList extends React.Component {
 
     constructor(props) {
         super();
-        this.state = {
-            data: []
-        };
-        console.log('UserList constrictor = ')
-        console.log(props);
+        this.state = {};
+
+        this._addUsersToChat = this._addUsersToChat.bind(this);
     }
 
     _handleCheckChange(id, e) {
@@ -490,6 +487,13 @@ class UserList extends React.Component {
         console.log(this.state);
     }
 
+    _addUsersToChat(e) {
+        // Get state of all objects that are equal to true
+        console.log('_addUsersToChat');
+        e.preventDefault();
+        console.log(this.state);
+    }
+
     render() {
         const userList = this.props.users.map((user) => {
             return (
@@ -503,7 +507,7 @@ class UserList extends React.Component {
         return (
             <div className="users">
                 <ul>{userList.reverse()}</ul>
-                <FullButton />
+                <FullButton _onSubmit={this._addUsersToChat}/>
             </div>
         )
     }
