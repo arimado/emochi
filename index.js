@@ -111,10 +111,13 @@ db.connect(DB_URL, function(err) {
     }
 });
 
-app.post('/api/register', passport.authenticate('local-signup', {
-    successRedirect: '/',
-    failureRedirect: '/login'
-}))
+app.post('/api/register',
+    passport.authenticate('local-signup'),
+    function(req, res){
+        console.log('POST: /api/register')
+        res.json(req.user.username)
+    }
+)
 
 app.get('/logout', function(req, res) {
     var name = req.user.username;

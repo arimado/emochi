@@ -185,7 +185,8 @@ class ChatBox extends React.Component {
     constructor() {
         super();
         this.state = {
-            username: 'no one'
+            username: 'no one',
+            users: []
         };
         this._getCurrentUser = this._getCurrentUser.bind(this);
         this._logOut = this._logOut.bind(this);
@@ -197,7 +198,7 @@ class ChatBox extends React.Component {
         console.log('print')
     }
 
-    _getCurrentUser() {
+    _getCurrentUser(done) {
         console.log('get current user fired');
         $.ajax({
               url: '/api/user',
@@ -206,6 +207,7 @@ class ChatBox extends React.Component {
               success: function(data) {
                 console.log('user set')
                 this.setState({username: data.username});
+                done();
               }.bind(this),
               error: function(xhr, status, err) {
                 console.log('fail!')
@@ -231,25 +233,27 @@ class ChatBox extends React.Component {
     }
 
     _getUsers() {
+
         // Make an api call to get users
 
-        var users;
+        console.log('getting users'); 
 
         $.ajax({
               url: '/api/users',
               dataType: 'json',
               cache: false,
               success: function(data) {
-
+                  this.setState({users: data});
               }.bind(this),
               error: function(xhr, status, err) {
-
+                  this.setState({users: data});
               }.bind(this)
         });
     }
 
     componentDidMount() {
         this._getCurrentUser()
+        this._getUsers()
     }
 
     render() {
@@ -258,6 +262,7 @@ class ChatBox extends React.Component {
             (child) => React.cloneElement(child, {
                 getUser: this._getCurrentUser,
                 getUsers: this._getUsers,
+                users: this.state.users,
                 consolePrint: this._consolePrint
             })
         );
@@ -336,9 +341,8 @@ class Register extends React.Component {
             type: 'POST',
             data: user,
             success: function(data) {
-            console.log('ajax success:') //unsure why this does not fire
-                this.setState({data: user});
-                this.props.getUser();
+                console.log('ajax register success:') //unsure why this does not fire
+                this.props.getUser(this.props.getUsers)
             }.bind(this),
             error: function(xhr, status, err) {
                 this.setState({data: user});  // PART OF OPTIMISTIC UPDATE
@@ -466,15 +470,15 @@ const UserList = (props) => {
     // from the json array
     // do a map
 
-    var userList = props.getUsers().map((name) => {
+    var userList = props.users.map((user) => {
         return (
-            <div> </div> 
+            <li> {user.username} </li>
         )
-    });
+    })
 
     return (
         <div className="users">
-            props.getUsers();
+            {userList}
         </div>
     )
 }
