@@ -187,13 +187,15 @@ class ChatBox extends React.Component {
         this.state = {
             username: 'no one',
             users: [],
-            chats: []
+            chats: [],
+            chat: ''
         };
         this._getCurrentUser = this._getCurrentUser.bind(this);
         this._logOut = this._logOut.bind(this);
         this._consolePrint = this._consolePrint.bind(this);
         this._getUsers = this._getUsers.bind(this);
         this._getChats = this._getChats.bind(this);
+        this._setChat = this._setChat.bind(this);
     }
 
     _consolePrint() {
@@ -273,6 +275,11 @@ class ChatBox extends React.Component {
         // print an array of users
     }
 
+    _setChat(chatId) {
+        console.log('set Chat fired with ' + chatId)
+        this.setState({chat: chatId});
+    }
+
     componentDidMount() {
         this._getCurrentUser();
         this._getUsers();
@@ -287,7 +294,9 @@ class ChatBox extends React.Component {
                 users: this.state.users,
                 consolePrint: this._consolePrint,
                 getChats: this._getChats,
-                chats: this.state.chats
+                chats: this.state.chats,
+                setChat: this._setChat,
+                activeChat: this.state.chat
             })
         );
         return (
@@ -575,7 +584,7 @@ const ChatList = (props) => {
                     <div>
                     Conversation with: <br/>
                     <span className="membersList">
-                        <Link to={`/chats/${chat._id}`}>{chat.members.join(', ')}</Link>
+                        <Link onClick={props.setChat.bind(this, chat._id)} to={`/chats/${chat._id}`}>{chat.members.join(', ')}</Link>
                     </span>
                     </div>
                 </li>
@@ -593,9 +602,12 @@ const ChatList = (props) => {
 
 }
 
-const Convo = (props) => {
+const Chat = (props) => {
+
+
+
     return (
-        <div class="convo">convo</div>
+        <div class="convo">hi {props.activeChat}</div>
     )
 }
 
@@ -608,7 +620,7 @@ const app = (
             <Route path="login" component={Login} />
             <Route path="users" component={UserList} />
             <Route path="chats" component={ChatList} />
-            <Route path="chats/:chatId" component={Convo} />
+            <Route path="chats/:chatId" component={Chat} />
         </Route>
     </Router>
 )
