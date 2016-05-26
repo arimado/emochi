@@ -250,7 +250,6 @@ class ChatBox extends React.Component {
 
     _addUsersToChat() {
         // print an array of users
-
     }
 
     componentDidMount() {
@@ -469,7 +468,6 @@ class UserList extends React.Component {
     constructor(props) {
         super();
         this.state = {};
-
         this._addUsersToChat = this._addUsersToChat.bind(this);
     }
 
@@ -483,7 +481,7 @@ class UserList extends React.Component {
             checkbox[id] = true;
         }
         console.log(checkbox);
-        this.setState(checkbox);
+            this.setState(checkbox);
         console.log(this.state);
     }
 
@@ -492,6 +490,27 @@ class UserList extends React.Component {
         console.log('_addUsersToChat');
         e.preventDefault();
         console.log(this.state);
+        // get users into array
+        var usersObj = this.state;
+        var usersArr = Object.keys(usersObj).map((key) => key);
+        var userJSON = JSON.stringify(usersArr);
+        var data = {data: userJSON};
+
+        console.log(data)
+
+        $.ajax({
+            url: '/api/chats/create',
+            dataType: 'json',
+            type: 'POST',
+            data: data,
+            success: function(data) {
+                console.log('ajax add chat users success:') //unsure why this does not fire
+                console.log(data);
+            }.bind(this),
+            error: function(xhr, status, err) {
+            console.error('/api/login', status, err.toString());
+            }.bind(this)
+        });
     }
 
     render() {

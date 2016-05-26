@@ -173,6 +173,19 @@ app.post('/api/data', function(req, res) {
 });
 
 
+app.post('/api/chats/create', function(req, res) {
+    var chats = db.get().collection('chats');
+
+    console.log('body: ')
+    console.log(req.body);
+    console.log('parsed: ')
+    console.log(JSON.parse(req.body.data));
+    // chats.insert({members: req.body.members}, function (err, result){
+    //     res.json(result)
+    // });
+});
+
+
 
 io.on('connection', function (socket) {
 

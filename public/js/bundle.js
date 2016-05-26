@@ -25322,7 +25322,6 @@ var ChatBox = function (_React$Component5) {
         key: '_addUsersToChat',
         value: function _addUsersToChat() {
             // print an array of users
-
         }
     }, {
         key: 'componentDidMount',
@@ -25647,10 +25646,7 @@ var UserList = function (_React$Component10) {
 
         var _this11 = _possibleConstructorReturn(this, Object.getPrototypeOf(UserList).call(this));
 
-        _this11.state = {
-            data: []
-        };
-
+        _this11.state = {};
         _this11._addUsersToChat = _this11._addUsersToChat.bind(_this11);
         return _this11;
     }
@@ -25677,6 +25673,29 @@ var UserList = function (_React$Component10) {
             console.log('_addUsersToChat');
             e.preventDefault();
             console.log(this.state);
+            // get users into array
+            var usersObj = this.state;
+            var usersArr = Object.keys(usersObj).map(function (key) {
+                return key;
+            });
+            var userJSON = JSON.stringify(usersArr);
+            var data = { data: userJSON };
+
+            console.log(data);
+
+            $.ajax({
+                url: '/api/chats/create',
+                dataType: 'json',
+                type: 'POST',
+                data: data,
+                success: function (data) {
+                    console.log('ajax add chat users success:'); //unsure why this does not fire
+                    console.log(data);
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.error('/api/login', status, err.toString());
+                }.bind(this)
+            });
         }
     }, {
         key: 'render',
