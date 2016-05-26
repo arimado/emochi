@@ -489,14 +489,11 @@ class UserList extends React.Component {
         // Get state of all objects that are equal to true
         console.log('_addUsersToChat');
         e.preventDefault();
-        console.log(this.state);
         // get users into array
         var usersObj = this.state;
         var usersArr = Object.keys(usersObj).map((key) => key);
         var userJSON = JSON.stringify(usersArr);
         var data = {data: userJSON};
-
-        console.log(data)
 
         $.ajax({
             url: '/api/chats/create',
@@ -508,7 +505,7 @@ class UserList extends React.Component {
                 console.log(data);
             }.bind(this),
             error: function(xhr, status, err) {
-            console.error('/api/login', status, err.toString());
+            console.error('/api/chats/create', status, err.toString());
             }.bind(this)
         });
     }
@@ -530,6 +527,22 @@ class UserList extends React.Component {
             </div>
         )
     }
+}
+
+const ChatList = (props) => {
+
+        // get chats documents
+            // what event?
+                // on load
+                // sockets
+                
+        // loop through chat documents and show
+        // open chat window on click
+        //
+
+        return (
+
+        )
 }
 
 const app = (

@@ -181,8 +181,6 @@ app.post('/api/chats/create', function(req, res) {
     });
 });
 
-
-
 io.on('connection', function (socket) {
 
     console.log('a user connected!');
