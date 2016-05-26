@@ -25605,9 +25605,11 @@ var ChatList = function ChatList(props) {
                 _react2.default.createElement(
                     'span',
                     { className: 'membersList' },
-                    ' ',
-                    chat.members.join(', '),
-                    ' '
+                    _react2.default.createElement(
+                        _reactRouter.Link,
+                        { to: '/chats/' + chat._id },
+                        chat.members.join(', ')
+                    )
                 )
             )
         );
@@ -25626,6 +25628,14 @@ var ChatList = function ChatList(props) {
     );
 };
 
+var Convo = function Convo(props) {
+    return _react2.default.createElement(
+        'div',
+        { 'class': 'convo' },
+        'convo'
+    );
+};
+
 var app = _react2.default.createElement(
     _reactRouter.Router,
     null,
@@ -25637,7 +25647,8 @@ var app = _react2.default.createElement(
         _react2.default.createElement(_reactRouter.Route, { path: 'register', component: Register }),
         _react2.default.createElement(_reactRouter.Route, { path: 'login', component: Login }),
         _react2.default.createElement(_reactRouter.Route, { path: 'users', component: UserList }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'chats', component: ChatList })
+        _react2.default.createElement(_reactRouter.Route, { path: 'chats', component: ChatList }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'chats/:chatId', component: Convo })
     )
 );
 

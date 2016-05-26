@@ -574,7 +574,9 @@ const ChatList = (props) => {
                 <li key={chat._id}>
                     <div>
                     Conversation with: <br/>
-                    <span className="membersList"> {chat.members.join(', ')} </span>
+                    <span className="membersList">
+                        <Link to={`/chats/${chat._id}`}>{chat.members.join(', ')}</Link>
+                    </span>
                     </div>
                 </li>
             )
@@ -591,6 +593,12 @@ const ChatList = (props) => {
 
 }
 
+const Convo = (props) => {
+    return (
+        <div class="convo">convo</div>
+    )
+}
+
 const app = (
     <Router>
         <Redirect from="/" to="/home" />
@@ -600,6 +608,7 @@ const app = (
             <Route path="login" component={Login} />
             <Route path="users" component={UserList} />
             <Route path="chats" component={ChatList} />
+            <Route path="chats/:chatId" component={Convo} />
         </Route>
     </Router>
 )
