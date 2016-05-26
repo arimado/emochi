@@ -146,9 +146,9 @@ body {
 	display: fixed;
 	flex-direction: column;
 	position: absolute;
-   left: 0;
-   bottom: 0;
-   width: 100%;
+	left: 0;
+	bottom: 0;
+	width: 100%;
 }
 
 .fullButton {
@@ -194,5 +194,12 @@ body {
 }
 
 .users ul li input {
-	margin-left: auto; 
+	margin-left: auto;
+}
+
+
+/* CHATLIST ******************************************/
+
+.membersList {
+	font-size: 12px; 
 }

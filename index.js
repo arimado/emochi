@@ -159,7 +159,7 @@ app.get('/api/user', function(req, res) {
 app.get('/api/users', function(req, res) {
     var usersArray;
     var usersCollection = db.get().collection('users').find({}, {password: false}).toArray(function(err, users) {
-        usersArray = users;
+        // usersArray = users;
         res.json(users);
     });
 });
@@ -179,6 +179,14 @@ app.post('/api/chats/create', function(req, res) {
     chats.insert({members: members}, function (err, result){
         res.json(result)
     });
+});
+
+app.get('/api/chats', function(req, res) {
+    var currentChatId = req.body.id;
+    var chats = db.get().collection('chats');
+    chats.find({}).toArray(function(err, chats) {
+        res.json(chats);
+    })
 });
 
 io.on('connection', function (socket) {

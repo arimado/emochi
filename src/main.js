@@ -186,12 +186,14 @@ class ChatBox extends React.Component {
         super();
         this.state = {
             username: 'no one',
-            users: []
+            users: [],
+            chats: []
         };
         this._getCurrentUser = this._getCurrentUser.bind(this);
         this._logOut = this._logOut.bind(this);
         this._consolePrint = this._consolePrint.bind(this);
         this._getUsers = this._getUsers.bind(this);
+        this._getChats = this._getChats.bind(this);
     }
 
     _consolePrint() {
@@ -248,13 +250,33 @@ class ChatBox extends React.Component {
         });
     }
 
+    _getChats(done) {
+        // query the database
+        $.ajax({
+              url: '/api/chats',
+              dataType: 'json',
+              cache: false,
+              success: function(data) {
+                console.log('user set');
+                this.setState({chats: data});
+                if (done) done();
+              }.bind(this),
+              error: function(xhr, status, err) {
+                console.log('fail!');
+                this.setState({chats: data});
+                console.error('/api/user', status, err.toString());
+              }.bind(this)
+        });
+    }
+
     _addUsersToChat() {
         // print an array of users
     }
 
     componentDidMount() {
-        this._getCurrentUser()
-        this._getUsers()
+        this._getCurrentUser();
+        this._getUsers();
+        this._getChats();
     }
 
     render() {
@@ -263,7 +285,9 @@ class ChatBox extends React.Component {
                 getUser: this._getCurrentUser,
                 getUsers: this._getUsers,
                 users: this.state.users,
-                consolePrint: this._consolePrint
+                consolePrint: this._consolePrint,
+                getChats: this._getChats,
+                chats: this.state.chats
             })
         );
         return (
@@ -284,8 +308,9 @@ const Menu = (props) => {
             <Link to="/register">Register</Link> |
             <Link to="/login">Login</Link> |
             <Link to="/" onClick={props.logOut}>Logout</Link> |
-            <Link to="/users">Users</Link>
-            <p>  Logged in as {props.name} </p>
+            <Link to="/users">Users</Link> |
+            <Link to="/Chats">Chats</Link>
+            <p>Logged in as {props.name} </p>
         </div>
     )
 }
@@ -535,14 +560,35 @@ const ChatList = (props) => {
             // what event?
                 // on load
                 // sockets
-                
+        // open chat window on click
+            // all you would need to do is pass a certain id down to the prop
+                // why can't i do this?
+                    //
+
         // loop through chat documents and show
         // open chat window on click
-        //
+
+        const chatList = props.chats.map((chat) => {
+
+            return (
+                <li key={chat._id}>
+                    <div>
+                    Conversation with: <br/>
+                    <span className="membersList"> {chat.members.join(', ')} </span>
+                    </div>
+                </li>
+            )
+        });
+
 
         return (
-
+            <div className="users">
+                <ul> {chatList} </ul>
+            </div>
         )
+
+
+
 }
 
 const app = (
@@ -553,6 +599,7 @@ const app = (
             <Route path="register" component={Register}/>
             <Route path="login" component={Login} />
             <Route path="users" component={UserList} />
+            <Route path="chats" component={ChatList} />
         </Route>
     </Router>
 )
