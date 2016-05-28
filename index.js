@@ -193,7 +193,8 @@ io.on('connection', function (socket) {
     console.log('a user connected!');
     // receive from client
     socket.on('chat:msg', function (msg) {
-        console.log('message recieved: ' + msg);
+        console.log('server recieved message: ' + msg);
+        io.emit('server:msg', msg);
     });
 
     socket.on('disconnect', function () {

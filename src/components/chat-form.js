@@ -1,8 +1,7 @@
 import React from 'react';
 
 export default (props) => {
-    console.log('chat form imported')
-
+    
     const getMessage = (e) => {
         e.preventDefault();
         var msg = document.getElementById("messageField").value;

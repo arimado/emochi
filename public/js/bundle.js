@@ -25062,8 +25062,10 @@ var ChatBox = function (_React$Component) {
             username: 'no one',
             users: [],
             chats: [],
-            chat: ''
+            chat: '',
+            message: ''
         };
+
         _this._getCurrentUser = _this._getCurrentUser.bind(_this);
         _this._logOut = _this._logOut.bind(_this);
         _this._consolePrint = _this._consolePrint.bind(_this);
@@ -25071,6 +25073,7 @@ var ChatBox = function (_React$Component) {
         _this._getChats = _this._getChats.bind(_this);
         _this._setChat = _this._setChat.bind(_this);
         _this._sendMsgToServer = _this._sendMsgToServer.bind(_this);
+        _this._setNewMessage = _this._setNewMessage.bind(_this);
         return _this;
     }
 
@@ -25161,9 +25164,18 @@ var ChatBox = function (_React$Component) {
     }, {
         key: '_sendMsgToServer',
         value: function _sendMsgToServer(msg) {
-            // EMIT HERE
             console.log('fired: sendMsgToServer');
             socket.emit('chat:msg', msg);
+        }
+    }, {
+        key: '_setNewMessage',
+        value: function _setNewMessage() {
+            var that = this;
+            socket.on('server:msg', function (msg) {
+                console.log('message recieved from server:  ' + msg);
+                that.setState({ message: msg });
+                // i have to add the new message to the chat form
+            });
         }
     }, {
         key: 'componentDidMount',
@@ -25171,6 +25183,7 @@ var ChatBox = function (_React$Component) {
             this._getCurrentUser();
             this._getUsers();
             this._getChats();
+            this._setNewMessage();
         }
     }, {
         key: 'render',
@@ -25187,7 +25200,8 @@ var ChatBox = function (_React$Component) {
                     chats: _this2.state.chats,
                     setChat: _this2._setChat,
                     activeChat: _this2.state.chat,
-                    sendMsgToServer: _this2._sendMsgToServer
+                    sendMsgToServer: _this2._sendMsgToServer,
+                    getMsg: _this2.state.message
                 });
             });
             return _react2.default.createElement(
@@ -25209,20 +25223,19 @@ var ChatBox = function (_React$Component) {
 exports.default = ChatBox;
 
 },{"./menu.js":236,"react":228}],231:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _react = require('react');
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function (props) {
-    console.log('chat form imported');
 
     var getMessage = function getMessage(e) {
         e.preventDefault();
@@ -25231,13 +25244,13 @@ exports.default = function (props) {
     };
 
     return _react2.default.createElement(
-        'form',
-        { className: 'chatForm', onSubmit: getMessage },
+        "form",
+        { className: "chatForm", onSubmit: getMessage },
         _react2.default.createElement(
-            'div',
-            { className: 'chatFormInner' },
-            _react2.default.createElement('input', { id: 'messageField', type: 'text' }),
-            _react2.default.createElement('input', { type: 'submit', value: ' ' })
+            "div",
+            { className: "chatFormInner" },
+            _react2.default.createElement("input", { id: "messageField", type: "text" }),
+            _react2.default.createElement("input", { type: "submit", value: " " })
         )
     );
 };
@@ -25321,12 +25334,19 @@ exports.default = function (props) {
             _react2.default.createElement(
                 'p',
                 null,
-                'updated',
+                'Chat ID: ',
                 props.activeChat
+            ),
+            _react2.default.createElement(
+                'p',
+                null,
+                'Current Message: ',
+                props.getMsg
             )
         ),
         _react2.default.createElement(_chatForm2.default, {
-            sendMsgToServer: props.sendMsgToServer
+            sendMsgToServer: props.sendMsgToServer,
+            getMsg: props.getMsg
         })
     );
 };

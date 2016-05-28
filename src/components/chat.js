@@ -5,10 +5,12 @@ export default (props) => {
     return (
         <div class="convoWrapper">
             <div className="convo">
-                <p>updated{props.activeChat}</p>
+                <p>Chat ID: {props.activeChat}</p>
+                <p>Current Message: {props.getMsg}</p>
             </div>
             <ChatForm
                 sendMsgToServer={props.sendMsgToServer}
+                getMsg={props.getMsg}
             />
         </div>
     )

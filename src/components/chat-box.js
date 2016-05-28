@@ -13,8 +13,10 @@ export default class ChatBox extends React.Component {
             username: 'no one',
             users: [],
             chats: [],
-            chat: ''
+            chat: '',
+            message: ''
         };
+
         this._getCurrentUser = this._getCurrentUser.bind(this);
         this._logOut = this._logOut.bind(this);
         this._consolePrint = this._consolePrint.bind(this);
@@ -22,6 +24,7 @@ export default class ChatBox extends React.Component {
         this._getChats = this._getChats.bind(this);
         this._setChat = this._setChat.bind(this);
         this._sendMsgToServer = this._sendMsgToServer.bind(this);
+        this._setNewMessage = this._setNewMessage.bind(this);
     }
 
     _consolePrint() {
@@ -103,15 +106,23 @@ export default class ChatBox extends React.Component {
     }
 
     _sendMsgToServer(msg) {
-        // EMIT HERE
         console.log('fired: sendMsgToServer')
         socket.emit('chat:msg', msg);
+    }
+
+    _setNewMessage() {
+        var that = this;
+        socket.on('server:msg', function(msg) {
+            console.log('message recieved from server:  ' + msg);
+            that.setState({message: msg});
+        })
     }
 
     componentDidMount() {
         this._getCurrentUser();
         this._getUsers();
         this._getChats();
+        this._setNewMessage();
     }
 
     render() {
@@ -125,7 +136,8 @@ export default class ChatBox extends React.Component {
                 chats: this.state.chats,
                 setChat: this._setChat,
                 activeChat: this.state.chat,
-                sendMsgToServer: this._sendMsgToServer
+                sendMsgToServer: this._sendMsgToServer,
+                getMsg: this.state.message
             })
         );
         return (
