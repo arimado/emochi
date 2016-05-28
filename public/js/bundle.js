@@ -25054,6 +25054,58 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = require('react-router');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (props) {
+    var chatList = props.chats.map(function (chat) {
+
+        return _react2.default.createElement(
+            'li',
+            { key: chat._id },
+            _react2.default.createElement(
+                'div',
+                null,
+                'Conversation with: ',
+                _react2.default.createElement('br', null),
+                _react2.default.createElement(
+                    'span',
+                    { className: 'membersList' },
+                    _react2.default.createElement(
+                        _reactRouter.Link,
+                        { onClick: props.setChat.bind(undefined, chat._id), to: '/chats/' + chat._id },
+                        chat.members.join(', ')
+                    )
+                )
+            )
+        );
+    });
+
+    return _react2.default.createElement(
+        'div',
+        { className: 'users' },
+        _react2.default.createElement(
+            'ul',
+            null,
+            ' ',
+            chatList,
+            ' '
+        )
+    );
+};
+
+},{"react":228,"react-router":32}],232:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -25162,7 +25214,7 @@ var Register = function (_React$Component) {
 
 exports.default = Register;
 
-},{"./button.js":229,"react":228}],232:[function(require,module,exports){
+},{"./button.js":229,"react":228}],233:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -25186,6 +25238,10 @@ var _chatForm2 = _interopRequireDefault(_chatForm);
 var _register = require('./components/register.js');
 
 var _register2 = _interopRequireDefault(_register);
+
+var _chatList = require('./components/chat-list.js');
+
+var _chatList2 = _interopRequireDefault(_chatList);
 
 var _reactRouter = require('react-router');
 
@@ -25610,44 +25666,6 @@ var UserList = function (_React$Component4) {
     return UserList;
 }(_react2.default.Component);
 
-var ChatList = function ChatList(props) {
-
-    var chatList = props.chats.map(function (chat) {
-
-        return _react2.default.createElement(
-            'li',
-            { key: chat._id },
-            _react2.default.createElement(
-                'div',
-                null,
-                'Conversation with: ',
-                _react2.default.createElement('br', null),
-                _react2.default.createElement(
-                    'span',
-                    { className: 'membersList' },
-                    _react2.default.createElement(
-                        _reactRouter.Link,
-                        { onClick: props.setChat.bind(undefined, chat._id), to: '/chats/' + chat._id },
-                        chat.members.join(', ')
-                    )
-                )
-            )
-        );
-    });
-
-    return _react2.default.createElement(
-        'div',
-        { className: 'users' },
-        _react2.default.createElement(
-            'ul',
-            null,
-            ' ',
-            chatList,
-            ' '
-        )
-    );
-};
-
 var Chat = function Chat(props) {
     return _react2.default.createElement(
         'div',
@@ -25677,11 +25695,11 @@ var app = _react2.default.createElement(
         _react2.default.createElement(_reactRouter.Route, { path: 'register', component: _register2.default }),
         _react2.default.createElement(_reactRouter.Route, { path: 'login', component: Login }),
         _react2.default.createElement(_reactRouter.Route, { path: 'users', component: UserList }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'chats', component: ChatList }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'chats', component: _chatList2.default }),
         _react2.default.createElement(_reactRouter.Route, { path: 'chats/:chatId', component: Chat })
     )
 );
 
 _reactDom2.default.render(app, document.getElementById('container'));
 
-},{"./components/button.js":229,"./components/chat-form.js":230,"./components/register.js":231,"react":228,"react-dom":2,"react-router":32}]},{},[232]);
+},{"./components/button.js":229,"./components/chat-form.js":230,"./components/chat-list.js":231,"./components/register.js":232,"react":228,"react-dom":2,"react-router":32}]},{},[233]);

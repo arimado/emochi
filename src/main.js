@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import FullButton from './components/button.js';
 import ChatForm from './components/chat-form.js';
 import Register from './components/register.js';
+import ChatList from './components/chat-list.js';
 import { hashHistory, Router, Route, Redirect, Link } from 'react-router';
 
 // CHAT App starts here ----------------------------
@@ -301,29 +302,6 @@ class UserList extends React.Component {
             </div>
         )
     }
-}
-
-const ChatList = (props) => {
-
-        const chatList = props.chats.map((chat) => {
-
-            return (
-                <li key={chat._id}>
-                    <div>
-                        Conversation with: <br/>
-                        <span className="membersList">
-                            <Link onClick={props.setChat.bind(this, chat._id)} to={`/chats/${chat._id}`}>{chat.members.join(', ')}</Link>
-                        </span>
-                    </div>
-                </li>
-            )
-        });
-
-        return (
-            <div className="users">
-                <ul> {chatList} </ul>
-            </div>
-        )
 }
 
 const Chat = (props) => {
