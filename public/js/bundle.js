@@ -25065,6 +25065,7 @@ var ChatBox = function (_React$Component) {
         _this._getUsers = _this._getUsers.bind(_this);
         _this._getChats = _this._getChats.bind(_this);
         _this._setChat = _this._setChat.bind(_this);
+        _this._sendMsgToServer = _this._sendMsgToServer.bind(_this);
         return _this;
     }
 
@@ -25147,15 +25148,18 @@ var ChatBox = function (_React$Component) {
             });
         }
     }, {
-        key: '_addUsersToChat',
-        value: function _addUsersToChat() {
-            // print an array of users
-        }
-    }, {
         key: '_setChat',
         value: function _setChat(chatId) {
             console.log('set Chat fired with ' + chatId);
             this.setState({ chat: chatId });
+        }
+    }, {
+        key: '_sendMsgToServer',
+        value: function _sendMsgToServer(e) {
+            // EMIT HERE
+            e.preventDefault();
+            console.log('fired: send-msg-to-server');
+            io.emit('chat message', msg);
         }
     }, {
         key: 'componentDidMount',
@@ -25178,7 +25182,8 @@ var ChatBox = function (_React$Component) {
                     getChats: _this2._getChats,
                     chats: _this2.state.chats,
                     setChat: _this2._setChat,
-                    activeChat: _this2.state.chat
+                    activeChat: _this2.state.chat,
+                    sendMsgToServer: _this2._sendMsgToServer
                 });
             });
             return _react2.default.createElement(
@@ -25216,7 +25221,7 @@ exports.default = function (props) {
     console.log('chat form imported');
     return _react2.default.createElement(
         'form',
-        { className: 'chatForm' },
+        { className: 'chatForm', onSubmit: props.sendMsgToServer },
         _react2.default.createElement(
             'div',
             { className: 'chatFormInner' },
@@ -25309,7 +25314,9 @@ exports.default = function (props) {
                 props.activeChat
             )
         ),
-        _react2.default.createElement(_chatForm2.default, null)
+        _react2.default.createElement(_chatForm2.default, {
+            sendMsgToServer: props.sendMsgToServer
+        })
     );
 };
 

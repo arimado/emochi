@@ -17,6 +17,7 @@ export default class ChatBox extends React.Component {
         this._getUsers = this._getUsers.bind(this);
         this._getChats = this._getChats.bind(this);
         this._setChat = this._setChat.bind(this);
+        this._sendMsgToServer = this._sendMsgToServer.bind(this);
     }
 
     _consolePrint() {
@@ -92,13 +93,17 @@ export default class ChatBox extends React.Component {
         });
     }
 
-    _addUsersToChat() {
-        // print an array of users
-    }
-
     _setChat(chatId) {
         console.log('set Chat fired with ' + chatId)
         this.setState({chat: chatId});
+    }
+
+    _sendMsgToServer(e) {
+        // EMIT HERE
+        e.preventDefault();
+        console.log('fired: send-msg-to-server');
+
+        // io.emit('chat message', msg);
     }
 
     componentDidMount() {
@@ -117,7 +122,8 @@ export default class ChatBox extends React.Component {
                 getChats: this._getChats,
                 chats: this.state.chats,
                 setChat: this._setChat,
-                activeChat: this.state.chat
+                activeChat: this.state.chat,
+                sendMsgToServer: this._sendMsgToServer
             })
         );
         return (

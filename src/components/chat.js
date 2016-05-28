@@ -7,7 +7,9 @@ export default (props) => {
             <div className="convo">
                 <p>updated{props.activeChat}</p>
             </div>
-            <ChatForm />
+            <ChatForm
+                sendMsgToServer={props.sendMsgToServer}
+            />
         </div>
     )
 }

@@ -172,7 +172,6 @@ app.post('/api/data', function(req, res) {
     });
 });
 
-
 app.post('/api/chats/create', function(req, res) {
     var members = JSON.parse(req.body.data);
     var chats = db.get().collection('chats');
@@ -199,7 +198,7 @@ io.on('connection', function (socket) {
         io.emit('init', 'SERVER');
     });
 
-    socket.on('user:comment', function (comment) {
+    socket.on('user:msg', function (comment) {
         console.log('received comment emit')
         // every time a receive a comment
         // im going to emit it to everyone
