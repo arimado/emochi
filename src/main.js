@@ -388,7 +388,7 @@ class Register extends React.Component {
         return (
             <div className="registerContainer growContainer">
                 <div className="growContent">
-                    <form className="bottomForm" onSubmit={this._handleRegisterSubmit}>
+                    <form className="loginForm" onSubmit={this._handleRegisterSubmit}>
                         <input
                             type="text"
                             placeholder="name"
@@ -456,9 +456,9 @@ class Login extends React.Component {
 
     render() {
         return (
-            <div className="loginContainer growContainer">
+            <div className="registerContainer growContainer">
                 <div className="growContent">
-                <form className="bottomForm" onSubmit={this._handleLoginSubmit}>
+                <form className="loginForm" onSubmit={this._handleLoginSubmit}>
                     <input
                         type="text"
                         placeholder="name"
@@ -582,10 +582,10 @@ const ChatList = (props) => {
             return (
                 <li key={chat._id}>
                     <div>
-                    Conversation with: <br/>
-                    <span className="membersList">
-                        <Link onClick={props.setChat.bind(this, chat._id)} to={`/chats/${chat._id}`}>{chat.members.join(', ')}</Link>
-                    </span>
+                        Conversation with: <br/>
+                        <span className="membersList">
+                            <Link onClick={props.setChat.bind(this, chat._id)} to={`/chats/${chat._id}`}>{chat.members.join(', ')}</Link>
+                        </span>
                     </div>
                 </li>
             )
@@ -599,9 +599,24 @@ const ChatList = (props) => {
 }
 
 const Chat = (props) => {
-
     return (
-        <div class="convo">hi {props.activeChat}</div>
+        <div class="convoWrapper">
+            <div className="convo">
+                <p>updated{props.activeChat}</p>
+            </div>
+            <ChatForm />
+        </div>
+    )
+}
+
+const ChatForm = () => {
+    return (
+        <form className="chatForm" onSubmit={props._onSubmit}>
+            <div className="chatFormInner">
+                <input type="text"/>
+                <input type="submit" value=" "/>
+            </div>
+        </form>
     )
 }
 

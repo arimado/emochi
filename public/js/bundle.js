@@ -25537,7 +25537,7 @@ var Register = function (_React$Component7) {
                     { className: 'growContent' },
                     _react2.default.createElement(
                         'form',
-                        { className: 'bottomForm', onSubmit: this._handleRegisterSubmit },
+                        { className: 'loginForm', onSubmit: this._handleRegisterSubmit },
                         _react2.default.createElement('input', {
                             type: 'text',
                             placeholder: 'name',
@@ -25618,13 +25618,13 @@ var Login = function (_React$Component8) {
         value: function render() {
             return _react2.default.createElement(
                 'div',
-                { className: 'loginContainer growContainer' },
+                { className: 'registerContainer growContainer' },
                 _react2.default.createElement(
                     'div',
                     { className: 'growContent' },
                     _react2.default.createElement(
                         'form',
-                        { className: 'bottomForm', onSubmit: this._handleLoginSubmit },
+                        { className: 'loginForm', onSubmit: this._handleLoginSubmit },
                         _react2.default.createElement('input', {
                             type: 'text',
                             placeholder: 'name',
@@ -25822,9 +25822,31 @@ var Chat = function Chat(props) {
 
     return _react2.default.createElement(
         'div',
-        { 'class': 'convo' },
-        'hi ',
-        props.activeChat
+        { 'class': 'convoWrapper' },
+        _react2.default.createElement(
+            'div',
+            { className: 'convo' },
+            _react2.default.createElement(
+                'p',
+                null,
+                'updated',
+                props.activeChat
+            )
+        ),
+        _react2.default.createElement(ChatForm, null)
+    );
+};
+
+var ChatForm = function ChatForm() {
+    return _react2.default.createElement(
+        'form',
+        { className: 'chatForm' },
+        _react2.default.createElement(
+            'div',
+            { className: 'chatFormInner' },
+            _react2.default.createElement('input', { type: 'text' }),
+            _react2.default.createElement('input', { type: 'submit', value: ' ' })
+        )
     );
 };
 

@@ -138,6 +138,13 @@ body {
     padding: 20px;
 }
 
+/* REGISTER + LOGIN BUTTON FORM */
+
+.loginForm {
+	flex-direction: column;
+	width: 100%;
+}
+
 /* BOTTOM FORM ***************************************/
 
 /* REGISTER + LOGIN BUTTON */
@@ -169,10 +176,46 @@ body {
     margin-bottom: 20px;
 }
 
-.registerContainer form [type=text]:focus {
+.registerContainer form input[type=text]:focus {
     background-color: none;
     border-bottom: 2px solid black;
     outline: none;
+}
+
+
+/* CHAT FORM */
+
+.chatForm {
+	display: fixed;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+}
+
+.chatFormInner {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	border-top: 1px solid rgb(212, 212, 212);
+}
+
+.chatForm .chatFormInner input {
+	padding: 20px;
+}
+
+.chatForm .chatFormInner input[type=text] {
+	flex-grow: 1;
+}
+
+.chatForm .chatFormInner input[type=text]:focus {
+    display: block;
+	border: none;
+}
+
+.chatForm .chatFormInner input[type=submit] {
+	width: 80px;
+	background: rgb(221, 221, 221);
 }
 
 
@@ -201,5 +244,11 @@ body {
 /* CHATLIST ******************************************/
 
 .membersList {
-	font-size: 12px; 
+	font-size: 12px;
+}
+
+/* CHAT ******************************************/
+
+.convoContainer {
+
 }
