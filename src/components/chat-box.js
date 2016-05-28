@@ -109,16 +109,33 @@ export default class ChatBox extends React.Component {
 
     _sendMsgToServer(msg) {
         console.log('fired: sendMsgToServer')
-        socket.emit('chat:msg', msg);
+
+        // lets send the chat ID as well as the message
+        // then lets set the room or namespace based on that chat ID
+        // then lets listen for messages based on that chat ID
+            // all of these things i have no idea how to do...
+            // LETS FUCKEN DO THIS.
+
+        var profileMsg = {
+            chatID:     this.state.chat,
+            user:       this.state.username,
+            message:    msg
+        }
+
+
+        socket.emit('chat:msg', profileMsg);
     }
 
     _setNewMessage() {
         var that = this;
-        socket.on('server:msg', function(msg) {
-            console.log('message recieved from server:  ' + msg);
-            that.setState({message: msg}, (thing) => {
-                console.log('callback fired' + msg);
-                $('#convo').append('<p>' + msg + '</p>');
+        socket.on('server:data', function(data) {
+            console.log('message recieved from server:  ');
+            console.dir(data);
+
+            that.setState({message: data.message}, (thing) => {
+                console.log('callback fired: ' + data.message);
+                console.log('callback property: ' + thing);
+                $('#convo').append('<p>' + data.message + '</p>');
             });
         })
     }
