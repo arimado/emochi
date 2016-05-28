@@ -25245,6 +25245,7 @@ exports.default = function (props) {
         e.preventDefault();
         var msg = document.getElementById("messageField").value;
         props.sendMsgToServer(msg);
+        document.getElementById("messageField").value = '';
     };
 
     return _react2.default.createElement(
