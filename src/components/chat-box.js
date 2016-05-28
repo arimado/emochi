@@ -105,8 +105,8 @@ export default class ChatBox extends React.Component {
     _setChat(chatId) {
         console.log('set Chat fired with ' + chatId)
         // only leave chat if there is an availble chat id
-        // if(this.state.chat) socket.leave(this.state.chat);
-        // set state of chat Id
+        if(this.state.chat) socket.emit('disconnect:chatroom', this.state.chat);
+
         this.setState({chat: chatId});
         // join the chatId room
         socket.emit('connect:chatroom', chatId);
