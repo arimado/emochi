@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ChatForm from './components/chat-form.js';
 import { hashHistory, Router, Route, Redirect, Link } from 'react-router';
 
 // CHAT App starts here ----------------------------
@@ -389,18 +390,6 @@ class UserList extends React.Component {
 
 const ChatList = (props) => {
 
-        // get chats documents
-            // what event?
-                // on load
-                // sockets
-        // open chat window on click
-            // all you would need to do is pass a certain id down to the prop
-                // why can't i do this?
-                    //
-
-        // loop through chat documents and show
-        // open chat window on click
-
         const chatList = props.chats.map((chat) => {
 
             return (
@@ -433,16 +422,6 @@ const Chat = (props) => {
     )
 }
 
-const ChatForm = () => {
-    return (
-        <form className="chatForm">
-            <div className="chatFormInner">
-                <input type="text"/>
-                <input type="submit" value=" "/>
-            </div>
-        </form>
-    )
-}
 
 const app = (
     <Router>

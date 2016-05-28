@@ -24971,6 +24971,37 @@ module.exports = require('./lib/React');
 },{"./lib/React":89}],229:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (props) {
+    console.log('chat form imported');
+    return _react2.default.createElement(
+        'form',
+        { className: 'chatForm' },
+        _react2.default.createElement(
+            'div',
+            { className: 'chatFormInner' },
+            _react2.default.createElement('input', { type: 'text' }),
+            _react2.default.createElement('input', { type: 'submit', value: ' ' })
+        )
+    );
+};
+
+},{"react":228,"react-dom":2}],230:[function(require,module,exports){
+'use strict';
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -24980,6 +25011,10 @@ var _react2 = _interopRequireDefault(_react);
 var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _chatForm = require('./components/chat-form.js');
+
+var _chatForm2 = _interopRequireDefault(_chatForm);
 
 var _reactRouter = require('react-router');
 
@@ -25523,18 +25558,6 @@ var UserList = function (_React$Component6) {
 
 var ChatList = function ChatList(props) {
 
-    // get chats documents
-    // what event?
-    // on load
-    // sockets
-    // open chat window on click
-    // all you would need to do is pass a certain id down to the prop
-    // why can't i do this?
-    //
-
-    // loop through chat documents and show
-    // open chat window on click
-
     var chatList = props.chats.map(function (chat) {
 
         return _react2.default.createElement(
@@ -25585,20 +25608,7 @@ var Chat = function Chat(props) {
                 props.activeChat
             )
         ),
-        _react2.default.createElement(ChatForm, null)
-    );
-};
-
-var ChatForm = function ChatForm() {
-    return _react2.default.createElement(
-        'form',
-        { className: 'chatForm' },
-        _react2.default.createElement(
-            'div',
-            { className: 'chatFormInner' },
-            _react2.default.createElement('input', { type: 'text' }),
-            _react2.default.createElement('input', { type: 'submit', value: ' ' })
-        )
+        _react2.default.createElement(_chatForm2.default, null)
     );
 };
 
@@ -25620,4 +25630,4 @@ var app = _react2.default.createElement(
 
 _reactDom2.default.render(app, document.getElementById('container'));
 
-},{"react":228,"react-dom":2,"react-router":32}]},{},[229]);
+},{"./components/chat-form.js":229,"react":228,"react-dom":2,"react-router":32}]},{},[230]);
