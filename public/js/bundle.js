@@ -24991,276 +24991,29 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var CommentBox = function (_React$Component) {
-    _inherits(CommentBox, _React$Component);
-
-    function CommentBox() {
-        _classCallCheck(this, CommentBox);
-
-        // WTF IS THIS MATE
-
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentBox).call(this));
-
-        _this.state = {
-            data: []
-        };
-
-        _this._handleCommentSubmit = _this._handleCommentSubmit.bind(_this);
-        return _this;
-    }
-
-    _createClass(CommentBox, [{
-        key: '_loadCommentsFromServer',
-        value: function _loadCommentsFromServer() {
-            $.ajax({
-                url: this.props.url,
-                dataType: 'json',
-                cache: false,
-                success: function (data) {
-                    this.setState({ data: data });
-                }.bind(this),
-                error: function (xhr, status, err) {
-                    console.log('fail!');
-                    console.error(this.props.url, status, err.toString());
-                }.bind(this)
-            });
-        }
-    }, {
-        key: '_handleCommentSubmit',
-        value: function _handleCommentSubmit(comment) {
-
-            // OPTIMISTIC UPDATE
-            var comments = this.state.data;
-            var newComment = comment;
-            newComment._id = new Date().getTime() + Math.round(Math.random() * 100) + Math.round(Math.random() * 10);
-            var newComments = comments.concat([newComment]);
-            this.setState({ data: newComments });
-
-            $.ajax({
-                url: this.props.url,
-                dataType: 'json',
-                type: 'POST',
-                data: comment,
-                success: function (data) {
-                    console.log('ajax success:'); //unsure why this does not fire
-                    this.setState({ data: data });
-                }.bind(this),
-                error: function (xhr, status, err) {
-                    this.setState({ data: newComments }); // PART OF OPTIMISTIC UPDATE
-                    console.error(this.props.url, status, err.toString());
-                }.bind(this)
-            });
-        }
-    }, {
-        key: '_thisIsMethod',
-        value: function _thisIsMethod() {
-            console.log('thisIsMethod called');
-        }
-    }, {
-        key: '_initialize',
-        value: function _initialize(init) {
-            return init;
-        }
-    }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            socket.on('init', this._initialize(this._loadCommentsFromServer.bind(this)));
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'div',
-                { className: 'commentBox' },
-                _react2.default.createElement(
-                    'h1',
-                    null,
-                    ' Composable Componenets '
-                ),
-                _react2.default.createElement(CommentList, { data: this.state.data }),
-                _react2.default.createElement(CommentForm, { onCommentSubmit: this._handleCommentSubmit })
-            );
-        }
-    }]);
-
-    return CommentBox;
-}(_react2.default.Component);
-
-var CommentList = function (_React$Component2) {
-    _inherits(CommentList, _React$Component2);
-
-    function CommentList() {
-        _classCallCheck(this, CommentList);
-
-        return _possibleConstructorReturn(this, Object.getPrototypeOf(CommentList).apply(this, arguments));
-    }
-
-    _createClass(CommentList, [{
-        key: '_getComments',
-        value: function _getComments() {
-            var commentNodes = this.props.data;
-            return commentNodes.map(function (comment) {
-                return _react2.default.createElement(
-                    Comment,
-                    { author: comment.author, key: comment._id },
-                    comment.text,
-                    ';'
-                );
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var commentNodes = this._getComments();
-            console.log(commentNodes);
-            return _react2.default.createElement(
-                'div',
-                { className: 'commentList' },
-                commentNodes
-            );
-        }
-    }]);
-
-    return CommentList;
-}(_react2.default.Component);
-
-;
-
-var Comment = function (_React$Component3) {
-    _inherits(Comment, _React$Component3);
-
-    function Comment() {
-        _classCallCheck(this, Comment);
-
-        return _possibleConstructorReturn(this, Object.getPrototypeOf(Comment).apply(this, arguments));
-    }
-
-    _createClass(Comment, [{
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'div',
-                { className: 'comment' },
-                _react2.default.createElement(
-                    'h2',
-                    { className: 'commentAuthor' },
-                    'author: ',
-                    this.props.author
-                ),
-                _react2.default.createElement(
-                    'p',
-                    { className: 'commentAuthor' },
-                    this.props.children
-                )
-            );
-        }
-    }]);
-
-    return Comment;
-}(_react2.default.Component);
-
-;
-
-var CommentForm = function (_React$Component4) {
-    _inherits(CommentForm, _React$Component4);
-
-    function CommentForm() {
-        _classCallCheck(this, CommentForm);
-
-        var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentForm).call(this));
-
-        _this4.state = {
-            author: 'test',
-            text: 'test'
-        };
-
-        _this4._handleAuthorChange = _this4._handleAuthorChange.bind(_this4);
-        _this4._handleTextChange = _this4._handleTextChange.bind(_this4);
-        _this4._handleSubmit = _this4._handleSubmit.bind(_this4);
-        return _this4;
-    }
-
-    _createClass(CommentForm, [{
-        key: '_handleAuthorChange',
-        value: function _handleAuthorChange(e) {
-            this.setState({ author: e.target.value });
-        }
-    }, {
-        key: '_handleTextChange',
-        value: function _handleTextChange(e) {
-            this.setState({ text: e.target.value });
-        }
-    }, {
-        key: '_handleSubmit',
-        value: function _handleSubmit(e) {
-            e.preventDefault();
-            var author = this.state.author.trim();
-            var text = this.state.text.trim();
-            if (!text || !author) {
-                return;
-            }
-            this.props.onCommentSubmit({ author: author, text: text });
-            this.setState({ author: '', text: '' });
-        }
-    }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            console.log(this.state);
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'form',
-                { className: 'commentForm', onSubmit: this._handleSubmit },
-                _react2.default.createElement('input', {
-                    type: 'text',
-                    placeholder: 'Your name',
-                    value: this.state.author,
-                    onChange: this._handleAuthorChange
-                }),
-                _react2.default.createElement('input', {
-                    type: 'text',
-                    placeholder: 'Say something...',
-                    value: this.state.text,
-                    onChange: this._handleTextChange
-                }),
-                _react2.default.createElement('input', {
-                    type: 'submit',
-                    value: 'submit'
-                })
-            );
-        }
-    }]);
-
-    return CommentForm;
-}(_react2.default.Component);
-
-;
-
 // CHAT App starts here ----------------------------
 
-var ChatBox = function (_React$Component5) {
-    _inherits(ChatBox, _React$Component5);
+var ChatBox = function (_React$Component) {
+    _inherits(ChatBox, _React$Component);
 
     function ChatBox() {
         _classCallCheck(this, ChatBox);
 
-        var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(ChatBox).call(this));
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ChatBox).call(this));
 
-        _this5.state = {
+        _this.state = {
             username: 'no one',
             users: [],
             chats: [],
             chat: ''
         };
-        _this5._getCurrentUser = _this5._getCurrentUser.bind(_this5);
-        _this5._logOut = _this5._logOut.bind(_this5);
-        _this5._consolePrint = _this5._consolePrint.bind(_this5);
-        _this5._getUsers = _this5._getUsers.bind(_this5);
-        _this5._getChats = _this5._getChats.bind(_this5);
-        _this5._setChat = _this5._setChat.bind(_this5);
-        return _this5;
+        _this._getCurrentUser = _this._getCurrentUser.bind(_this);
+        _this._logOut = _this._logOut.bind(_this);
+        _this._consolePrint = _this._consolePrint.bind(_this);
+        _this._getUsers = _this._getUsers.bind(_this);
+        _this._getChats = _this._getChats.bind(_this);
+        _this._setChat = _this._setChat.bind(_this);
+        return _this;
     }
 
     _createClass(ChatBox, [{
@@ -25362,18 +25115,18 @@ var ChatBox = function (_React$Component5) {
     }, {
         key: 'render',
         value: function render() {
-            var _this6 = this;
+            var _this2 = this;
 
             var childrenWithProps = _react2.default.Children.map(this.props.children, function (child) {
                 return _react2.default.cloneElement(child, {
-                    getUser: _this6._getCurrentUser,
-                    getUsers: _this6._getUsers,
-                    users: _this6.state.users,
-                    consolePrint: _this6._consolePrint,
-                    getChats: _this6._getChats,
-                    chats: _this6.state.chats,
-                    setChat: _this6._setChat,
-                    activeChat: _this6.state.chat
+                    getUser: _this2._getCurrentUser,
+                    getUsers: _this2._getUsers,
+                    users: _this2.state.users,
+                    consolePrint: _this2._consolePrint,
+                    getChats: _this2._getChats,
+                    chats: _this2.state.chats,
+                    setChat: _this2._setChat,
+                    activeChat: _this2.state.chat
                 });
             });
             return _react2.default.createElement(
@@ -25441,8 +25194,8 @@ var Menu = function Menu(props) {
     );
 };
 
-var Home = function (_React$Component6) {
-    _inherits(Home, _React$Component6);
+var Home = function (_React$Component2) {
+    _inherits(Home, _React$Component2);
 
     function Home() {
         _classCallCheck(this, Home);
@@ -25474,23 +25227,23 @@ var Home = function (_React$Component6) {
     return Home;
 }(_react2.default.Component);
 
-var Register = function (_React$Component7) {
-    _inherits(Register, _React$Component7);
+var Register = function (_React$Component3) {
+    _inherits(Register, _React$Component3);
 
     function Register() {
         _classCallCheck(this, Register);
 
-        var _this8 = _possibleConstructorReturn(this, Object.getPrototypeOf(Register).call(this));
+        var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(Register).call(this));
 
-        _this8.state = {
+        _this4.state = {
             username: '',
             password: ''
         };
 
-        _this8._handlePasswordChange = _this8._handlePasswordChange.bind(_this8);
-        _this8._handleUsernameChange = _this8._handleUsernameChange.bind(_this8);
-        _this8._handleRegisterSubmit = _this8._handleRegisterSubmit.bind(_this8);
-        return _this8;
+        _this4._handlePasswordChange = _this4._handlePasswordChange.bind(_this4);
+        _this4._handleUsernameChange = _this4._handleUsernameChange.bind(_this4);
+        _this4._handleRegisterSubmit = _this4._handleRegisterSubmit.bind(_this4);
+        return _this4;
     }
 
     _createClass(Register, [{
@@ -25562,23 +25315,23 @@ var Register = function (_React$Component7) {
     return Register;
 }(_react2.default.Component);
 
-var Login = function (_React$Component8) {
-    _inherits(Login, _React$Component8);
+var Login = function (_React$Component4) {
+    _inherits(Login, _React$Component4);
 
     function Login() {
         _classCallCheck(this, Login);
 
-        var _this9 = _possibleConstructorReturn(this, Object.getPrototypeOf(Login).call(this));
+        var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(Login).call(this));
 
-        _this9.state = {
+        _this5.state = {
             username: '',
             password: ''
         };
 
-        _this9._handlePasswordChange = _this9._handlePasswordChange.bind(_this9);
-        _this9._handleUsernameChange = _this9._handleUsernameChange.bind(_this9);
-        _this9._handleLoginSubmit = _this9._handleLoginSubmit.bind(_this9);
-        return _this9;
+        _this5._handlePasswordChange = _this5._handlePasswordChange.bind(_this5);
+        _this5._handleUsernameChange = _this5._handleUsernameChange.bind(_this5);
+        _this5._handleLoginSubmit = _this5._handleLoginSubmit.bind(_this5);
+        return _this5;
     }
 
     _createClass(Login, [{
@@ -25649,8 +25402,8 @@ var Login = function (_React$Component8) {
     return Login;
 }(_react2.default.Component);
 
-var FullButton = function (_React$Component9) {
-    _inherits(FullButton, _React$Component9);
+var FullButton = function (_React$Component5) {
+    _inherits(FullButton, _React$Component5);
 
     function FullButton() {
         _classCallCheck(this, FullButton);
@@ -25678,17 +25431,17 @@ var FullButton = function (_React$Component9) {
     return FullButton;
 }(_react2.default.Component);
 
-var UserList = function (_React$Component10) {
-    _inherits(UserList, _React$Component10);
+var UserList = function (_React$Component6) {
+    _inherits(UserList, _React$Component6);
 
     function UserList(props) {
         _classCallCheck(this, UserList);
 
-        var _this11 = _possibleConstructorReturn(this, Object.getPrototypeOf(UserList).call(this));
+        var _this7 = _possibleConstructorReturn(this, Object.getPrototypeOf(UserList).call(this));
 
-        _this11.state = {};
-        _this11._addUsersToChat = _this11._addUsersToChat.bind(_this11);
-        return _this11;
+        _this7.state = {};
+        _this7._addUsersToChat = _this7._addUsersToChat.bind(_this7);
+        return _this7;
     }
 
     _createClass(UserList, [{
@@ -25737,7 +25490,7 @@ var UserList = function (_React$Component10) {
     }, {
         key: 'render',
         value: function render() {
-            var _this12 = this;
+            var _this8 = this;
 
             var userList = this.props.users.map(function (user) {
                 return _react2.default.createElement(
@@ -25748,7 +25501,7 @@ var UserList = function (_React$Component10) {
                         null,
                         user.username
                     ),
-                    _react2.default.createElement('input', { key: user._id, checked: _this12.state[user._id], type: 'checkbox', onClick: _this12._handleCheckChange.bind(_this12, user._id) })
+                    _react2.default.createElement('input', { key: user._id, checked: _this8.state[user._id], type: 'checkbox', onClick: _this8._handleCheckChange.bind(_this8, user._id) })
                 );
             });
 
@@ -25819,7 +25572,6 @@ var ChatList = function ChatList(props) {
 };
 
 var Chat = function Chat(props) {
-
     return _react2.default.createElement(
         'div',
         { 'class': 'convoWrapper' },
