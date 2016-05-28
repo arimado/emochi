@@ -186,16 +186,12 @@ class ChatBox extends React.Component {
         super();
         this.state = {
             username: 'no one',
-            users: [],
-            chats: [],
-            chat: ''
+            users: []
         };
         this._getCurrentUser = this._getCurrentUser.bind(this);
         this._logOut = this._logOut.bind(this);
         this._consolePrint = this._consolePrint.bind(this);
         this._getUsers = this._getUsers.bind(this);
-        this._getChats = this._getChats.bind(this);
-        this._setChat = this._setChat.bind(this);
     }
 
     _consolePrint() {
@@ -252,38 +248,13 @@ class ChatBox extends React.Component {
         });
     }
 
-    _getChats(done) {
-        // query the database
-        $.ajax({
-              url: '/api/chats',
-              dataType: 'json',
-              cache: false,
-              success: function(data) {
-                console.log('user set');
-                this.setState({chats: data});
-                if (done) done();
-              }.bind(this),
-              error: function(xhr, status, err) {
-                console.log('fail!');
-                this.setState({chats: data});
-                console.error('/api/user', status, err.toString());
-              }.bind(this)
-        });
-    }
-
     _addUsersToChat() {
         // print an array of users
     }
 
-    _setChat(chatId) {
-        console.log('set Chat fired with ' + chatId)
-        this.setState({chat: chatId});
-    }
-
     componentDidMount() {
-        this._getCurrentUser();
-        this._getUsers();
-        this._getChats();
+        this._getCurrentUser()
+        this._getUsers()
     }
 
     render() {
@@ -292,11 +263,7 @@ class ChatBox extends React.Component {
                 getUser: this._getCurrentUser,
                 getUsers: this._getUsers,
                 users: this.state.users,
-                consolePrint: this._consolePrint,
-                getChats: this._getChats,
-                chats: this.state.chats,
-                setChat: this._setChat,
-                activeChat: this.state.chat
+                consolePrint: this._consolePrint
             })
         );
         return (
@@ -317,9 +284,8 @@ const Menu = (props) => {
             <Link to="/register">Register</Link> |
             <Link to="/login">Login</Link> |
             <Link to="/" onClick={props.logOut}>Logout</Link> |
-            <Link to="/users">Users</Link> |
-            <Link to="/Chats">Chats</Link>
-            <p>Logged in as {props.name} </p>
+            <Link to="/users">Users</Link>
+            <p>  Logged in as {props.name} </p>
         </div>
     )
 }
@@ -565,50 +531,23 @@ class UserList extends React.Component {
 
 const ChatList = (props) => {
 
-        // get chats documents
-            // what event?
-                // on load
-                // sockets
-        // open chat window on click
-            // all you would need to do is pass a certain id down to the prop
-                // why can't i do this?
-                    //
+        //events
+            // get chats documents
+                // what event?
+                    // on load
+                    // sockets
+            // open new chat window on click
+                //  the component recieves an id on click
+                    // i have been dealing with routes though?
+                        // what i want to do is
 
         // loop through chat documents and show
         // open chat window on click
-
-        const chatList = props.chats.map((chat) => {
-
-            return (
-                <li key={chat._id}>
-                    <div>
-                    Conversation with: <br/>
-                    <span className="membersList">
-                        <Link onClick={props.setChat.bind(this, chat._id)} to={`/chats/${chat._id}`}>{chat.members.join(', ')}</Link>
-                    </span>
-                    </div>
-                </li>
-            )
-        });
-
+        //
 
         return (
-            <div className="users">
-                <ul> {chatList} </ul>
-            </div>
+
         )
-
-
-
-}
-
-const Chat = (props) => {
-
-
-
-    return (
-        <div class="convo">hi {props.activeChat}</div>
-    )
 }
 
 const app = (
@@ -619,8 +558,6 @@ const app = (
             <Route path="register" component={Register}/>
             <Route path="login" component={Login} />
             <Route path="users" component={UserList} />
-            <Route path="chats" component={ChatList} />
-            <Route path="chats/:chatId" component={Chat} />
         </Route>
     </Router>
 )
