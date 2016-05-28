@@ -25161,21 +25161,26 @@ var ChatBox = function (_React$Component) {
         key: '_setChat',
         value: function _setChat(chatId) {
             console.log('set Chat fired with ' + chatId);
+            // only leave chat if there is an availble chat id
+            // if(this.state.chat) socket.leave(this.state.chat);
+            // set state of chat Id
             this.setState({ chat: chatId });
+            // join the chatId room
+            socket.emit('connect:chatroom', chatId);
         }
     }, {
         key: '_sendMsgToServer',
         value: function _sendMsgToServer(msg) {
             console.log('fired: sendMsgToServer');
 
-            // lets send the chat ID as well as the message
             // then lets set the room or namespace based on that chat ID
+            // you would have to work out how rooms or namespaces work
+            // K LETS FUCKN DO IT THEN
             // then lets listen for messages based on that chat ID
-            // all of these things i have no idea how to do...
-            // LETS FUCKEN DO THIS.
+            // listneners would have to be set on chatID state changes
 
             var profileMsg = {
-                chatID: this.state.chat,
+                chatId: this.state.chat,
                 user: this.state.username,
                 message: msg
             };
