@@ -24975,13 +24975,61 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = require('react-dom');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _reactDom2 = _interopRequireDefault(_reactDom);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var FullButton = function (_React$Component) {
+    _inherits(FullButton, _React$Component);
+
+    function FullButton() {
+        _classCallCheck(this, FullButton);
+
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(FullButton).apply(this, arguments));
+    }
+
+    _createClass(FullButton, [{
+        key: 'render',
+        value: function render() {
+            var buttonClass = 'button' + this.props.buttonVal + ' fullButton';
+
+            return _react2.default.createElement(
+                'form',
+                { className: 'bottomForm', onSubmit: this.props._onSubmit },
+                _react2.default.createElement('input', {
+                    type: 'submit',
+                    value: this.props.buttonVal,
+                    className: buttonClass
+                })
+            );
+        }
+    }]);
+
+    return FullButton;
+}(_react2.default.Component);
+
+exports.default = FullButton;
+
+},{"react":228}],230:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24999,7 +25047,122 @@ exports.default = function (props) {
     );
 };
 
-},{"react":228,"react-dom":2}],230:[function(require,module,exports){
+},{"react":228}],231:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _button = require('./button.js');
+
+var _button2 = _interopRequireDefault(_button);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Register = function (_React$Component) {
+    _inherits(Register, _React$Component);
+
+    function Register() {
+        _classCallCheck(this, Register);
+
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Register).call(this));
+
+        _this.state = {
+            username: '',
+            password: ''
+        };
+
+        _this._handlePasswordChange = _this._handlePasswordChange.bind(_this);
+        _this._handleUsernameChange = _this._handleUsernameChange.bind(_this);
+        _this._handleRegisterSubmit = _this._handleRegisterSubmit.bind(_this);
+        return _this;
+    }
+
+    _createClass(Register, [{
+        key: '_handleUsernameChange',
+        value: function _handleUsernameChange(e) {
+            this.setState({ username: e.target.value });
+        }
+    }, {
+        key: '_handlePasswordChange',
+        value: function _handlePasswordChange(e) {
+            this.setState({ password: e.target.value });
+        }
+    }, {
+        key: '_handleRegisterSubmit',
+        value: function _handleRegisterSubmit(e) {
+            e.preventDefault();
+            console.log('submit fired');
+
+            var user = { username: this.state.username, password: this.state.password };
+
+            $.ajax({
+                url: '/api/register',
+                dataType: 'json',
+                type: 'POST',
+                data: user,
+                success: function (data) {
+                    console.log('ajax register success:'); //unsure why this does not fire
+                    this.props.getUser(this.props.getUsers);
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    this.setState({ data: user }); // PART OF OPTIMISTIC UPDATE
+                    console.error(this.props.url, status, err.toString());
+                }.bind(this)
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'registerContainer growContainer' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'growContent' },
+                    _react2.default.createElement(
+                        'form',
+                        { className: 'loginForm', onSubmit: this._handleRegisterSubmit },
+                        _react2.default.createElement('input', {
+                            type: 'text',
+                            placeholder: 'name',
+                            className: 'registerField',
+                            value: this.state.username,
+                            onChange: this._handleUsernameChange
+                        }),
+                        _react2.default.createElement('input', {
+                            type: 'text',
+                            placeholder: 'password',
+                            className: 'registerField',
+                            value: this.state.password,
+                            onChange: this._handlePasswordChange
+                        })
+                    )
+                ),
+                _react2.default.createElement(_button2.default, { buttonVal: 'Register', _onSubmit: this._handleRegisterSubmit })
+            );
+        }
+    }]);
+
+    return Register;
+}(_react2.default.Component);
+
+exports.default = Register;
+
+},{"./button.js":229,"react":228}],232:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -25012,9 +25175,17 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _button = require('./components/button.js');
+
+var _button2 = _interopRequireDefault(_button);
+
 var _chatForm = require('./components/chat-form.js');
 
 var _chatForm2 = _interopRequireDefault(_chatForm);
+
+var _register = require('./components/register.js');
+
+var _register2 = _interopRequireDefault(_register);
 
 var _reactRouter = require('react-router');
 
@@ -25262,13 +25433,13 @@ var Home = function (_React$Component2) {
     return Home;
 }(_react2.default.Component);
 
-var Register = function (_React$Component3) {
-    _inherits(Register, _React$Component3);
+var Login = function (_React$Component3) {
+    _inherits(Login, _React$Component3);
 
-    function Register() {
-        _classCallCheck(this, Register);
+    function Login() {
+        _classCallCheck(this, Login);
 
-        var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(Register).call(this));
+        var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(Login).call(this));
 
         _this4.state = {
             username: '',
@@ -25277,96 +25448,8 @@ var Register = function (_React$Component3) {
 
         _this4._handlePasswordChange = _this4._handlePasswordChange.bind(_this4);
         _this4._handleUsernameChange = _this4._handleUsernameChange.bind(_this4);
-        _this4._handleRegisterSubmit = _this4._handleRegisterSubmit.bind(_this4);
+        _this4._handleLoginSubmit = _this4._handleLoginSubmit.bind(_this4);
         return _this4;
-    }
-
-    _createClass(Register, [{
-        key: '_handleUsernameChange',
-        value: function _handleUsernameChange(e) {
-            this.setState({ username: e.target.value });
-        }
-    }, {
-        key: '_handlePasswordChange',
-        value: function _handlePasswordChange(e) {
-            this.setState({ password: e.target.value });
-        }
-    }, {
-        key: '_handleRegisterSubmit',
-        value: function _handleRegisterSubmit(e) {
-            e.preventDefault();
-            console.log('submit fired');
-
-            var user = { username: this.state.username, password: this.state.password };
-
-            $.ajax({
-                url: '/api/register',
-                dataType: 'json',
-                type: 'POST',
-                data: user,
-                success: function (data) {
-                    console.log('ajax register success:'); //unsure why this does not fire
-                    this.props.getUser(this.props.getUsers);
-                }.bind(this),
-                error: function (xhr, status, err) {
-                    this.setState({ data: user }); // PART OF OPTIMISTIC UPDATE
-                    console.error(this.props.url, status, err.toString());
-                }.bind(this)
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'div',
-                { className: 'registerContainer growContainer' },
-                _react2.default.createElement(
-                    'div',
-                    { className: 'growContent' },
-                    _react2.default.createElement(
-                        'form',
-                        { className: 'loginForm', onSubmit: this._handleRegisterSubmit },
-                        _react2.default.createElement('input', {
-                            type: 'text',
-                            placeholder: 'name',
-                            className: 'registerField',
-                            value: this.state.username,
-                            onChange: this._handleUsernameChange
-                        }),
-                        _react2.default.createElement('input', {
-                            type: 'text',
-                            placeholder: 'password',
-                            className: 'registerField',
-                            value: this.state.password,
-                            onChange: this._handlePasswordChange
-                        })
-                    )
-                ),
-                _react2.default.createElement(FullButton, { buttonVal: 'Register', _onSubmit: this._handleRegisterSubmit })
-            );
-        }
-    }]);
-
-    return Register;
-}(_react2.default.Component);
-
-var Login = function (_React$Component4) {
-    _inherits(Login, _React$Component4);
-
-    function Login() {
-        _classCallCheck(this, Login);
-
-        var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(Login).call(this));
-
-        _this5.state = {
-            username: '',
-            password: ''
-        };
-
-        _this5._handlePasswordChange = _this5._handlePasswordChange.bind(_this5);
-        _this5._handleUsernameChange = _this5._handleUsernameChange.bind(_this5);
-        _this5._handleLoginSubmit = _this5._handleLoginSubmit.bind(_this5);
-        return _this5;
     }
 
     _createClass(Login, [{
@@ -25429,7 +25512,7 @@ var Login = function (_React$Component4) {
                         })
                     )
                 ),
-                _react2.default.createElement(FullButton, { buttonVal: 'Login', _onSubmit: this._handleLoginSubmit })
+                _react2.default.createElement(_button2.default, { buttonVal: 'Login', _onSubmit: this._handleLoginSubmit })
             );
         }
     }]);
@@ -25437,46 +25520,17 @@ var Login = function (_React$Component4) {
     return Login;
 }(_react2.default.Component);
 
-var FullButton = function (_React$Component5) {
-    _inherits(FullButton, _React$Component5);
-
-    function FullButton() {
-        _classCallCheck(this, FullButton);
-
-        return _possibleConstructorReturn(this, Object.getPrototypeOf(FullButton).apply(this, arguments));
-    }
-
-    _createClass(FullButton, [{
-        key: 'render',
-        value: function render() {
-            var buttonClass = 'button' + this.props.buttonVal + ' fullButton';
-
-            return _react2.default.createElement(
-                'form',
-                { className: 'bottomForm', onSubmit: this.props._onSubmit },
-                _react2.default.createElement('input', {
-                    type: 'submit',
-                    value: this.props.buttonVal,
-                    className: buttonClass
-                })
-            );
-        }
-    }]);
-
-    return FullButton;
-}(_react2.default.Component);
-
-var UserList = function (_React$Component6) {
-    _inherits(UserList, _React$Component6);
+var UserList = function (_React$Component4) {
+    _inherits(UserList, _React$Component4);
 
     function UserList(props) {
         _classCallCheck(this, UserList);
 
-        var _this7 = _possibleConstructorReturn(this, Object.getPrototypeOf(UserList).call(this));
+        var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(UserList).call(this));
 
-        _this7.state = {};
-        _this7._addUsersToChat = _this7._addUsersToChat.bind(_this7);
-        return _this7;
+        _this5.state = {};
+        _this5._addUsersToChat = _this5._addUsersToChat.bind(_this5);
+        return _this5;
     }
 
     _createClass(UserList, [{
@@ -25525,7 +25579,7 @@ var UserList = function (_React$Component6) {
     }, {
         key: 'render',
         value: function render() {
-            var _this8 = this;
+            var _this6 = this;
 
             var userList = this.props.users.map(function (user) {
                 return _react2.default.createElement(
@@ -25536,7 +25590,7 @@ var UserList = function (_React$Component6) {
                         null,
                         user.username
                     ),
-                    _react2.default.createElement('input', { key: user._id, checked: _this8.state[user._id], type: 'checkbox', onClick: _this8._handleCheckChange.bind(_this8, user._id) })
+                    _react2.default.createElement('input', { key: user._id, checked: _this6.state[user._id], type: 'checkbox', onClick: _this6._handleCheckChange.bind(_this6, user._id) })
                 );
             });
 
@@ -25548,7 +25602,7 @@ var UserList = function (_React$Component6) {
                     null,
                     userList.reverse()
                 ),
-                _react2.default.createElement(FullButton, { _onSubmit: this._addUsersToChat })
+                _react2.default.createElement(_button2.default, { _onSubmit: this._addUsersToChat })
             );
         }
     }]);
@@ -25620,7 +25674,7 @@ var app = _react2.default.createElement(
         _reactRouter.Route,
         { path: '/', component: ChatBox },
         _react2.default.createElement(_reactRouter.Route, { path: 'home', component: Home }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'register', component: Register }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'register', component: _register2.default }),
         _react2.default.createElement(_reactRouter.Route, { path: 'login', component: Login }),
         _react2.default.createElement(_reactRouter.Route, { path: 'users', component: UserList }),
         _react2.default.createElement(_reactRouter.Route, { path: 'chats', component: ChatList }),
@@ -25630,4 +25684,4 @@ var app = _react2.default.createElement(
 
 _reactDom2.default.render(app, document.getElementById('container'));
 
-},{"./components/chat-form.js":229,"react":228,"react-dom":2,"react-router":32}]},{},[230]);
+},{"./components/button.js":229,"./components/chat-form.js":230,"./components/register.js":231,"react":228,"react-dom":2,"react-router":32}]},{},[232]);
