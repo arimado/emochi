@@ -25045,6 +25045,11 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+// import io from 'socket.io-client'
+// let socket = io('http://localhost:3005/');
+
+var socket = io();
+
 var ChatBox = function (_React$Component) {
     _inherits(ChatBox, _React$Component);
 
@@ -25155,11 +25160,10 @@ var ChatBox = function (_React$Component) {
         }
     }, {
         key: '_sendMsgToServer',
-        value: function _sendMsgToServer(e) {
+        value: function _sendMsgToServer(msg) {
             // EMIT HERE
-            e.preventDefault();
-            console.log('fired: send-msg-to-server');
-            io.emit('chat message', msg);
+            console.log('fired: sendMsgToServer');
+            socket.emit('chat:msg', msg);
         }
     }, {
         key: 'componentDidMount',
@@ -25219,13 +25223,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = function (props) {
     console.log('chat form imported');
+
+    var getMessage = function getMessage(e) {
+        e.preventDefault();
+        var msg = document.getElementById("messageField").value;
+        props.sendMsgToServer(msg);
+    };
+
     return _react2.default.createElement(
         'form',
-        { className: 'chatForm', onSubmit: props.sendMsgToServer },
+        { className: 'chatForm', onSubmit: getMessage },
         _react2.default.createElement(
             'div',
             { className: 'chatFormInner' },
-            _react2.default.createElement('input', { type: 'text' }),
+            _react2.default.createElement('input', { id: 'messageField', type: 'text' }),
             _react2.default.createElement('input', { type: 'submit', value: ' ' })
         )
     );

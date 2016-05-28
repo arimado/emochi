@@ -192,18 +192,9 @@ io.on('connection', function (socket) {
 
     console.log('a user connected!');
     // receive from client
-    socket.on('chat message', function (msg) {
-        // emit to all clients
-        io.emit('chat message', msg);
-        io.emit('init', 'SERVER');
+    socket.on('chat:msg', function (msg) {
+        console.log('message recieved: ' + msg);
     });
-
-    socket.on('user:msg', function (comment) {
-        console.log('received comment emit')
-        // every time a receive a comment
-        // im going to emit it to everyone
-        io.emit('init', 'SERVER');
-    })
 
     socket.on('disconnect', function () {
         console.log('user disconnected');

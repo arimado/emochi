@@ -1,5 +1,9 @@
 import React from 'react';
 import Menu from './menu.js';
+// import io from 'socket.io-client'
+// let socket = io('http://localhost:3005/');
+
+let socket = io();
 
 export default class ChatBox extends React.Component {
 
@@ -98,12 +102,10 @@ export default class ChatBox extends React.Component {
         this.setState({chat: chatId});
     }
 
-    _sendMsgToServer(e) {
+    _sendMsgToServer(msg) {
         // EMIT HERE
-        e.preventDefault();
-        console.log('fired: send-msg-to-server');
-
-        // io.emit('chat message', msg);
+        console.log('fired: sendMsgToServer')
+        socket.emit('chat:msg', msg);
     }
 
     componentDidMount() {
