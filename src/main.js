@@ -545,9 +545,7 @@ const ChatList = (props) => {
         // open chat window on click
         //
 
-        return (
-
-        )
+    
 }
 
 const app = (

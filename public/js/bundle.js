@@ -25251,16 +25251,12 @@ var ChatBox = function (_React$Component5) {
 
         _this5.state = {
             username: 'no one',
-            users: [],
-            chats: [],
-            chat: ''
+            users: []
         };
         _this5._getCurrentUser = _this5._getCurrentUser.bind(_this5);
         _this5._logOut = _this5._logOut.bind(_this5);
         _this5._consolePrint = _this5._consolePrint.bind(_this5);
         _this5._getUsers = _this5._getUsers.bind(_this5);
-        _this5._getChats = _this5._getChats.bind(_this5);
-        _this5._setChat = _this5._setChat.bind(_this5);
         return _this5;
     }
 
@@ -25323,42 +25319,15 @@ var ChatBox = function (_React$Component5) {
             });
         }
     }, {
-        key: '_getChats',
-        value: function _getChats(done) {
-            // query the database
-            $.ajax({
-                url: '/api/chats',
-                dataType: 'json',
-                cache: false,
-                success: function (data) {
-                    console.log('user set');
-                    this.setState({ chats: data });
-                    if (done) done();
-                }.bind(this),
-                error: function (xhr, status, err) {
-                    console.log('fail!');
-                    this.setState({ chats: data });
-                    console.error('/api/user', status, err.toString());
-                }.bind(this)
-            });
-        }
-    }, {
         key: '_addUsersToChat',
         value: function _addUsersToChat() {
             // print an array of users
-        }
-    }, {
-        key: '_setChat',
-        value: function _setChat(chatId) {
-            console.log('set Chat fired with ' + chatId);
-            this.setState({ chat: chatId });
         }
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
             this._getCurrentUser();
             this._getUsers();
-            this._getChats();
         }
     }, {
         key: 'render',
@@ -25370,11 +25339,7 @@ var ChatBox = function (_React$Component5) {
                     getUser: _this6._getCurrentUser,
                     getUsers: _this6._getUsers,
                     users: _this6.state.users,
-                    consolePrint: _this6._consolePrint,
-                    getChats: _this6._getChats,
-                    chats: _this6.state.chats,
-                    setChat: _this6._setChat,
-                    activeChat: _this6.state.chat
+                    consolePrint: _this6._consolePrint
                 });
             });
             return _react2.default.createElement(
@@ -25426,16 +25391,10 @@ var Menu = function Menu(props) {
             { to: '/users' },
             'Users'
         ),
-        ' |',
-        _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/Chats' },
-            'Chats'
-        ),
         _react2.default.createElement(
             'p',
             null,
-            'Logged in as ',
+            '  Logged in as ',
             props.name,
             ' '
         )
@@ -25771,62 +25730,20 @@ var UserList = function (_React$Component10) {
 
 var ChatList = function ChatList(props) {
 
+    //events
     // get chats documents
     // what event?
     // on load
     // sockets
-    // open chat window on click
-    // all you would need to do is pass a certain id down to the prop
-    // why can't i do this?
-    //
+    // open new chat window on click
+    //  the component recieves an id on click
+    // i have been dealing with routes though?
+    // what i want to do is
 
     // loop through chat documents and show
     // open chat window on click
+    //
 
-    var chatList = props.chats.map(function (chat) {
-
-        return _react2.default.createElement(
-            'li',
-            { key: chat._id },
-            _react2.default.createElement(
-                'div',
-                null,
-                'Conversation with: ',
-                _react2.default.createElement('br', null),
-                _react2.default.createElement(
-                    'span',
-                    { className: 'membersList' },
-                    _react2.default.createElement(
-                        _reactRouter.Link,
-                        { onClick: props.setChat.bind(undefined, chat._id), to: '/chats/' + chat._id },
-                        chat.members.join(', ')
-                    )
-                )
-            )
-        );
-    });
-
-    return _react2.default.createElement(
-        'div',
-        { className: 'users' },
-        _react2.default.createElement(
-            'ul',
-            null,
-            ' ',
-            chatList,
-            ' '
-        )
-    );
-};
-
-var Chat = function Chat(props) {
-
-    return _react2.default.createElement(
-        'div',
-        { 'class': 'convo' },
-        'hi ',
-        props.activeChat
-    );
 };
 
 var app = _react2.default.createElement(
@@ -25839,9 +25756,7 @@ var app = _react2.default.createElement(
         _react2.default.createElement(_reactRouter.Route, { path: 'home', component: Home }),
         _react2.default.createElement(_reactRouter.Route, { path: 'register', component: Register }),
         _react2.default.createElement(_reactRouter.Route, { path: 'login', component: Login }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'users', component: UserList }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'chats', component: ChatList }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'chats/:chatId', component: Chat })
+        _react2.default.createElement(_reactRouter.Route, { path: 'users', component: UserList })
     )
 );
 
