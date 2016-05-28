@@ -5,6 +5,8 @@ import Menu from './menu.js';
 
 let socket = io();
 
+let $chatElement = $('#convo');
+
 export default class ChatBox extends React.Component {
 
     constructor() {
@@ -114,7 +116,10 @@ export default class ChatBox extends React.Component {
         var that = this;
         socket.on('server:msg', function(msg) {
             console.log('message recieved from server:  ' + msg);
-            that.setState({message: msg});
+            that.setState({message: msg}, (thing) => {
+                console.log('callback fired' + msg);
+                $('#convo').append('<p>' + msg + '</p>');
+            });
         })
     }
 

@@ -25050,6 +25050,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var socket = io();
 
+var $chatElement = $('#convo');
+
 var ChatBox = function (_React$Component) {
     _inherits(ChatBox, _React$Component);
 
@@ -25173,8 +25175,10 @@ var ChatBox = function (_React$Component) {
             var that = this;
             socket.on('server:msg', function (msg) {
                 console.log('message recieved from server:  ' + msg);
-                that.setState({ message: msg });
-                // i have to add the new message to the chat form
+                that.setState({ message: msg }, function (thing) {
+                    console.log('callback fired' + msg);
+                    $('#convo').append('<p>' + msg + '</p>');
+                });
             });
         }
     }, {
@@ -25330,7 +25334,7 @@ exports.default = function (props) {
         { 'class': 'convoWrapper' },
         _react2.default.createElement(
             'div',
-            { className: 'convo' },
+            { className: 'convo', id: 'convo' },
             _react2.default.createElement(
                 'p',
                 null,
