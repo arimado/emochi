@@ -4,6 +4,11 @@ import { Link, browserHistory } from 'react-router';
 export default (props) => {
 
 
+    // STATE DEPENDENCIES ----------------------------
+    // - props.chats >      root: this.state.chats  Arr
+    // - props.users >      root: this.state.users  Arr
+    // - props.activeChat > root: this.state.chat   Str
+
     const activeChat = props.chats.filter((chat) => {
         return chat._id === props.activeChat;
     })
@@ -19,16 +24,15 @@ export default (props) => {
             let isMatch = activeChatMemberIds.indexOf(user._id);
             if (isMatch >= 0) { return true } else { return false };
 
-        }) 
+        })
+
         activeUserIds = activeUsers.map((member) => {
                return <p key={member._id}>{member.username}</p>
         });
+
     } else {
         activeUserIds = () => { return <div></div> }
     }
-
-
-
 
     return (
         <div className="menu">
