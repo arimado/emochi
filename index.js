@@ -193,7 +193,7 @@ io.on('connection', function (socket) {
     console.log("socket connection established: " + socket.id);
 
     // receive from client
-    socket.on('chat:msg', function (data) {
+    socket.on('data:message', function (data) {
         io.to(data.chatId).emit('server:data', data);
     });
 

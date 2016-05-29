@@ -25062,10 +25062,11 @@ var ChatBox = function (_React$Component) {
 
         _this.state = {
             username: 'no one',
-            users: [],
-            chats: [],
+            users: [], //
+            chats: [], // array of availble chats with the chats[i]._id and chats[i].members (which is an array of user _id's)
             chat: '',
-            message: ''
+            message: '',
+            names: []
         };
 
         _this._getCurrentUser = _this._getCurrentUser.bind(_this);
@@ -25124,7 +25125,12 @@ var ChatBox = function (_React$Component) {
     }, {
         key: '_getUsers',
         value: function _getUsers() {
-            // Make an api call to get users
+
+            // _getUsers() makes an API call to get users
+            // called on root Component mount
+            // data is availble to childeren through childrenWithProps function
+            // as 'users'
+
             console.log('getting users');
             $.ajax({
                 url: '/api/users',
@@ -25148,6 +25154,7 @@ var ChatBox = function (_React$Component) {
                 cache: false,
                 success: function (data) {
                     console.log('user set');
+                    // this should be retrunging an array of chats
                     this.setState({ chats: data });
                     if (done) done();
                 }.bind(this),
@@ -25169,21 +25176,22 @@ var ChatBox = function (_React$Component) {
             socket.emit('connect:chatroom', chatId);
         }
     }, {
+        key: '_getNamesOfActiveChat',
+        value: function _getNamesOfActiveChat(chatId) {
+            console.log('');
+        }
+    }, {
         key: '_sendMsgToServer',
         value: function _sendMsgToServer(msg) {
             console.log('fired: sendMsgToServer');
-
-            // then lets set the room or namespace based on that chat ID
-            // you would have to work out how rooms or namespaces work
-            // K LETS FUCKN DO IT THEN
-            // then lets listen for messages based on that chat ID
-            // listneners would have to be set on chatID state changes
 
             var profileMsg = {
                 chatId: this.state.chat,
                 user: this.state.username,
                 message: msg
             };
+
+            console.log(profileMsg);
 
             socket.emit('data:message', profileMsg);
         }
@@ -25233,9 +25241,12 @@ var ChatBox = function (_React$Component) {
                 'div',
                 { className: 'chatBoxContainer' },
                 _react2.default.createElement(_menu2.default, {
+                    activeChat: this.state.chat,
+                    chats: this.state.chats,
                     name: this.state.username,
                     logOut: this._logOut,
-                    getUser: this._getCurrentUser
+                    getUser: this._getCurrentUser,
+                    users: this.state.users
                 }),
                 _react2.default.createElement(
                     'div',
@@ -25355,6 +25366,7 @@ var _chatForm2 = _interopRequireDefault(_chatForm);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function (props) {
+
     return _react2.default.createElement(
         'div',
         { 'class': 'convoWrapper' },
@@ -25585,6 +25597,41 @@ exports.default = function (props) {
     var loggedInState = function loggedInState() {}; //
     var loggedOutState = function loggedOutState() {};
 
+    // get activeChat ID
+    // loop through member list
+    // filter?
+    // if users are in member list show it
+    var activeChat = props.chats.filter(function (chat) {
+        return chat._id === props.activeChat;
+    });
+
+    var chats = activeChat.map(function (chat) {
+
+        var keyId = Math.floor(Math.random() * 10 + Math.random() * 3);
+
+        var members = chat.members.map(function (member) {
+            return _react2.default.createElement(
+                'p',
+                { key: member },
+                ' ',
+                member,
+                ' '
+            );
+        });
+
+        return _react2.default.createElement(
+            'li',
+            { key: chat._id },
+            ' ',
+            members,
+            ' '
+        );
+    });
+
+    console.log(activeChat);
+
+    var allUsers = props.users.filter(function (user) {});
+
     return _react2.default.createElement(
         'div',
         { className: 'menu' },
@@ -25605,7 +25652,8 @@ exports.default = function (props) {
             'Logged in as ',
             props.name,
             ' '
-        )
+        ),
+        chats
     );
 };
 
@@ -25788,7 +25836,8 @@ var UserList = function (_React$Component) {
             // Get state of all objects that are equal to true
             console.log('_addUsersToChat');
             e.preventDefault();
-            // get users into array
+
+            // get users into array from state object
             var usersObj = this.state;
             var usersArr = Object.keys(usersObj).map(function (key) {
                 return key;

@@ -11,12 +11,14 @@ export default class ChatBox extends React.Component {
 
     constructor() {
         super();
+
         this.state = {
             username: 'no one',
-            users: [],
-            chats: [],
+            users: [],                                //
+            chats: [],                                // array of availble chats with the chats[i]._id and chats[i].members (which is an array of user _id's)
             chat: '',
-            message: ''
+            message: '',
+            names: []
         };
 
         this._getCurrentUser = this._getCurrentUser.bind(this);
@@ -69,7 +71,12 @@ export default class ChatBox extends React.Component {
     }
 
     _getUsers() {
-        // Make an api call to get users
+
+        // _getUsers() makes an API call to get users
+        // called on root Component mount
+        // data is availble to childeren through childrenWithProps function
+        // as 'users'
+
         console.log('getting users');
         $.ajax({
               url: '/api/users',
@@ -92,6 +99,7 @@ export default class ChatBox extends React.Component {
               cache: false,
               success: function(data) {
                 console.log('user set');
+                // this should be retrunging an array of chats
                 this.setState({chats: data});
                 if (done) done();
               }.bind(this),
@@ -112,20 +120,20 @@ export default class ChatBox extends React.Component {
         socket.emit('connect:chatroom', chatId);
     }
 
+    _getNamesOfActiveChat(chatId) {
+        console.log('');
+    }
+
     _sendMsgToServer(msg) {
         console.log('fired: sendMsgToServer')
-
-        // then lets set the room or namespace based on that chat ID
-            // you would have to work out how rooms or namespaces work
-                // K LETS FUCKN DO IT THEN
-        // then lets listen for messages based on that chat ID
-            // listneners would have to be set on chatID state changes
 
         var profileMsg = {
             chatId:     this.state.chat,
             user:       this.state.username,
             message:    msg
         }
+
+        console.log(profileMsg);
 
 
         socket.emit('data:message', profileMsg);
@@ -170,9 +178,12 @@ export default class ChatBox extends React.Component {
         return (
             <div className="chatBoxContainer">
                 <Menu
+                    activeChat = {this.state.chat}
+                    chats = {this.state.chats}
                     name={this.state.username}
                     logOut={this._logOut}
                     getUser={this._getCurrentUser}
+                    users={this.state.users}
                 />
                 <div className="mainContent">
                     {childrenWithProps}

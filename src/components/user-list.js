@@ -28,7 +28,8 @@ export default class UserList extends React.Component {
         // Get state of all objects that are equal to true
         console.log('_addUsersToChat');
         e.preventDefault();
-        // get users into array
+
+        // get users into array from state object
         var usersObj = this.state;
         var usersArr = Object.keys(usersObj).map((key) => key);
         var userJSON = JSON.stringify(usersArr);
