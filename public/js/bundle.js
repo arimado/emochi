@@ -25381,16 +25381,20 @@ exports.default = function (props) {
                 'div',
                 { className: 'overflowContent' },
                 _react2.default.createElement(
-                    'p',
-                    null,
-                    'Chat ID: ',
-                    props.activeChat
-                ),
-                _react2.default.createElement(
-                    'p',
-                    null,
-                    'Current Message: ',
-                    props.getMsg
+                    'div',
+                    { className: 'overflowContentInner' },
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        'Chat ID: ',
+                        props.activeChat
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        'Current Message: ',
+                        props.getMsg
+                    )
                 )
             )
         ),

@@ -7,8 +7,10 @@ export default (props) => {
         <div class="convoWrapper">
             <div className="convo growContent" id="convo" >
                 <div className="overflowContent">
-                    <p>Chat ID: {props.activeChat}</p>
-                    <p>Current Message: {props.getMsg}</p>
+                    <div className="overflowContentInner" >
+                        <p>Chat ID: {props.activeChat}</p>
+                        <p>Current Message: {props.getMsg}</p>
+                    </div>
                 </div>
             </div>
             <ChatForm
