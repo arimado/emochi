@@ -25206,7 +25206,7 @@ var ChatBox = function (_React$Component) {
                 that.setState({ message: data.message }, function (thing) {
                     console.log('callback fired: ' + data.message);
                     console.log('callback property: ' + thing);
-                    $('#convo').append('<p>' + data.message + '</p>');
+                    $('#convo .overflowContent').append('<p>' + data.message + '</p>');
                 });
             });
         }
@@ -25378,16 +25378,20 @@ exports.default = function (props) {
             'div',
             { className: 'convo growContent', id: 'convo' },
             _react2.default.createElement(
-                'p',
-                null,
-                'Chat ID: ',
-                props.activeChat
-            ),
-            _react2.default.createElement(
-                'p',
-                null,
-                'Current Message: ',
-                props.getMsg
+                'div',
+                { className: 'overflowContent' },
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    'Chat ID: ',
+                    props.activeChat
+                ),
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    'Current Message: ',
+                    props.getMsg
+                )
             )
         ),
         _react2.default.createElement(_chatForm2.default, {

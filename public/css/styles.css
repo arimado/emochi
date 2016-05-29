@@ -162,6 +162,7 @@ body {
 	border: 1px solid red;
 }
 
+
 .menu {
 	padding: 20px;
 	border-bottom: 1px solid rgb(180, 180, 180);
@@ -196,6 +197,11 @@ body {
 .growContent {
     flex-grow: 1;
     padding: 20px;
+}
+
+.overflowContent {
+	max-height: 100%;
+	border: 1px solid blue;
 }
 
 /* REGISTER + LOGIN BUTTON FORM */
@@ -322,7 +328,7 @@ body {
 /* CHAT ******************************************/
 
 .convoContainer {
-	t
+	
 }
 
 .convo {

@@ -148,7 +148,7 @@ export default class ChatBox extends React.Component {
             that.setState({message: data.message}, (thing) => {
                 console.log('callback fired: ' + data.message);
                 console.log('callback property: ' + thing);
-                $('#convo').append('<p>' + data.message + '</p>');
+                $('#convo .overflowContent').append('<p>' + data.message + '</p>');
             });
         })
     }
