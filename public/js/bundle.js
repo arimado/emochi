@@ -25592,45 +25592,42 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = function (props) {
 
-    // depending on props I can  return different elements
-
-    var loggedInState = function loggedInState() {}; //
-    var loggedOutState = function loggedOutState() {};
-
-    // get activeChat ID
-    // loop through member list
-    // filter?
-    // if users are in member list show it
     var activeChat = props.chats.filter(function (chat) {
         return chat._id === props.activeChat;
     });
 
-    // const activeChatMemberIds = activeChat.map((chat) => {
-    //
-    //     // let members = chat.members.map((member) => {
-    //     //     return (
-    //     //         <p key={member}> {member} </p>
-    //     //     )
-    //     // })
-    //
-    //     return chat.members
-    //
-    // })
-
     var activeChatMemberIds;
-    var users;
+    var activeUserIds;
+    var activeUsers;
 
     if (props.activeChat !== '') {
         activeChatMemberIds = activeChat[0].members;
-        users = activeChatMemberIds.map(function (member) {
+        console.log('props users --- ');
+        console.log(props.users);
+        console.log('activeChatMemberIds --- ');
+        console.log(activeChatMemberIds);
+
+        activeUsers = props.users.filter(function (user) {
+            var isMatch = activeChatMemberIds.indexOf(user._id);
+            if (isMatch >= 0) {
+                return true;
+            } else {
+                return false;
+            };
+        });
+
+        console.log('activeUsers after map --- ');
+        console.log(activeUsers);
+
+        activeUserIds = activeUsers.map(function (member) {
             return _react2.default.createElement(
                 'p',
-                { key: member },
-                member
+                { key: member._id },
+                member.username
             );
         });
     } else {
-        users = function users() {
+        activeUserIds = function activeUserIds() {
             return _react2.default.createElement('div', null);
         };
     }
@@ -25656,7 +25653,7 @@ exports.default = function (props) {
             props.name,
             ' '
         ),
-        users
+        activeUserIds
     );
 };
 
