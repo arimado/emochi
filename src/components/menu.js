@@ -17,34 +17,37 @@ export default (props) => {
         return chat._id === props.activeChat;
     })
 
-    const chats = activeChat.map((chat) => {
+    // const activeChatMemberIds = activeChat.map((chat) => {
+    //
+    //     // let members = chat.members.map((member) => {
+    //     //     return (
+    //     //         <p key={member}> {member} </p>
+    //     //     )
+    //     // })
+    //
+    //     return chat.members
+    //
+    // })
 
-        let keyId = Math.floor(Math.random() * 10 + Math.random() * 3);
+    var activeChatMemberIds;
+    var users;
 
-        let members = chat.members.map((member) => {
-            return (
-                <p key={member}> {member} </p>
-            )
-        })
+    if (props.activeChat !== '') {
+        activeChatMemberIds = activeChat[0].members;
+        users = activeChatMemberIds.map((member) => {
+            return <p key={member}>{member}</p>
+        });
+    } else {
+        users = () => { return <div></div> }
+    }
 
-        return (
-            <li key={chat._id}> {members} </li>
-        )
-
-    })
-
-    console.log(activeChat);
-
-    const allUsers = props.users.filter((user) => {
-
-    })
 
     return (
         <div className="menu">
             <Link to="/" onClick={props.logOut}>Logout</Link> |
             <Link to="/users">New Chat</Link>
             <p>Logged in as {props.name} </p>
-            {chats}
+            {users}
         </div>
     )
 }

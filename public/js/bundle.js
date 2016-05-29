@@ -25605,32 +25605,35 @@ exports.default = function (props) {
         return chat._id === props.activeChat;
     });
 
-    var chats = activeChat.map(function (chat) {
+    // const activeChatMemberIds = activeChat.map((chat) => {
+    //
+    //     // let members = chat.members.map((member) => {
+    //     //     return (
+    //     //         <p key={member}> {member} </p>
+    //     //     )
+    //     // })
+    //
+    //     return chat.members
+    //
+    // })
 
-        var keyId = Math.floor(Math.random() * 10 + Math.random() * 3);
+    var activeChatMemberIds;
+    var users;
 
-        var members = chat.members.map(function (member) {
+    if (props.activeChat !== '') {
+        activeChatMemberIds = activeChat[0].members;
+        users = activeChatMemberIds.map(function (member) {
             return _react2.default.createElement(
                 'p',
                 { key: member },
-                ' ',
-                member,
-                ' '
+                member
             );
         });
-
-        return _react2.default.createElement(
-            'li',
-            { key: chat._id },
-            ' ',
-            members,
-            ' '
-        );
-    });
-
-    console.log(activeChat);
-
-    var allUsers = props.users.filter(function (user) {});
+    } else {
+        users = function users() {
+            return _react2.default.createElement('div', null);
+        };
+    }
 
     return _react2.default.createElement(
         'div',
@@ -25653,7 +25656,7 @@ exports.default = function (props) {
             props.name,
             ' '
         ),
-        chats
+        users
     );
 };
 
