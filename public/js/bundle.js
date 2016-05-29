@@ -25376,7 +25376,7 @@ exports.default = function (props) {
         { 'class': 'convoWrapper' },
         _react2.default.createElement(
             'div',
-            { className: 'convo', id: 'convo' },
+            { className: 'convo growContent', id: 'convo' },
             _react2.default.createElement(
                 'p',
                 null,
