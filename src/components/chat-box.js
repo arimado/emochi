@@ -27,6 +27,7 @@ export default class ChatBox extends React.Component {
         this._setChat = this._setChat.bind(this);
         this._sendMsgToServer = this._sendMsgToServer.bind(this);
         this._setNewMessage = this._setNewMessage.bind(this);
+
     }
 
     _consolePrint() {
@@ -168,7 +169,11 @@ export default class ChatBox extends React.Component {
         );
         return (
             <div className="chatBoxContainer">
-                <Menu name={this.state.username} logOut={this._logOut} getUser={this._getCurrentUser}/>
+                <Menu
+                    name={this.state.username}
+                    logOut={this._logOut}
+                    getUser={this._getCurrentUser}
+                />
                 <div className="mainContent">
                     {childrenWithProps}
                 </div>

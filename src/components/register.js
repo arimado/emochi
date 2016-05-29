@@ -1,5 +1,6 @@
 import React from 'react';
 import FullButton from './button.js';
+import { browserHistory } from 'react-router';
 
 export default class Register extends React.Component {
 
@@ -37,6 +38,7 @@ export default class Register extends React.Component {
             success: function(data) {
                 console.log('ajax register success:') //unsure why this does not fire
                 this.props.getUser(this.props.getUsers)
+                this.props.history.push('/chats');
             }.bind(this),
             error: function(xhr, status, err) {
                 this.setState({data: user});  // PART OF OPTIMISTIC UPDATE

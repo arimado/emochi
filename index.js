@@ -194,19 +194,7 @@ io.on('connection', function (socket) {
 
     // receive from client
     socket.on('chat:msg', function (data) {
-        console.log('server recieved message: --- ');
-        console.log('socket chatrooms: ' + JSON.stringify(socket.rooms));
-        console.log('socket message room: '+ data.chatId);
-        console.log(data);
-        // io.emit('server:data', data);
-        // EMIT TO CHAT ID as ROOM ID
-        // io.to(data.chatId).emit('some event');
         io.to(data.chatId).emit('server:data', data);
-        // if i wanted to use rooms
-            // i would have to make this incoming connection connect via a room right?
-                // i would have to check each socket against the current state of client
-                //
-
     });
 
     socket.on('connect:chatroom', function(chatroom) {
@@ -217,7 +205,7 @@ io.on('connection', function (socket) {
 
     socket.on('disconnect:chatroom', function(chatroom) {
         console.log('disconnect:chatroom fired')
-        console.log('chatroom: ' + chatroom); 
+        console.log('chatroom: ' + chatroom);
         socket.leave(chatroom);
     })
 

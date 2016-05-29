@@ -1,5 +1,6 @@
 import React from 'react';
 import FullButton from './button.js';
+import { browserHistory } from 'react-router';
 
 export default class UserList extends React.Component {
 
@@ -40,7 +41,9 @@ export default class UserList extends React.Component {
             data: data,
             success: function(data) {
                 console.log('ajax add chat users success:') //unsure why this does not fire
-                console.log(data);
+                console.log(data.ops[0]._id);
+                this.props.history.push('/chats/' + data.ops[0]._id);
+                this.props.setChat()
             }.bind(this),
             error: function(xhr, status, err) {
             console.error('/api/chats/create', status, err.toString());
@@ -52,7 +55,8 @@ export default class UserList extends React.Component {
         const userList = this.props.users.map((user) => {
             return (
                 <li key={user._id}>
-                    <label>{user.username}</label><input key={user._id} checked={this.state[user._id]} type="checkbox" onClick={this._handleCheckChange.bind(this, user._id)} />
+                    <label>{user.username}</label>
+                    <input key={user._id} checked={this.state[user._id]} type="checkbox" onClick={this._handleCheckChange.bind(this, user._id)} />
                     {/* the onClick event solution came from --> https://github.com/facebook/react/issues/5674 */}
                 </li>
             )

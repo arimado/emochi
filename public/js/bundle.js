@@ -25076,6 +25076,7 @@ var ChatBox = function (_React$Component) {
         _this._setChat = _this._setChat.bind(_this);
         _this._sendMsgToServer = _this._sendMsgToServer.bind(_this);
         _this._setNewMessage = _this._setNewMessage.bind(_this);
+
         return _this;
     }
 
@@ -25163,7 +25164,6 @@ var ChatBox = function (_React$Component) {
             console.log('set Chat fired with ' + chatId);
             // only leave chat if there is an availble chat id
             if (this.state.chat) socket.emit('disconnect:chatroom', this.state.chat);
-
             this.setState({ chat: chatId });
             // join the chatId room
             socket.emit('connect:chatroom', chatId);
@@ -25185,7 +25185,7 @@ var ChatBox = function (_React$Component) {
                 message: msg
             };
 
-            socket.emit('chat:msg', profileMsg);
+            socket.emit('data:message', profileMsg);
         }
     }, {
         key: '_setNewMessage',
@@ -25232,7 +25232,11 @@ var ChatBox = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 { className: 'chatBoxContainer' },
-                _react2.default.createElement(_menu2.default, { name: this.state.username, logOut: this._logOut, getUser: this._getCurrentUser }),
+                _react2.default.createElement(_menu2.default, {
+                    name: this.state.username,
+                    logOut: this._logOut,
+                    getUser: this._getCurrentUser
+                }),
                 _react2.default.createElement(
                     'div',
                     { className: 'mainContent' },
@@ -25378,7 +25382,7 @@ exports.default = function (props) {
 };
 
 },{"./chat-form.js":231,"react":228}],234:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -25386,9 +25390,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = require('react-router');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25408,22 +25414,29 @@ var Home = function (_React$Component) {
     }
 
     _createClass(Home, [{
-        key: "componentDidMount",
+        key: 'componentDidMount',
         value: function componentDidMount() {
             this.props.consolePrint();
             this.props.getUser();
         }
     }, {
-        key: "render",
+        key: 'render',
         value: function render() {
             return _react2.default.createElement(
-                "div",
-                { className: "homeContainer" },
+                'div',
+                { className: 'homeContainer' },
                 _react2.default.createElement(
-                    "p",
-                    null,
-                    " Home page "
-                )
+                    _reactRouter.Link,
+                    { to: '/register' },
+                    'Register'
+                ),
+                ' |',
+                _react2.default.createElement(
+                    _reactRouter.Link,
+                    { to: '/login' },
+                    'Login'
+                ),
+                ' |'
             );
         }
     }]);
@@ -25433,7 +25446,7 @@ var Home = function (_React$Component) {
 
 exports.default = Home;
 
-},{"react":228}],235:[function(require,module,exports){
+},{"react":228,"react-router":32}],235:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25449,6 +25462,8 @@ var _react2 = _interopRequireDefault(_react);
 var _button = require('./button.js');
 
 var _button2 = _interopRequireDefault(_button);
+
+var _reactRouter = require('react-router');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25503,6 +25518,7 @@ var Login = function (_React$Component) {
                 success: function (data) {
                     console.log('ajax success:'); //unsure why this does not fire
                     this.props.getUser();
+                    this.props.history.push('/chats');
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error('/api/login', status, err.toString());
@@ -25547,7 +25563,7 @@ var Login = function (_React$Component) {
 
 exports.default = Login;
 
-},{"./button.js":229,"react":228}],236:[function(require,module,exports){
+},{"./button.js":229,"react":228,"react-router":32}],236:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25563,27 +25579,15 @@ var _reactRouter = require('react-router');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function (props) {
+
+    // depending on props I can  return different elements
+
+    var loggedInState = function loggedInState() {}; //
+    var loggedOutState = function loggedOutState() {};
+
     return _react2.default.createElement(
         'div',
         { className: 'menu' },
-        _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/' },
-            'Home'
-        ),
-        ' |',
-        _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/register' },
-            'Register'
-        ),
-        ' |',
-        _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/login' },
-            'Login'
-        ),
-        ' |',
         _react2.default.createElement(
             _reactRouter.Link,
             { to: '/', onClick: props.logOut },
@@ -25593,13 +25597,7 @@ exports.default = function (props) {
         _react2.default.createElement(
             _reactRouter.Link,
             { to: '/users' },
-            'Users'
-        ),
-        ' |',
-        _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/Chats' },
-            'Chats'
+            'New Chat'
         ),
         _react2.default.createElement(
             'p',
@@ -25627,6 +25625,8 @@ var _react2 = _interopRequireDefault(_react);
 var _button = require('./button.js');
 
 var _button2 = _interopRequireDefault(_button);
+
+var _reactRouter = require('react-router');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25681,6 +25681,7 @@ var Register = function (_React$Component) {
                 success: function (data) {
                     console.log('ajax register success:'); //unsure why this does not fire
                     this.props.getUser(this.props.getUsers);
+                    this.props.history.push('/chats');
                 }.bind(this),
                 error: function (xhr, status, err) {
                     this.setState({ data: user }); // PART OF OPTIMISTIC UPDATE
@@ -25726,7 +25727,7 @@ var Register = function (_React$Component) {
 
 exports.default = Register;
 
-},{"./button.js":229,"react":228}],238:[function(require,module,exports){
+},{"./button.js":229,"react":228,"react-router":32}],238:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25742,6 +25743,8 @@ var _react2 = _interopRequireDefault(_react);
 var _button = require('./button.js');
 
 var _button2 = _interopRequireDefault(_button);
+
+var _reactRouter = require('react-router');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25800,7 +25803,9 @@ var UserList = function (_React$Component) {
                 data: data,
                 success: function (data) {
                     console.log('ajax add chat users success:'); //unsure why this does not fire
-                    console.log(data);
+                    console.log(data.ops[0]._id);
+                    this.props.history.push('/chats/' + data.ops[0]._id);
+                    this.props.setChat();
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error('/api/chats/create', status, err.toString());
@@ -25843,7 +25848,7 @@ var UserList = function (_React$Component) {
 
 exports.default = UserList;
 
-},{"./button.js":229,"react":228}],239:[function(require,module,exports){
+},{"./button.js":229,"react":228,"react-router":32}],239:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');

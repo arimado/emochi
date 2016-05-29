@@ -1,5 +1,6 @@
 import React from 'react';
 import FullButton from './button.js';
+import { browserHistory } from 'react-router';
 
 export default class Login extends React.Component {
 
@@ -37,11 +38,14 @@ export default class Login extends React.Component {
                 success: function(data) {
                     console.log('ajax success:') //unsure why this does not fire
                     this.props.getUser();
+                    this.props.history.push('/chats');
                 }.bind(this),
                 error: function(xhr, status, err) {
                 console.error('/api/login', status, err.toString());
                 }.bind(this)
             });
+
+
         }
 
     render() {
