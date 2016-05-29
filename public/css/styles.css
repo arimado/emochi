@@ -137,21 +137,32 @@ body {
 
 /* MAIN ******************************************/
 
+#containerOuter {
+	height: 100%;
+	border: 1px solid blue;
+}
+
 #container {
-    display: flex;
+    /*display: flex;
     flex-direction: column;
     flex-grow: 1;
+	border: 1px solid red;*/
+	border:1px solid green;
+	max-height: 800px;
+	height: 100%;
 }
 
 .chatBoxContainer {
     display: flex;
+	height: 100%;
     flex-direction: column;
-    flex-grow: 1;
+	border: 1px solid red;
 }
 
 .menu {
 	padding: 20px;
 	border-bottom: 1px solid rgb(180, 180, 180);
+	flex-grow: 1;
 }
 
 .menu p {
@@ -160,8 +171,6 @@ body {
 }
 
 .mainContent {
-    display: flex;
-    flex-direction: column;
     flex-grow: 1;
 }
 
@@ -170,6 +179,7 @@ body {
     flex-direction: column;
     flex-grow: 1;
     font-weight: 200;
+	border: 1px solid green;
 }
 
 .growContent {

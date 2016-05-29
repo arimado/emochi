@@ -25639,13 +25639,20 @@ exports.default = function (props) {
         _react2.default.createElement(
             _reactRouter.Link,
             { to: '/', onClick: props.logOut },
-            'Logout'
+            _react2.default.createElement(
+                'i',
+                { className: 'material-icons' },
+                'eject'
+            )
         ),
-        ' |',
         _react2.default.createElement(
             _reactRouter.Link,
             { to: '/users' },
-            'New Chat'
+            _react2.default.createElement(
+                'i',
+                { className: 'material-icons' },
+                'add'
+            )
         ),
         _react2.default.createElement(
             'p',

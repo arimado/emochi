@@ -35,8 +35,8 @@ export default (props) => {
 
     return (
         <div className="menu">
-            <Link to="/" onClick={props.logOut}>Logout</Link> |
-            <Link to="/users">New Chat</Link>
+            <Link to="/" onClick={props.logOut}><i className="material-icons">eject</i></Link>
+            <Link to="/users"><i className="material-icons">add</i></Link>
             <p>Logged in as {props.name} </p>
             <ul className="activeUsers">
                 {activeUserIds}
