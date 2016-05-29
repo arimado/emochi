@@ -154,6 +154,10 @@ export default class ChatBox extends React.Component {
     }
 
     componentDidMount() {
+        if (this.props.params) {
+            console.log(this.props.params);
+            this._setChat(this.props.params.chatId)
+        }
         this._getCurrentUser();
         this._getUsers();
         this._getChats();

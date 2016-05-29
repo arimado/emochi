@@ -3,6 +3,7 @@
    v2.0 | 20110126
    License: none (public domain)
 */
+/* -------------------------------------------- */
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -56,6 +57,44 @@ table {
 /****************************************************/
 /* END RESET ****************************************/
 /****************************************************/
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(fonts/Material/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url(fonts/Material/MaterialIcons-Regular.woff2) format('woff2'),
+       url(fonts/Material/MaterialIcons-Regular.woff) format('woff'),
+       url(fonts/Material/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
 
 /* GLOBALS ******************************************/
 
@@ -143,6 +182,18 @@ body {
 .loginForm {
 	flex-direction: column;
 	width: 100%;
+}
+
+/* MAIN ******************************************/
+
+.activeUsers {
+}
+
+.activeUsers li {
+	display: inline-block;
+	padding: 10px;
+	border-radius: 50px;
+	background: rgb(217, 217, 217);
 }
 
 /* BOTTOM FORM ***************************************/

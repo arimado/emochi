@@ -17,17 +17,16 @@ export default (props) => {
     var activeUserIds;
     var activeUsers;
 
-    if (props.activeChat !== '') {
-
+    if (props.activeChat !== '' && props.activeChat !== undefined) {
+        console.log(props.activeChat);
         activeChatMemberIds = activeChat[0].members
         activeUsers = props.users.filter((user) => {
             let isMatch = activeChatMemberIds.indexOf(user._id);
             if (isMatch >= 0) { return true } else { return false };
 
         })
-
         activeUserIds = activeUsers.map((member) => {
-               return <p key={member._id}>{member.username}</p>
+            return <li key={member._id}>{member.username.slice(0,2).toUpperCase()}</li>
         });
 
     } else {
@@ -39,7 +38,9 @@ export default (props) => {
             <Link to="/" onClick={props.logOut}>Logout</Link> |
             <Link to="/users">New Chat</Link>
             <p>Logged in as {props.name} </p>
-            {activeUserIds}
+            <ul className="activeUsers">
+                {activeUserIds}
+            </ul>
         </div>
     )
 }

@@ -25213,6 +25213,10 @@ var ChatBox = function (_React$Component) {
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
+            if (this.props.params) {
+                console.log(this.props.params);
+                this._setChat(this.props.params.chatId);
+            }
             this._getCurrentUser();
             this._getUsers();
             this._getChats();
@@ -25592,6 +25596,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = function (props) {
 
+    // STATE DEPENDENCIES ----------------------------
+    // - props.chats >      root: this.state.chats  Arr
+    // - props.users >      root: this.state.users  Arr
+    // - props.activeChat > root: this.state.chat   Str
+
     var activeChat = props.chats.filter(function (chat) {
         return chat._id === props.activeChat;
     });
@@ -25600,13 +25609,9 @@ exports.default = function (props) {
     var activeUserIds;
     var activeUsers;
 
-    if (props.activeChat !== '') {
+    if (props.activeChat !== '' && props.activeChat !== undefined) {
+        console.log(props.activeChat);
         activeChatMemberIds = activeChat[0].members;
-        console.log('props users --- ');
-        console.log(props.users);
-        console.log('activeChatMemberIds --- ');
-        console.log(activeChatMemberIds);
-
         activeUsers = props.users.filter(function (user) {
             var isMatch = activeChatMemberIds.indexOf(user._id);
             if (isMatch >= 0) {
@@ -25615,15 +25620,11 @@ exports.default = function (props) {
                 return false;
             };
         });
-
-        console.log('activeUsers after map --- ');
-        console.log(activeUsers);
-
         activeUserIds = activeUsers.map(function (member) {
             return _react2.default.createElement(
-                'p',
+                'li',
                 { key: member._id },
-                member.username
+                member.username.slice(0, 2).toUpperCase()
             );
         });
     } else {
@@ -25653,7 +25654,11 @@ exports.default = function (props) {
             props.name,
             ' '
         ),
-        activeUserIds
+        _react2.default.createElement(
+            'ul',
+            { className: 'activeUsers' },
+            activeUserIds
+        )
     );
 };
 
