@@ -77,7 +77,7 @@ export default class ChatBox extends React.Component {
         // data is availble to childeren through childrenWithProps function
         // as 'users'
 
-        console.log('getting users');
+        // console.log('getting users');
         $.ajax({
               url: '/api/users',
               dataType: 'json',
@@ -92,16 +92,31 @@ export default class ChatBox extends React.Component {
     }
 
     _getChats(done) {
-        // query the database
+
+        // this._getChats -----------------------------------
+        // - GET: /api/chats
+        //      - server returns array of chats
+        //      - properties: ._id STR, .members ARR
+        // - sets this.state.chats to that array
+        // - Triggered By
+        //      - whenever this._setChat() is called
+        //      - root componentDidMount
+
         $.ajax({
               url: '/api/chats',
               dataType: 'json',
               cache: false,
               success: function(data) {
-                console.log('user set');
+                console.log('GET /api/chats fired. Server data: ');
+                console.log(data);
                 // this should be retrunging an array of chats
-                this.setState({chats: data});
-                if (done) done();
+                if (done) {
+                    // console.log('updating this.state.chats with callback')
+                    this.setState({chats: data}, done);
+                } else {
+                    // console.log('updating this.state.chats without callback')
+                    this.setState({chats: data});
+                }
               }.bind(this),
               error: function(xhr, status, err) {
                 console.log('fail!');
@@ -111,11 +126,31 @@ export default class ChatBox extends React.Component {
         });
     }
 
-    _setChat(chatId) {
+    _setChat(chatId, done) {
+
+        // this._setChat -----------------------------------
+        // - sets chatId string in this.state.chat
+        // - then fetches the new chats from the database with this_.getChats
+        // - Triggered By:
+        //      - SUBMIT BUTTON in user-list.js
+        //      - ON ELEMENT CLICK in chat-list.js
+        
         console.log('set Chat fired with ' + chatId)
+
         // only leave chat if there is an availble chat id
         if(this.state.chat) socket.emit('disconnect:chatroom', this.state.chat);
-        this.setState({chat: chatId});
+
+
+        this.setState({chat: chatId}, () => {
+            console.log('ROOT STATE: setState - activeChatId');
+            // I want to makes sure that the state is updated
+            this._getChats(() => {
+                console.log('new chats imported')
+                if (done) done();
+            });
+        });
+
+
         // join the chatId room
         socket.emit('connect:chatroom', chatId);
     }
@@ -148,7 +183,8 @@ export default class ChatBox extends React.Component {
             that.setState({message: data.message}, (thing) => {
                 console.log('callback fired: ' + data.message);
                 console.log('callback property: ' + thing);
-                $('#convo .overflowContent').append('<p>' + data.message + '</p>');
+                $('#convo').append('<p>' + data.message + '</p>');
+                $('#convo')[0].scrollTop = $('#convo')[0].scrollHeight;
             });
         })
     }
@@ -165,6 +201,10 @@ export default class ChatBox extends React.Component {
     }
 
     render() {
+
+        console.log('ROOT STATE: this.state.chats: ');
+        console.log(this.state.chats);
+
         const childrenWithProps = React.Children.map(this.props.children,
             (child) => React.cloneElement(child, {
                 getUser: this._getCurrentUser,

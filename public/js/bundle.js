@@ -25147,16 +25147,25 @@ var ChatBox = function (_React$Component) {
     }, {
         key: '_getChats',
         value: function _getChats(done) {
+
+            console.log('ROOT: this._getChats - fired');
+
             // query the database
             $.ajax({
                 url: '/api/chats',
                 dataType: 'json',
                 cache: false,
                 success: function (data) {
-                    console.log('user set');
+                    console.log('GET /api/chats fired. Server data: ');
+                    console.log(data);
                     // this should be retrunging an array of chats
-                    this.setState({ chats: data });
-                    if (done) done();
+                    if (done) {
+                        console.log('updating this.state.chats with callback');
+                        this.setState({ chats: data }, done);
+                    } else {
+                        console.log('updating this.state.chats without callback');
+                        this.setState({ chats: data });
+                    }
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.log('fail!');
@@ -25167,11 +25176,23 @@ var ChatBox = function (_React$Component) {
         }
     }, {
         key: '_setChat',
-        value: function _setChat(chatId) {
+        value: function _setChat(chatId, done) {
+            var _this2 = this;
+
             console.log('set Chat fired with ' + chatId);
+
             // only leave chat if there is an availble chat id
             if (this.state.chat) socket.emit('disconnect:chatroom', this.state.chat);
-            this.setState({ chat: chatId });
+
+            this.setState({ chat: chatId }, function () {
+                console.log('ROOT STATE: setState - activeChatId');
+                // I want to makes sure that the state is updated
+                _this2._getChats(function () {
+                    console.log('new chats imported');
+                    if (done) done();
+                });
+            });
+
             // join the chatId room
             socket.emit('connect:chatroom', chatId);
         }
@@ -25206,7 +25227,8 @@ var ChatBox = function (_React$Component) {
                 that.setState({ message: data.message }, function (thing) {
                     console.log('callback fired: ' + data.message);
                     console.log('callback property: ' + thing);
-                    $('#convo .overflowContent').append('<p>' + data.message + '</p>');
+                    $('#convo').append('<p>' + data.message + '</p>');
+                    $('#convo')[0].scrollTop = $('#convo')[0].scrollHeight;
                 });
             });
         }
@@ -25225,20 +25247,23 @@ var ChatBox = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
+            var _this3 = this;
+
+            console.log('ROOT STATE: this.state.chats: ');
+            console.log(this.state.chats);
 
             var childrenWithProps = _react2.default.Children.map(this.props.children, function (child) {
                 return _react2.default.cloneElement(child, {
-                    getUser: _this2._getCurrentUser,
-                    getUsers: _this2._getUsers,
-                    users: _this2.state.users,
-                    consolePrint: _this2._consolePrint,
-                    getChats: _this2._getChats,
-                    chats: _this2.state.chats,
-                    setChat: _this2._setChat,
-                    activeChat: _this2.state.chat,
-                    sendMsgToServer: _this2._sendMsgToServer,
-                    getMsg: _this2.state.message
+                    getUser: _this3._getCurrentUser,
+                    getUsers: _this3._getUsers,
+                    users: _this3.state.users,
+                    consolePrint: _this3._consolePrint,
+                    getChats: _this3._getChats,
+                    chats: _this3.state.chats,
+                    setChat: _this3._setChat,
+                    activeChat: _this3.state.chat,
+                    sendMsgToServer: _this3._sendMsgToServer,
+                    getMsg: _this3.state.message
                 });
             });
             return _react2.default.createElement(
@@ -25378,24 +25403,16 @@ exports.default = function (props) {
             'div',
             { className: 'convo growContent', id: 'convo' },
             _react2.default.createElement(
-                'div',
-                { className: 'overflowContent' },
-                _react2.default.createElement(
-                    'div',
-                    { className: 'overflowContentInner' },
-                    _react2.default.createElement(
-                        'p',
-                        null,
-                        'Chat ID: ',
-                        props.activeChat
-                    ),
-                    _react2.default.createElement(
-                        'p',
-                        null,
-                        'Current Message: ',
-                        props.getMsg
-                    )
-                )
+                'p',
+                null,
+                'Chat ID: ',
+                props.activeChat
+            ),
+            _react2.default.createElement(
+                'p',
+                null,
+                'Current Message: ',
+                props.getMsg
             )
         ),
         _react2.default.createElement(_chatForm2.default, {
@@ -25604,21 +25621,35 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = function (props) {
 
+    console.log("COMPONENT: MENU ------------------");
+
     // STATE DEPENDENCIES ----------------------------
     // - props.chats >      root: this.state.chats  Arr
     // - props.users >      root: this.state.users  Arr
     // - props.activeChat > root: this.state.chat   Str
 
-    var activeChat = props.chats.filter(function (chat) {
-        return chat._id === props.activeChat;
-    });
-
+    var activeChat;
     var activeChatMemberIds;
     var activeUserIds;
     var activeUsers;
 
-    if (props.activeChat !== '' && props.activeChat !== undefined) {
+    // THE PROBLEM WITH THE BELOW IS THAT IT FIRES BEFORE A NEW CHAT LIST IS ACTIVE.
+
+    // IF THERE WAS A WAY TO SAVE THE CURRENT STATE
+    // AND COMPARE IT WITH THE NEW THEN I WOULD BE ABLE TO DO THIS
+
+    activeChat = props.chats.filter(function (chat) {
+        return chat._id === props.activeChat;
+    });
+    console.log('activeChat ------ ');
+    console.log(activeChat);
+
+    if (props.activeChat !== '' && props.activeChat !== undefined && activeChat.length > 0) {
+        console.log('props.activeChat ------ ');
         console.log(props.activeChat);
+        console.log('props.chats ------ ');
+        console.log(props.chats);
+
         activeChatMemberIds = activeChat[0].members;
         activeUsers = props.users.filter(function (user) {
             var isMatch = activeChatMemberIds.indexOf(user._id);
@@ -25645,24 +25676,6 @@ exports.default = function (props) {
         'div',
         { className: 'menu' },
         _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/', onClick: props.logOut },
-            _react2.default.createElement(
-                'i',
-                { className: 'material-icons' },
-                'eject'
-            )
-        ),
-        _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/users' },
-            _react2.default.createElement(
-                'i',
-                { className: 'material-icons' },
-                'add'
-            )
-        ),
-        _react2.default.createElement(
             'p',
             null,
             'Logged in as ',
@@ -25673,6 +25686,36 @@ exports.default = function (props) {
             'ul',
             { className: 'activeUsers' },
             activeUserIds
+        ),
+        _react2.default.createElement(
+            'ul',
+            { className: 'controls' },
+            _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                    _reactRouter.Link,
+                    { to: '/', onClick: props.logOut },
+                    _react2.default.createElement(
+                        'i',
+                        { className: 'material-icons' },
+                        'eject'
+                    )
+                )
+            ),
+            _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                    _reactRouter.Link,
+                    { to: '/users' },
+                    _react2.default.createElement(
+                        'i',
+                        { className: 'material-icons' },
+                        'add'
+                    )
+                )
+            )
         )
     );
 };
@@ -25854,7 +25897,7 @@ var UserList = function (_React$Component) {
         key: '_addUsersToChat',
         value: function _addUsersToChat(e) {
             // Get state of all objects that are equal to true
-            console.log('_addUsersToChat');
+            console.log('EVENT: _addUsersToChat ----------- ');
             e.preventDefault();
 
             // get users into array from state object
@@ -25871,10 +25914,14 @@ var UserList = function (_React$Component) {
                 type: 'POST',
                 data: data,
                 success: function (data) {
-                    console.log('ajax add chat users success:'); //unsure why this does not fire
+                    var _this2 = this;
+
+                    console.log('ajax add chat users success:');
                     console.log(data.ops[0]._id);
-                    this.props.history.push('/chats/' + data.ops[0]._id);
-                    this.props.setChat();
+                    this.props.setChat(data.ops[0]._id, function () {
+                        console.log('setChat callback fired');
+                        _this2.props.history.push('/chats/' + data.ops[0]._id);
+                    });
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error('/api/chats/create', status, err.toString());
@@ -25884,7 +25931,7 @@ var UserList = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
+            var _this3 = this;
 
             var userList = this.props.users.map(function (user) {
                 return _react2.default.createElement(
@@ -25895,7 +25942,7 @@ var UserList = function (_React$Component) {
                         null,
                         user.username
                     ),
-                    _react2.default.createElement('input', { key: user._id, checked: _this2.state[user._id], type: 'checkbox', onClick: _this2._handleCheckChange.bind(_this2, user._id) })
+                    _react2.default.createElement('input', { key: user._id, checked: _this3.state[user._id], type: 'checkbox', onClick: _this3._handleCheckChange.bind(_this3, user._id) })
                 );
             });
 

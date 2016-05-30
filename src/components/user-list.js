@@ -26,7 +26,7 @@ export default class UserList extends React.Component {
 
     _addUsersToChat(e) {
         // Get state of all objects that are equal to true
-        console.log('_addUsersToChat');
+        console.log('EVENT: _addUsersToChat ----------- ');
         e.preventDefault();
 
         // get users into array from state object
@@ -41,10 +41,13 @@ export default class UserList extends React.Component {
             type: 'POST',
             data: data,
             success: function(data) {
-                console.log('ajax add chat users success:') //unsure why this does not fire
+                console.log('ajax add chat users success:')
                 console.log(data.ops[0]._id);
-                this.props.history.push('/chats/' + data.ops[0]._id);
-                this.props.setChat()
+                this.props.setChat(data.ops[0]._id, () => {
+                    console.log('setChat callback fired');
+                    this.props.history.push('/chats/' + data.ops[0]._id);
+                });
+
             }.bind(this),
             error: function(xhr, status, err) {
             console.error('/api/chats/create', status, err.toString());
