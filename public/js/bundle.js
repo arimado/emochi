@@ -25420,25 +25420,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = function (props) {
 
+    // SOME PROPS YOU CAN USE FOR DEBUGGING
+    // Chat ID: {props.activeChat}
+    // Current Message: {props.getMsg}
+
     return _react2.default.createElement(
         'div',
         { 'class': 'convoWrapper' },
-        _react2.default.createElement(
-            'div',
-            { className: 'convo growContent', id: 'convo' },
-            _react2.default.createElement(
-                'p',
-                null,
-                'Chat ID: ',
-                props.activeChat
-            ),
-            _react2.default.createElement(
-                'p',
-                null,
-                'Current Message: ',
-                props.getMsg
-            )
-        ),
+        _react2.default.createElement('div', { className: 'convo growContent', id: 'convo' }),
         _react2.default.createElement(_chatForm2.default, {
             sendMsgToServer: props.sendMsgToServer,
             getMsg: props.getMsg
