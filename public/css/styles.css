@@ -152,6 +152,7 @@ body {
 /* MAIN ******************************************/
 
 #layout {
+	flex:  1;
 	height: 100%;
 	display: flex;
 	flex-direction: row;
@@ -199,24 +200,37 @@ body {
 #layout .left > div,  #layout .right > div {
 	display: flex;
 	flex-direction: column;
+	padding: 20px;
+	font-size: 20px;
+	font-weight: 100;
+
 }
 
 /* LEFT TOP+BOTTOM, RIGHT TOP+BOTTOM*/
 
+#layout .left > div {
+	text-align: right;
+}
+
 #layout .left .top {
-	background: #ccc;
+
+	/*padding: 0 20px 20px 0px;*/
+
 }
 
 #layout .left .bottom {
 	background: #ccc;
+	/*padding: 20px 20px 0px 0px;*/
 }
 
 #layout .right .top {
 	background: #ccc;
+	/*padding: 0 0px 20px 20px;*/
 }
 
 #layout .right .bottom {
 	background: #ccc;
+	/*padding: 20px 0 0 20px;*/
 }
 
 /* LEFT COLUMN */
@@ -228,7 +242,7 @@ body {
 }
 
 #layout .cross i {
-	
+	font-size: 40px;
 }
 
 #layout .left .top .cross, #layout .left .bottom .cross  {
@@ -241,25 +255,42 @@ body {
 
 #layout .left .cross i {
 	margin-left: auto;
-	display: block;
 }
 
 #layout .left .top .cross {
 
 }
 
-#layout .left .bottom .cross {
+#layout .left .top .cross i {
+
+}
+
+#layout .left .bottom .cross i {
+
+}
+
+#layout .right .cross {
+
+}
+
+#layout .right .top .cross i {
+
+}
+
+#layout .right .bottom .cross i {
 
 }
 
 /* CONTENT ELEMENTS */
 
 #layout .left .content {
-	flex: 1
+	flex: 1;
+	position: relative;
 }
 
 #layout .right .content {
 	flex: 1;
+	position: relative;
 }
 
 /*LEFT*/
@@ -274,7 +305,17 @@ body {
 
 #layout .left .top .content {
 	background: red;
+	vertical-align: bottom;
 }
+
+#layout .left .top .content p{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+
+
+
 
 #layout .left .bottom .content {
 	background: red;
@@ -292,6 +333,10 @@ body {
 }
 
 #layout .right .top .content {
+
+}
+
+#layout .right .top .content p {
 
 }
 
