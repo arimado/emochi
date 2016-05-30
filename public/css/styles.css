@@ -186,14 +186,62 @@ body {
 }
 
 #layout .cross {
-	
+	border: 1px solid yellow;
+	position: relative;
 }
 
+#layout .content {
+	border: 1px solid black;
+}
+
+/* ALL GRID DIVS */
+
+#layout .left > div,  #layout .right > div {
+	display: flex;
+	flex-direction: column;
+}
+
+/* LEFT TOP+BOTTOM, RIGHT TOP+BOTTOM*/
+
+#layout .left .top {
+	background: #ccc;
+}
+
+#layout .left .bottom {
+	background: #ccc;
+}
+
+#layout .right .top {
+	background: #ccc;
+}
+
+#layout .right .bottom {
+	background: #ccc;
+}
 
 /* LEFT COLUMN */
 
+/* CROSS ELEMENTS */
+
+#layout .cross {
+	display: flex;
+}
+
+#layout .cross i {
+	
+}
+
 #layout .left .top .cross, #layout .left .bottom .cross  {
 
+}
+
+#layout .left .cross {
+
+}
+
+#layout .left .cross i {
+	margin-left: auto;
+	display: block;
 }
 
 #layout .left .top .cross {
@@ -204,6 +252,52 @@ body {
 
 }
 
+/* CONTENT ELEMENTS */
+
+#layout .left .content {
+	flex: 1
+}
+
+#layout .right .content {
+	flex: 1;
+}
+
+/*LEFT*/
+
+#layout .left .top .content, #layout .left .bottom .content  {
+	background: red;
+}
+
+#layout .left .content {
+	background: red;
+}
+
+#layout .left .top .content {
+	background: red;
+}
+
+#layout .left .bottom .content {
+	background: red;
+}
+
+/*RIGHT*/
+
+
+#layout .right .top .content, #layout .right .bottom .content  {
+
+}
+
+#layout .right .content {
+
+}
+
+#layout .right .top .content {
+
+}
+
+#layout .right .bottom .content {
+
+}
 
 
 #containerOuter {
