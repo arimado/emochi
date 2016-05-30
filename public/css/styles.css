@@ -102,7 +102,7 @@ form {
     display: flex;
 }
 
-input {
+input, button {
   background:none;
   border:none;
   padding: 0;
@@ -298,8 +298,11 @@ ul.controls li a {
 .fullButton {
     padding: 15px;
     width: 100%;
-    background: rgb(208, 208, 208);
+    background: #f1c40f;
     color: white;
+	-webkit-box-shadow: 0px -3px 2px -2px rgba(0,0,0,0.42);
+	-moz-box-shadow: 0px -3px 2px -2px rgba(0,0,0,0.42);
+	box-shadow: 0px -3px 2px -2px rgba(0,0,0,0.42);
 }
 
 .fullButton:hover {
@@ -328,13 +331,16 @@ ul.controls li a {
 	left: 0;
 	bottom: 0;*/
 	width: 100%;
+	background: #f1c40f;
+	-moz-box-shadow: 0px -3px 2px -2px rgba(0,0,0,0.42);
+	box-shadow: 0px -3px 2px -2px rgba(0,0,0,0.42);
 }
 
 .chatFormInner {
 	width: 100%;
 	display: flex;
 	flex-direction: row;
-	border-top: 1px solid rgb(212, 212, 212);
+	color: white;
 }
 
 .chatForm .chatFormInner input {
@@ -343,6 +349,8 @@ ul.controls li a {
 
 .chatForm .chatFormInner input[type=text] {
 	flex-grow: 1;
+	color: white;
+
 }
 
 .chatForm .chatFormInner input[type=text]:focus {
@@ -350,9 +358,10 @@ ul.controls li a {
 	border: none;
 }
 
-.chatForm .chatFormInner input[type=submit] {
+.chatForm .chatFormInner button {
 	width: 80px;
-	background: rgb(221, 221, 221);
+	background: #f1c40f;
+	color: white;
 }
 
 

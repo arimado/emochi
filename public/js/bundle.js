@@ -25344,7 +25344,15 @@ exports.default = function (props) {
             "div",
             { className: "chatFormInner" },
             _react2.default.createElement("input", { id: "messageField", type: "text" }),
-            _react2.default.createElement("input", { type: "submit", value: " " })
+            _react2.default.createElement(
+                "button",
+                { type: "submit", "class": "btn btn-success" },
+                _react2.default.createElement(
+                    "i",
+                    { className: "material-icons" },
+                    "send"
+                )
+            )
         )
     );
 };

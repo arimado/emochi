@@ -6,15 +6,18 @@ export default (props) => {
         e.preventDefault();
         var msg = document.getElementById("messageField").value;
         props.sendMsgToServer(msg);
-        document.getElementById("messageField").value = ''; 
+        document.getElementById("messageField").value = '';
     }
 
     return (
         <form className="chatForm" onSubmit={getMessage}>
             <div className="chatFormInner">
                 <input id="messageField" type="text"/>
-                <input type="submit" value=" "/>
+                <button type="submit" class="btn btn-success">
+                   <i className="material-icons">send</i>
+               </button>
             </div>
+
         </form>
     )
 }
