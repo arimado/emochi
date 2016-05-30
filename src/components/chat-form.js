@@ -12,7 +12,9 @@ export default (props) => {
     return (
         <form className="chatForm" onSubmit={getMessage}>
             <div className="chatFormInner">
-                <input id="messageField" type="text"/>
+                <div className="messageFieldWrapper">
+                    <input id="messageField" type="text"/><span className="shade"></span>
+                </div>
                 <button type="submit" class="btn btn-success">
                    <i className="material-icons">send</i>
                </button>
