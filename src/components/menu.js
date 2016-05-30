@@ -38,13 +38,15 @@ export default (props) => {
 
     return (
         <div className="menu">
-            <p>Logged in as {props.name} </p>
+            {/*<p>Logged in as {props.name} </p>*/}
             <div id="backButton">
                 <a onClick={props.navBack}><i className="material-icons">chevron_left</i></a>
             </div>
-            <ul className="activeUsers">
-                {activeUserIds}
-            </ul>
+            <div className="activeUsersWrapper">
+                <ul className="activeUsers">
+                    {activeUserIds}
+                </ul>
+            </div>
             <ul className="controls">
                 <li><Link to="/" onClick={props.logOut}><i className="material-icons">eject</i></Link></li>
                 <li><Link to="/users"><i className="material-icons">add</i></Link></li>

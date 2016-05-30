@@ -25691,13 +25691,6 @@ exports.default = function (props) {
         'div',
         { className: 'menu' },
         _react2.default.createElement(
-            'p',
-            null,
-            'Logged in as ',
-            props.name,
-            ' '
-        ),
-        _react2.default.createElement(
             'div',
             { id: 'backButton' },
             _react2.default.createElement(
@@ -25711,9 +25704,13 @@ exports.default = function (props) {
             )
         ),
         _react2.default.createElement(
-            'ul',
-            { className: 'activeUsers' },
-            activeUserIds
+            'div',
+            { className: 'activeUsersWrapper' },
+            _react2.default.createElement(
+                'ul',
+                { className: 'activeUsers' },
+                activeUserIds
+            )
         ),
         _react2.default.createElement(
             'ul',

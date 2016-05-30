@@ -130,9 +130,10 @@ body {
     flex-direction: column;
     flex-grow: 1;
     font-family: 'Roboto Condensed', sans-serif;
-	color: rgb(70, 70, 70);
+	color: white;
 	overflow: auto;
 	height: 100%;
+	background: #d35400;
 }
 
 /* MAIN ******************************************/
@@ -149,7 +150,11 @@ body {
 	max-width: 400px;
 	width: 100%;
 	height: 100%;
-	border: 1px solid green;
+	background: #e67e22;
+	-webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.83);
+	-moz-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.83);
+	box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.83);
+
 }
 
 .chatBoxContainer {
@@ -204,6 +209,10 @@ body {
 	flex-direction: row;
 }
 
+.menu div {
+
+}
+
 .menu > p {
 	padding: 5px 0px 0px 0px;
 	font-size: 12px;
@@ -214,24 +223,50 @@ body {
 .menu a {
 	display: block;
 	padding: 10px;
-	background: #ccc;
+	background: #f1c40f;
 	color: white;
 }
 
+div#backButton {
+	position: relative;
+	-webkit-box-shadow: 4px 0px 5px -5px rgba(0,0,0,0.79);
+	-moz-box-shadow: 4px 0px 5px -5px rgba(0,0,0,0.79);
+	box-shadow: 4px 0px 5px -5px rgba(0,0,0,0.79);
+}
+
+div#backButton a {
+
+}
+
+.activeUsersWrapper {
+	flex: 1;
+	width: 100%;
+	overflow: hidden;
+	background: #f1c40f;
+
+}
+
 .activeUsers {
-	border: 1px solid yellow;
+	overflow: auto;
+	white-space: nowrap;
+	padding: 8px 0 11px 0;
 }
 
 .activeUsers li {
 	display: inline-block;
 	padding: 10px;
 	border-radius: 50px;
-	background: rgb(217, 217, 217);
+	border: 1px solid white;
 	margin-right: 10px;
+	font-size: 10px;
+	letter-spacing: 1px;
 }
 
 ul.controls {
 	margin-left: auto;
+	-webkit-box-shadow: -4px 0px 5px -5px rgba(0,0,0,0.79);
+	-moz-box-shadow: -4px 0px 5px -5px rgba(0,0,0,0.79);
+	box-shadow: -4px 0px 5px -5px rgba(0,0,0,0.79);
 }
 
 ul.controls li {
@@ -271,13 +306,13 @@ ul.controls li a {
 .registerContainer form input[type=text] {
     display: block;
     padding: 20px;
-    border-bottom: 2px solid grey;
+    border-bottom: 2px solid white;
     margin-bottom: 20px;
 }
 
 .registerContainer form input[type=text]:focus {
     background-color: none;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid red;
     outline: none;
 }
 
