@@ -176,7 +176,7 @@ app.post('/api/chats/create', function(req, res) {
     var members = JSON.parse(req.body.data);
     var chats = db.get().collection('chats');
     chats.insert({members: members}, function (err, result){
-        res.json(result)
+        res.json(result);
     });
 });
 

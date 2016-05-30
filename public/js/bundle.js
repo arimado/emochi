@@ -25037,6 +25037,8 @@ var _menu = require('./menu.js');
 
 var _menu2 = _interopRequireDefault(_menu);
 
+var _reactRouter = require('react-router');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25077,6 +25079,7 @@ var ChatBox = function (_React$Component) {
         _this._setChat = _this._setChat.bind(_this);
         _this._sendMsgToServer = _this._sendMsgToServer.bind(_this);
         _this._setNewMessage = _this._setNewMessage.bind(_this);
+        _this._navBack = _this._navBack.bind(_this);
 
         return _this;
     }
@@ -25131,7 +25134,7 @@ var ChatBox = function (_React$Component) {
             // data is availble to childeren through childrenWithProps function
             // as 'users'
 
-            console.log('getting users');
+            // console.log('getting users');
             $.ajax({
                 url: '/api/users',
                 dataType: 'json',
@@ -25148,9 +25151,15 @@ var ChatBox = function (_React$Component) {
         key: '_getChats',
         value: function _getChats(done) {
 
-            console.log('ROOT: this._getChats - fired');
+            // this._getChats -----------------------------------
+            // - GET: /api/chats
+            //      - server returns array of chats
+            //      - properties: ._id STR, .members ARR
+            // - sets this.state.chats to that array
+            // - Triggered By
+            //      - whenever this._setChat() is called
+            //      - root componentDidMount
 
-            // query the database
             $.ajax({
                 url: '/api/chats',
                 dataType: 'json',
@@ -25160,10 +25169,10 @@ var ChatBox = function (_React$Component) {
                     console.log(data);
                     // this should be retrunging an array of chats
                     if (done) {
-                        console.log('updating this.state.chats with callback');
+                        // console.log('updating this.state.chats with callback')
                         this.setState({ chats: data }, done);
                     } else {
-                        console.log('updating this.state.chats without callback');
+                        // console.log('updating this.state.chats without callback')
                         this.setState({ chats: data });
                     }
                 }.bind(this),
@@ -25178,6 +25187,13 @@ var ChatBox = function (_React$Component) {
         key: '_setChat',
         value: function _setChat(chatId, done) {
             var _this2 = this;
+
+            // this._setChat -----------------------------------
+            // - sets chatId string in this.state.chat
+            // - then fetches the new chats from the database with this_.getChats
+            // - Triggered By:
+            //      - SUBMIT BUTTON in user-list.js
+            //      - ON ELEMENT CLICK in chat-list.js
 
             console.log('set Chat fired with ' + chatId);
 
@@ -25233,6 +25249,12 @@ var ChatBox = function (_React$Component) {
             });
         }
     }, {
+        key: '_navBack',
+        value: function _navBack() {
+            console.log('EVENT: _navBack()');
+            this.props.history.goBack();
+        }
+    }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
             if (this.props.params) {
@@ -25249,8 +25271,8 @@ var ChatBox = function (_React$Component) {
         value: function render() {
             var _this3 = this;
 
-            console.log('ROOT STATE: this.state.chats: ');
-            console.log(this.state.chats);
+            // console.log('ROOT STATE: this.state.chats: ');
+            // console.log(this.state.chats);
 
             var childrenWithProps = _react2.default.Children.map(this.props.children, function (child) {
                 return _react2.default.cloneElement(child, {
@@ -25266,6 +25288,7 @@ var ChatBox = function (_React$Component) {
                     getMsg: _this3.state.message
                 });
             });
+
             return _react2.default.createElement(
                 'div',
                 { className: 'chatBoxContainer' },
@@ -25275,7 +25298,8 @@ var ChatBox = function (_React$Component) {
                     name: this.state.username,
                     logOut: this._logOut,
                     getUser: this._getCurrentUser,
-                    users: this.state.users
+                    users: this.state.users,
+                    navBack: this._navBack
                 }),
                 _react2.default.createElement(
                     'div',
@@ -25291,7 +25315,7 @@ var ChatBox = function (_React$Component) {
 
 exports.default = ChatBox;
 
-},{"./menu.js":236,"react":228}],231:[function(require,module,exports){
+},{"./menu.js":236,"react":228,"react-router":32}],231:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -25628,27 +25652,16 @@ exports.default = function (props) {
     // - props.users >      root: this.state.users  Arr
     // - props.activeChat > root: this.state.chat   Str
 
-    var activeChat;
     var activeChatMemberIds;
     var activeUserIds;
     var activeUsers;
-
-    // THE PROBLEM WITH THE BELOW IS THAT IT FIRES BEFORE A NEW CHAT LIST IS ACTIVE.
-
-    // IF THERE WAS A WAY TO SAVE THE CURRENT STATE
-    // AND COMPARE IT WITH THE NEW THEN I WOULD BE ABLE TO DO THIS
-
-    activeChat = props.chats.filter(function (chat) {
+    var activeChat = props.chats.filter(function (chat) {
         return chat._id === props.activeChat;
     });
-    console.log('activeChat ------ ');
-    console.log(activeChat);
+
+    // ONLY RENDER WHEN THERE IS A NEW CHAT INITIALISED AND SAVED TO THE DB
 
     if (props.activeChat !== '' && props.activeChat !== undefined && activeChat.length > 0) {
-        console.log('props.activeChat ------ ');
-        console.log(props.activeChat);
-        console.log('props.chats ------ ');
-        console.log(props.chats);
 
         activeChatMemberIds = activeChat[0].members;
         activeUsers = props.users.filter(function (user) {
@@ -25672,6 +25685,8 @@ exports.default = function (props) {
         };
     }
 
+    // CLICK EVENTS
+
     return _react2.default.createElement(
         'div',
         { className: 'menu' },
@@ -25681,6 +25696,19 @@ exports.default = function (props) {
             'Logged in as ',
             props.name,
             ' '
+        ),
+        _react2.default.createElement(
+            'div',
+            { id: 'backButton' },
+            _react2.default.createElement(
+                'a',
+                { onClick: props.navBack },
+                _react2.default.createElement(
+                    'i',
+                    { className: 'material-icons' },
+                    'chevron_left'
+                )
+            )
         ),
         _react2.default.createElement(
             'ul',

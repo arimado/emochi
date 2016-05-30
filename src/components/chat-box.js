@@ -1,5 +1,6 @@
 import React from 'react';
 import Menu from './menu.js';
+import { browserHistory, RouterContext } from 'react-router';
 // import io from 'socket.io-client'
 // let socket = io('http://localhost:3005/');
 
@@ -29,6 +30,7 @@ export default class ChatBox extends React.Component {
         this._setChat = this._setChat.bind(this);
         this._sendMsgToServer = this._sendMsgToServer.bind(this);
         this._setNewMessage = this._setNewMessage.bind(this);
+        this._navBack = this._navBack.bind(this);
 
     }
 
@@ -134,7 +136,7 @@ export default class ChatBox extends React.Component {
         // - Triggered By:
         //      - SUBMIT BUTTON in user-list.js
         //      - ON ELEMENT CLICK in chat-list.js
-        
+
         console.log('set Chat fired with ' + chatId)
 
         // only leave chat if there is an availble chat id
@@ -189,6 +191,11 @@ export default class ChatBox extends React.Component {
         })
     }
 
+    _navBack() {
+        console.log('EVENT: _navBack()')
+        this.props.history.goBack();
+    }
+
     componentDidMount() {
         if (this.props.params) {
             console.log(this.props.params);
@@ -202,8 +209,8 @@ export default class ChatBox extends React.Component {
 
     render() {
 
-        console.log('ROOT STATE: this.state.chats: ');
-        console.log(this.state.chats);
+        // console.log('ROOT STATE: this.state.chats: ');
+        // console.log(this.state.chats);
 
         const childrenWithProps = React.Children.map(this.props.children,
             (child) => React.cloneElement(child, {
@@ -219,6 +226,7 @@ export default class ChatBox extends React.Component {
                 getMsg: this.state.message
             })
         );
+
         return (
             <div className="chatBoxContainer">
                 <Menu
@@ -228,6 +236,7 @@ export default class ChatBox extends React.Component {
                     logOut={this._logOut}
                     getUser={this._getCurrentUser}
                     users={this.state.users}
+                    navBack={this._navBack}
                 />
                 <div className="mainContent">
                     {childrenWithProps}

@@ -33,9 +33,15 @@ export default (props) => {
         activeUserIds = () => { return <div></div> }
     }
 
+    // CLICK EVENTS
+
+
     return (
         <div className="menu">
             <p>Logged in as {props.name} </p>
+            <div id="backButton">
+                <a onClick={props.navBack}><i className="material-icons">chevron_left</i></a>
+            </div>
             <ul className="activeUsers">
                 {activeUserIds}
             </ul>
