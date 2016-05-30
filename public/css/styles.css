@@ -98,6 +98,19 @@ table {
 
 /* GLOBALS ******************************************/
 
+*::-webkit-input-placeholder {
+    color: white;
+}
+*:-moz-placeholder {
+    color: white;
+}
+*::-moz-placeholder {
+    color: white;
+}
+*:-ms-input-placeholder {
+    color: white;
+}
+
 form {
     display: flex;
 }
@@ -188,6 +201,7 @@ body {
 
 .growContent {
 	height: 100%;
+	flex: 1;
 	overflow: scroll;
 }
 
@@ -208,8 +222,9 @@ body {
 	display: flex;
 	flex-direction: row;
 	-webkit-box-shadow: 0px 3px 2px -2px rgba(0,0,0,0.42);
--moz-box-shadow: 0px 3px 2px -2px rgba(0,0,0,0.42);
-box-shadow: 0px 3px 2px -2px rgba(0,0,0,0.42);
+	-moz-box-shadow: 0px 3px 2px -2px rgba(0,0,0,0.42);
+	box-shadow: 0px 3px 2px -2px rgba(0,0,0,0.42);
+    height: 50px;
 }
 
 .menu div {
@@ -246,6 +261,7 @@ div#backButton a {
 	width: 100%;
 	overflow: hidden;
 	background: #f1c40f;
+	height: 47px;
 
 }
 
@@ -281,19 +297,49 @@ ul.controls li a {
 }
 
 
+/* PAGES *********************************************/
+
+
+/* REGISTER AND LOGIN SCREEN ********************* */
+
+.registerContainer form {
+	margin-top: 50px;
+}
+
+.registerContainer form input[type=text] {
+    display: block;
+    padding: 20px;
+    background: #f1c40f;
+	color: white;
+	margin: 20px 20px 0px 20px;
+	-webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.51);
+	-moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.51);
+	box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.51);
+}
+
+.registerContainer form input:-webkit-input-placeholder {
+	color:white;
+}
+
+
+.registerContainer form input[type=text]:focus {
+    background-color: none;
+    outline: none;
+}
 
 /* BOTTOM FORM ***************************************/
 
 /* REGISTER + LOGIN BUTTON */
 
 .bottomForm {
-	/*display: fixed;*/
 	flex-direction: column;
-	/*position: absolute;*/
-	/*left: 0;
-	bottom: 0;*/
 	width: 100%;
 }
+
+.bottomForm input {
+	flex: 1;
+}
+
 
 .fullButton {
     padding: 15px;
@@ -309,18 +355,6 @@ ul.controls li a {
     background: rgb(172, 172, 172);
 }
 
-.registerContainer form input[type=text] {
-    display: block;
-    padding: 20px;
-    border-bottom: 2px solid white;
-    margin-bottom: 20px;
-}
-
-.registerContainer form input[type=text]:focus {
-    background-color: none;
-    border-bottom: 2px solid red;
-    outline: none;
-}
 
 
 /* CHAT FORM */
@@ -334,6 +368,7 @@ ul.controls li a {
 	background: #f1c40f;
 	-moz-box-shadow: 0px -3px 2px -2px rgba(0,0,0,0.42);
 	box-shadow: 0px -3px 2px -2px rgba(0,0,0,0.42);
+	overflow: hidden;
 }
 
 .chatFormInner {

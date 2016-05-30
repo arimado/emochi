@@ -49,7 +49,7 @@ export default class Register extends React.Component {
 
     render() {
         return (
-            <div className="registerContainer growContainer">
+            <div className="registerContainer growContainer registerLoginContainer">
                 <div className="growContent">
                     <form className="loginForm" onSubmit={this._handleRegisterSubmit}>
                         <input
