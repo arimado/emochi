@@ -25493,17 +25493,34 @@ var Home = function (_React$Component) {
                 'div',
                 { className: 'homeContainer' },
                 _react2.default.createElement(
-                    _reactRouter.Link,
-                    { to: '/register' },
-                    'Register'
+                    'div',
+                    { className: 'logoContainer' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'logo' },
+                        'Emochi'
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'description' },
+                        ' Shh... no words. Only feels now.'
+                    )
                 ),
-                ' |',
                 _react2.default.createElement(
-                    _reactRouter.Link,
-                    { to: '/login' },
-                    'Login'
-                ),
-                ' |'
+                    'div',
+                    { className: 'homeLinks' },
+                    _react2.default.createElement(
+                        _reactRouter.Link,
+                        { to: '/register' },
+                        'Register'
+                    ),
+                    ' ',
+                    _react2.default.createElement(
+                        _reactRouter.Link,
+                        { to: '/login' },
+                        'Login'
+                    )
+                )
             );
         }
     }]);
@@ -25597,7 +25614,7 @@ var Login = function (_React$Component) {
         value: function render() {
             return _react2.default.createElement(
                 'div',
-                { className: 'registerContainer growContainer' },
+                { className: 'registerContainer growContainer registerLoginContainer' },
                 _react2.default.createElement(
                     'div',
                     { className: 'growContent' },
@@ -25832,7 +25849,7 @@ var Register = function (_React$Component) {
         value: function render() {
             return _react2.default.createElement(
                 'div',
-                { className: 'registerContainer growContainer' },
+                { className: 'registerContainer growContainer registerLoginContainer' },
                 _react2.default.createElement(
                     'div',
                     { className: 'growContent' },

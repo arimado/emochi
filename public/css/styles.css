@@ -33,6 +33,7 @@ footer, header, hgroup, menu, nav, section {
 
 body {
 	line-height: 1;
+
 }
 
 ol, ul {
@@ -142,11 +143,11 @@ body {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    font-family: 'Roboto Condensed', sans-serif;
+
 	color: white;
 	overflow: auto;
 	height: 100%;
-	background: #d35400;
+	background: rgb(63, 81, 181);
 }
 
 /* MAIN ******************************************/
@@ -156,11 +157,14 @@ body {
 	height: 100%;
 	display: flex;
 	flex-direction: row;
+	font-size: 12px;
+	font-family: 'Lato';
+	font-weight: 100;
 }
 
 #layout > div {
 	height: 100%;
-	border: 1px solid green;
+	/*border: 1px solid green;*/
 }
 
 #layout .left, #layout .right {
@@ -170,7 +174,7 @@ body {
 }
 
 #layout .top, #layout .middle, #layout .bottom {
-	border: 1px solid blue;
+	/*border: 1px solid blue;*/
 
 }
 
@@ -187,12 +191,12 @@ body {
 }
 
 #layout .cross {
-	border: 1px solid yellow;
+	/*border: 1px solid yellow;*/
 	position: relative;
 }
 
 #layout .content {
-	border: 1px solid black;
+	/*border: 1px solid black;*/
 }
 
 /* ALL GRID DIVS */
@@ -201,7 +205,6 @@ body {
 	display: flex;
 	flex-direction: column;
 	padding: 20px;
-	font-size: 20px;
 	font-weight: 100;
 
 }
@@ -214,23 +217,18 @@ body {
 
 #layout .left .top {
 
-	/*padding: 0 20px 20px 0px;*/
-
 }
 
 #layout .left .bottom {
-	background: #ccc;
-	/*padding: 20px 20px 0px 0px;*/
+	/*background: #ccc;*/
 }
 
 #layout .right .top {
-	background: #ccc;
-	/*padding: 0 0px 20px 20px;*/
+	/*background: #ccc;*/
 }
 
 #layout .right .bottom {
-	background: #ccc;
-	/*padding: 20px 0 0 20px;*/
+	/*background: #ccc;*/
 }
 
 /* LEFT COLUMN */
@@ -281,7 +279,18 @@ body {
 
 }
 
+/*BOTTOM CROSSES*/
+
+#layout .bottom .cross i {
+	padding: 0 0 30px 0;
+}
+
+
 /* CONTENT ELEMENTS */
+
+#layout .content a {
+	color: white;
+}
 
 #layout .left .content {
 	flex: 1;
@@ -296,31 +305,29 @@ body {
 /*LEFT*/
 
 #layout .left .top .content, #layout .left .bottom .content  {
-	background: red;
+	/*background: red;*/
 }
 
 #layout .left .content {
-	background: red;
+	/*background: red;*/
 }
 
 #layout .left .top .content {
-	background: red;
+	/*background: red;*/
 	vertical-align: bottom;
 }
 
 #layout .left .top .content p{
-	position: absolute;
-	bottom: 0;
-	right: 0;
+
 }
-
-
-
 
 #layout .left .bottom .content {
-	background: red;
+
 }
 
+#layout .left .bottom .content i {
+	font-size: 13px;
+}
 /*RIGHT*/
 
 
@@ -351,8 +358,10 @@ body {
 	display: flex;
 	flex-direction: column;;
 	justify-content: center;
+	font-family: 'Roboto Condensed', sans-serif;
+	font-size: 16px;
+	font-weight: 200;
 }
-
 
 #container {
 	margin: auto;
@@ -360,7 +369,7 @@ body {
 	max-width: 400px;
 	width: 100%;
 	height: 100%;
-	background: #e67e22;
+	background: rgb(113, 126, 198);
 	-webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.83);
 	-moz-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.83);
 	box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.83);
@@ -496,22 +505,66 @@ ul.controls li a {
 
 /* PAGES *********************************************/
 
+/* HOME */
+
+.homeContainer {
+	display: flex;
+	flex-direction: column;
+}
+
+.homeContainer .logoContainer {
+	text-align: center;
+	padding: 30px;
+	flex-grow: 1;
+	margin-top: 40px;
+
+}
+
+.homeContainer .logoContainer .logo {
+	font-size: 70px;
+	font-weight: 900;
+	letter-spacing: 3px;
+}
+
+.homeContainer .logoContainer .description {
+	font-size: 20px;
+	letter-spacing: 1px;
+	font-weight: 900;
+}
+
+.homeContainer .homeLinks {
+}
+
+
+.homeContainer .homeLinks a {
+	background: #f1c40f;
+	color: white;
+	padding: 20px;
+	text-decoration: none;
+	font-weight: 500;
+	text-transform: uppercase;
+	display: inline;
+	display: block;
+	text-align: center;
+	-webkit-box-shadow: 0px -2px 1px -1px rgba(0,0,0,0.21);
+	-moz-box-shadow: 0px -2px 1px -1px rgba(0,0,0,0.21);
+	box-shadow: 0px -2px 1px -1px rgba(0,0,0,0.21);
+}
+
 
 /* REGISTER AND LOGIN SCREEN ********************* */
 
 .registerContainer form {
-	margin-top: 50px;
+	margin-top: 10px;
 }
 
 .registerContainer form input[type=text] {
     display: block;
     padding: 20px;
-    background: #f1c40f;
-	color: white;
-	margin: 20px 20px 0px 20px;
-	-webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.51);
-	-moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.51);
-	box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.51);
+    color: white;
+    margin: 20px 20px 0px 20px;
+    -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.51);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .registerContainer form input:-webkit-input-placeholder {
