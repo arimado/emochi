@@ -25080,6 +25080,7 @@ var ChatBox = function (_React$Component) {
         _this._sendMsgToServer = _this._sendMsgToServer.bind(_this);
         _this._setNewMessage = _this._setNewMessage.bind(_this);
         _this._navBack = _this._navBack.bind(_this);
+        _this._getEmoji = _this._getEmoji.bind(_this);
 
         return _this;
     }
@@ -25218,19 +25219,42 @@ var ChatBox = function (_React$Component) {
             console.log('');
         }
     }, {
+        key: '_getEmoji',
+        value: function _getEmoji(message, callback) {
+            $.ajax({
+                url: 'http://emoji.getdango.com/api/emoji?q=' + encodeURIComponent(message),
+                success: function success(data) {
+                    console.log(data);
+                    callback(data);
+                }
+            });
+        }
+    }, {
         key: '_sendMsgToServer',
         value: function _sendMsgToServer(msg) {
+            var _this3 = this;
+
             console.log('fired: sendMsgToServer');
 
-            var profileMsg = {
-                chatId: this.state.chat,
-                user: this.state.username,
-                message: msg
-            };
+            this._getEmoji(msg, function (emojiResponse) {
 
-            console.log(profileMsg);
+                debugger;
 
-            socket.emit('data:message', profileMsg);
+                var emojiTxt = emojiResponse.results.map(function (e) {
+                    return e.text;
+                }).reduce(function (prev, next) {
+                    return prev + ' ' + next;
+                });
+
+                var profileMsg = {
+                    chatId: _this3.state.chat,
+                    user: _this3.state.username,
+                    message: emojiTxt
+                };
+
+                console.log(emojiTxt);
+                socket.emit('data:message', profileMsg);
+            });
         }
     }, {
         key: '_setNewMessage',
@@ -25269,23 +25293,23 @@ var ChatBox = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this3 = this;
+            var _this4 = this;
 
             // console.log('ROOT STATE: this.state.chats: ');
             // console.log(this.state.chats);
 
             var childrenWithProps = _react2.default.Children.map(this.props.children, function (child) {
                 return _react2.default.cloneElement(child, {
-                    getUser: _this3._getCurrentUser,
-                    getUsers: _this3._getUsers,
-                    users: _this3.state.users,
-                    consolePrint: _this3._consolePrint,
-                    getChats: _this3._getChats,
-                    chats: _this3.state.chats,
-                    setChat: _this3._setChat,
-                    activeChat: _this3.state.chat,
-                    sendMsgToServer: _this3._sendMsgToServer,
-                    getMsg: _this3.state.message
+                    getUser: _this4._getCurrentUser,
+                    getUsers: _this4._getUsers,
+                    users: _this4.state.users,
+                    consolePrint: _this4._consolePrint,
+                    getChats: _this4._getChats,
+                    chats: _this4.state.chats,
+                    setChat: _this4._setChat,
+                    activeChat: _this4.state.chat,
+                    sendMsgToServer: _this4._sendMsgToServer,
+                    getMsg: _this4.state.message
                 });
             });
 

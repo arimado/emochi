@@ -201,7 +201,7 @@ io.on('connection', function (socket) {
         console.log('connect:chatroom fired')
         console.log('chatroom: ' + chatroom);
         socket.join(chatroom);
-    })
+    });
 
     socket.on('disconnect:chatroom', function(chatroom) {
         console.log('disconnect:chatroom fired')
@@ -212,6 +212,7 @@ io.on('connection', function (socket) {
     socket.on('disconnect', function () {
         console.log("a socket connection was disconnected");
     });
+
 });
 
 http.listen(3005, function () {
