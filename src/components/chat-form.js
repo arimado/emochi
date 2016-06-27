@@ -8,7 +8,7 @@ export default (props) => {
         props.sendMsgToServer(msg);
         document.getElementById("messageField").value = '';
     }
-
+    
     return (
         <form className="chatForm" onSubmit={getMessage}>
             <div className="chatFormInner">
@@ -19,7 +19,6 @@ export default (props) => {
                    <i className="material-icons">send</i>
                </button>
             </div>
-
         </form>
     )
 }
