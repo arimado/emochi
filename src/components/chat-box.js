@@ -211,14 +211,16 @@ export default class ChatBox extends React.Component {
     }
 
     _chatInputChange(msg) {
-
-
         console.log(msg);
-
         // get emoji's
         // render new thing
         // probs only fire when the last has finished
         // make a dummt for making requests
+        this.setState({message: msg});
+        console.log(this.state.message);
+    }
+
+    _getCurrentMessage() {
 
     }
 

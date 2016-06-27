@@ -25274,14 +25274,17 @@ var ChatBox = function (_React$Component) {
     }, {
         key: '_chatInputChange',
         value: function _chatInputChange(msg) {
-
             console.log(msg);
-
             // get emoji's
             // render new thing
             // probs only fire when the last has finished
             // make a dummt for making requests
+            this.setState({ message: msg });
+            console.log(this.state.message);
         }
+    }, {
+        key: '_getCurrentMessage',
+        value: function _getCurrentMessage() {}
     }, {
         key: '_navBack',
         value: function _navBack() {
@@ -25373,7 +25376,7 @@ exports.default = function (props) {
     };
 
     var handleChange = function handleChange(e) {
-        props.chatInputChange('sup');
+        props.chatInputChange(e.target.value);
     };
 
     return _react2.default.createElement(
@@ -25385,7 +25388,7 @@ exports.default = function (props) {
             _react2.default.createElement(
                 "div",
                 { className: "messageFieldWrapper" },
-                _react2.default.createElement("input", { id: "messageField", type: "text", onChange: handleChange }),
+                _react2.default.createElement("input", { id: "messageField", type: "text", onChange: handleChange, value: props.getMsg }),
                 _react2.default.createElement("span", { className: "shade" })
             ),
             _react2.default.createElement(

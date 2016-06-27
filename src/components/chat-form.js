@@ -10,14 +10,14 @@ export default (props) => {
     }
 
     const handleChange = (e) => {
-        props.chatInputChange('sup');
+        props.chatInputChange(e.target.value);
     }
 
     return (
         <form className="chatForm" onSubmit={getMessage}>
             <div className="chatFormInner">
                 <div className="messageFieldWrapper">
-                    <input id="messageField" type="text" onChange={handleChange} /><span className="shade"></span>
+                    <input id="messageField" type="text" onChange={handleChange} value={props.getMsg}/><span className="shade"></span>
                 </div>
                 <button type="submit" class="btn btn-success">
                    <i className="material-icons">send</i>
