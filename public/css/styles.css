@@ -558,7 +558,7 @@ ul.controls li a {
 	margin-top: 10px;
 }
 
-.registerContainer form input[type=text] {
+.registerContainer form input[type=text], .registerContainer form input[type=password] {
     display: block;
     padding: 20px;
     color: white;
@@ -572,7 +572,7 @@ ul.controls li a {
 }
 
 
-.registerContainer form input[type=text]:focus {
+.registerContainer form input[type=text]:focus, .registerContainer form input[type=password]:focus {
     background-color: none;
     outline: none;
 }

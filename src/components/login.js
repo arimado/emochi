@@ -61,7 +61,7 @@ export default class Login extends React.Component {
                         onChange={this._handleUsernameChange}
                     />
                     <input
-                        type="text"
+                        type="password"
                         placeholder="password"
                         className="loginField"
                         value={this.state.password}

@@ -25742,7 +25742,7 @@ var Login = function (_React$Component) {
                             onChange: this._handleUsernameChange
                         }),
                         _react2.default.createElement('input', {
-                            type: 'text',
+                            type: 'password',
                             placeholder: 'password',
                             className: 'loginField',
                             value: this.state.password,
