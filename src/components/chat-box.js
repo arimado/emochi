@@ -8,6 +8,12 @@ let socket = io();
 
 let $chatElement = $('#convo');
 
+const emojiObjectToString = (obj) => {
+    return obj.results
+              .map(e => e.text)
+              .reduce(( prev, next ) => { return prev + ' ' +  next});
+}
+
 export default class ChatBox extends React.Component {
 
     constructor() {
@@ -19,7 +25,9 @@ export default class ChatBox extends React.Component {
             chats: [],                                // array of availble chats with the chats[i]._id and chats[i].members (which is an array of user _id's)
             chat: '',
             message: '',
-            names: []
+            preview: '',
+            names: [],
+            emojiFetch: false,
         };
 
         this._getCurrentUser = this._getCurrentUser.bind(this);
@@ -130,7 +138,6 @@ export default class ChatBox extends React.Component {
         });
     }
 
-
     _setChat(chatId, done) {
 
         // this._setChat -----------------------------------
@@ -165,13 +172,17 @@ export default class ChatBox extends React.Component {
     }
 
     _getEmoji(message, callback) {
-        $.ajax({
-          url: 'http://emoji.getdango.com/api/emoji?q=' + encodeURIComponent(message),
-          success: (data) => {
-              console.log(data)
-              callback(data)
-          }
-        });
+        if (this.state.emojiFetch === false) {
+            $.ajax({
+              url: 'http://emoji.getdango.com/api/emoji?q=' + encodeURIComponent(message),
+              success: (data) => {
+                  console.log(data)
+                  callback(data)
+                  this.setState({emojiFetch: false});
+              }
+            });
+        }
+        this.setState({emojiFetch: true});
     }
 
     _sendMsgToServer(msg) {
@@ -179,9 +190,7 @@ export default class ChatBox extends React.Component {
 
         this._getEmoji(msg, (emojiResponse) => {
 
-            var emojiTxt = emojiResponse.results
-                           .map(e => e.text)
-                           .reduce(( prev, next ) => { return prev + ' ' +  next})
+            var emojiTxt = emojiObjectToString(emojiResponse);
 
             var profileMsg = {
                 chatId:     this.state.chat,
@@ -216,11 +225,16 @@ export default class ChatBox extends React.Component {
         // render new thing
         // probs only fire when the last has finished
         // make a dummt for making requests
-        this.setState({message: msg});
-        console.log(this.state.message);
-    }
 
-    _getCurrentMessage() {
+        this.setState({preview: 'checking'});
+        if (msg.length > 0) {
+            this._getEmoji(msg, (res) => {
+                this.setState({preview: emojiObjectToString(res)});
+                console.log('chat-box.js - preview emoji: ', this.state.preview);
+            })
+        }
+        this.setState({message: msg});
+        console.log('chat-box.js - preview: ', this.state.preview);
 
     }
 
@@ -258,6 +272,7 @@ export default class ChatBox extends React.Component {
                 sendMsgToServer: this._sendMsgToServer,
                 getMsg: this.state.message,
                 chatInputChange: this._chatInputChange,
+                getPreview: this.state.preview,
             })
         );
 

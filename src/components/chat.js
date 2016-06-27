@@ -14,6 +14,7 @@ export default (props) => {
             <ChatForm
                 sendMsgToServer={props.sendMsgToServer}
                 getMsg={props.getMsg}
+                getPreview={props.getPreview}
                 chatInputChange={props.chatInputChange}
             />
         </div>

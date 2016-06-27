@@ -25054,6 +25054,14 @@ var socket = io();
 
 var $chatElement = $('#convo');
 
+var emojiObjectToString = function emojiObjectToString(obj) {
+    return obj.results.map(function (e) {
+        return e.text;
+    }).reduce(function (prev, next) {
+        return prev + ' ' + next;
+    });
+};
+
 var ChatBox = function (_React$Component) {
     _inherits(ChatBox, _React$Component);
 
@@ -25068,7 +25076,9 @@ var ChatBox = function (_React$Component) {
             chats: [], // array of availble chats with the chats[i]._id and chats[i].members (which is an array of user _id's)
             chat: '',
             message: '',
-            names: []
+            preview: '',
+            names: [],
+            emojiFetch: false
         };
 
         _this._getCurrentUser = _this._getCurrentUser.bind(_this);
@@ -25222,32 +25232,34 @@ var ChatBox = function (_React$Component) {
     }, {
         key: '_getEmoji',
         value: function _getEmoji(message, callback) {
-            $.ajax({
-                url: 'http://emoji.getdango.com/api/emoji?q=' + encodeURIComponent(message),
-                success: function success(data) {
-                    console.log(data);
-                    callback(data);
-                }
-            });
+            var _this3 = this;
+
+            if (this.state.emojiFetch === false) {
+                $.ajax({
+                    url: 'http://emoji.getdango.com/api/emoji?q=' + encodeURIComponent(message),
+                    success: function success(data) {
+                        console.log(data);
+                        callback(data);
+                        _this3.setState({ emojiFetch: false });
+                    }
+                });
+            }
+            this.setState({ emojiFetch: true });
         }
     }, {
         key: '_sendMsgToServer',
         value: function _sendMsgToServer(msg) {
-            var _this3 = this;
+            var _this4 = this;
 
             console.log('fired: sendMsgToServer');
 
             this._getEmoji(msg, function (emojiResponse) {
 
-                var emojiTxt = emojiResponse.results.map(function (e) {
-                    return e.text;
-                }).reduce(function (prev, next) {
-                    return prev + ' ' + next;
-                });
+                var emojiTxt = emojiObjectToString(emojiResponse);
 
                 var profileMsg = {
-                    chatId: _this3.state.chat,
-                    user: _this3.state.username,
+                    chatId: _this4.state.chat,
+                    user: _this4.state.username,
                     message: emojiTxt
                 };
 
@@ -25274,17 +25286,24 @@ var ChatBox = function (_React$Component) {
     }, {
         key: '_chatInputChange',
         value: function _chatInputChange(msg) {
+            var _this5 = this;
+
             console.log(msg);
             // get emoji's
             // render new thing
             // probs only fire when the last has finished
             // make a dummt for making requests
+
+            this.setState({ preview: 'checking' });
+            if (msg.length > 0) {
+                this._getEmoji(msg, function (res) {
+                    _this5.setState({ preview: emojiObjectToString(res) });
+                    console.log('chat-box.js - preview emoji: ', _this5.state.preview);
+                });
+            }
             this.setState({ message: msg });
-            console.log(this.state.message);
+            console.log('chat-box.js - preview: ', this.state.preview);
         }
-    }, {
-        key: '_getCurrentMessage',
-        value: function _getCurrentMessage() {}
     }, {
         key: '_navBack',
         value: function _navBack() {
@@ -25306,24 +25325,25 @@ var ChatBox = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this4 = this;
+            var _this6 = this;
 
             // console.log('ROOT STATE: this.state.chats: ');
             // console.log(this.state.chats);
 
             var childrenWithProps = _react2.default.Children.map(this.props.children, function (child) {
                 return _react2.default.cloneElement(child, {
-                    getUser: _this4._getCurrentUser,
-                    getUsers: _this4._getUsers,
-                    users: _this4.state.users,
-                    consolePrint: _this4._consolePrint,
-                    getChats: _this4._getChats,
-                    chats: _this4.state.chats,
-                    setChat: _this4._setChat,
-                    activeChat: _this4.state.chat,
-                    sendMsgToServer: _this4._sendMsgToServer,
-                    getMsg: _this4.state.message,
-                    chatInputChange: _this4._chatInputChange
+                    getUser: _this6._getCurrentUser,
+                    getUsers: _this6._getUsers,
+                    users: _this6.state.users,
+                    consolePrint: _this6._consolePrint,
+                    getChats: _this6._getChats,
+                    chats: _this6.state.chats,
+                    setChat: _this6._setChat,
+                    activeChat: _this6.state.chat,
+                    sendMsgToServer: _this6._sendMsgToServer,
+                    getMsg: _this6.state.message,
+                    chatInputChange: _this6._chatInputChange,
+                    getPreview: _this6.state.preview
                 });
             });
 
@@ -25375,8 +25395,12 @@ exports.default = function (props) {
         document.getElementById("messageField").value = '';
     };
 
+    var preview = '';
+
     var handleChange = function handleChange(e) {
         props.chatInputChange(e.target.value);
+        preview = props.getPreview;
+        console.log('preview: ', preview);
     };
 
     return _react2.default.createElement(
@@ -25388,6 +25412,11 @@ exports.default = function (props) {
             _react2.default.createElement(
                 "div",
                 { className: "messageFieldWrapper" },
+                _react2.default.createElement(
+                    "div",
+                    { id: "preview" },
+                    props.getPreview
+                ),
                 _react2.default.createElement("input", { id: "messageField", type: "text", onChange: handleChange, value: props.getMsg }),
                 _react2.default.createElement("span", { className: "shade" })
             ),
@@ -25486,6 +25515,7 @@ exports.default = function (props) {
         _react2.default.createElement(_chatForm2.default, {
             sendMsgToServer: props.sendMsgToServer,
             getMsg: props.getMsg,
+            getPreview: props.getPreview,
             chatInputChange: props.chatInputChange
         })
     );
