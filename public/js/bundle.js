@@ -25054,8 +25054,8 @@ var socket = io();
 
 var $chatElement = $('#convo');
 
-var emojiObjectToString = function emojiObjectToString(obj) {
-    return obj.results.map(function (e) {
+var emojiObjectToString = function emojiObjectToString(obj, length) {
+    return obj.results.slice(0, length).map(function (e) {
         return e.text;
     }).reduce(function (prev, next) {
         return prev + ' ' + next;
@@ -25249,23 +25249,29 @@ var ChatBox = function (_React$Component) {
     }, {
         key: '_sendMsgToServer',
         value: function _sendMsgToServer(msg) {
-            var _this4 = this;
-
             console.log('fired: sendMsgToServer');
 
-            this._getEmoji(msg, function (emojiResponse) {
+            // this._getEmoji(msg, (emojiResponse) => {
+            //
+            //     var emojiTxt = emojiObjectToString(emojiResponse);
+            //
+            //     var profileMsg = {
+            //         chatId:     this.state.chat,
+            //         user:       this.state.username,
+            //         message:    emojiTxt
+            //     }
+            //
+            //     console.log(emojiTxt);
+            //     socket.emit('data:message', profileMsg);
+            // })
 
-                var emojiTxt = emojiObjectToString(emojiResponse);
+            var profileMsg = {
+                chatId: this.state.chat,
+                user: this.state.username,
+                message: this.state.message
+            };
 
-                var profileMsg = {
-                    chatId: _this4.state.chat,
-                    user: _this4.state.username,
-                    message: emojiTxt
-                };
-
-                console.log(emojiTxt);
-                socket.emit('data:message', profileMsg);
-            });
+            socket.emit('data:message', profileMsg);
         }
     }, {
         key: '_setNewMessage',
@@ -25286,7 +25292,7 @@ var ChatBox = function (_React$Component) {
     }, {
         key: '_chatInputChange',
         value: function _chatInputChange(msg) {
-            var _this5 = this;
+            var _this4 = this;
 
             console.log(msg);
             // get emoji's
@@ -25297,8 +25303,8 @@ var ChatBox = function (_React$Component) {
             this.setState({ preview: 'checking' });
             if (msg.length > 0) {
                 this._getEmoji(msg, function (res) {
-                    _this5.setState({ preview: emojiObjectToString(res) });
-                    console.log('chat-box.js - preview emoji: ', _this5.state.preview);
+                    _this4.setState({ preview: emojiObjectToString(res, 5) });
+                    console.log('chat-box.js - preview emoji: ', _this4.state.preview);
                 });
             }
             this.setState({ message: msg });
@@ -25325,25 +25331,25 @@ var ChatBox = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this6 = this;
+            var _this5 = this;
 
             // console.log('ROOT STATE: this.state.chats: ');
             // console.log(this.state.chats);
 
             var childrenWithProps = _react2.default.Children.map(this.props.children, function (child) {
                 return _react2.default.cloneElement(child, {
-                    getUser: _this6._getCurrentUser,
-                    getUsers: _this6._getUsers,
-                    users: _this6.state.users,
-                    consolePrint: _this6._consolePrint,
-                    getChats: _this6._getChats,
-                    chats: _this6.state.chats,
-                    setChat: _this6._setChat,
-                    activeChat: _this6.state.chat,
-                    sendMsgToServer: _this6._sendMsgToServer,
-                    getMsg: _this6.state.message,
-                    chatInputChange: _this6._chatInputChange,
-                    getPreview: _this6.state.preview
+                    getUser: _this5._getCurrentUser,
+                    getUsers: _this5._getUsers,
+                    users: _this5.state.users,
+                    consolePrint: _this5._consolePrint,
+                    getChats: _this5._getChats,
+                    chats: _this5.state.chats,
+                    setChat: _this5._setChat,
+                    activeChat: _this5.state.chat,
+                    sendMsgToServer: _this5._sendMsgToServer,
+                    getMsg: _this5.state.message,
+                    chatInputChange: _this5._chatInputChange,
+                    getPreview: _this5.state.preview
                 });
             });
 
@@ -25740,8 +25746,6 @@ var _reactRouter = require('react-router');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function (props) {
-
-    console.log("COMPONENT: MENU ------------------");
 
     // STATE DEPENDENCIES ----------------------------
     // - props.chats >      root: this.state.chats  Arr

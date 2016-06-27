@@ -8,8 +8,9 @@ let socket = io();
 
 let $chatElement = $('#convo');
 
-const emojiObjectToString = (obj) => {
+const emojiObjectToString = (obj, length) => {
     return obj.results
+              .slice(0, length)
               .map(e => e.text)
               .reduce(( prev, next ) => { return prev + ' ' +  next});
 }
@@ -172,13 +173,14 @@ export default class ChatBox extends React.Component {
     }
 
     _getEmoji(message, callback) {
+
         if (this.state.emojiFetch === false) {
             $.ajax({
               url: 'http://emoji.getdango.com/api/emoji?q=' + encodeURIComponent(message),
               success: (data) => {
                   console.log(data)
                   callback(data)
-                  this.setState({emojiFetch: false});
+                  this.setState({emojiFetch: false})
               }
             });
         }
@@ -188,19 +190,27 @@ export default class ChatBox extends React.Component {
     _sendMsgToServer(msg) {
         console.log('fired: sendMsgToServer')
 
-        this._getEmoji(msg, (emojiResponse) => {
+        // this._getEmoji(msg, (emojiResponse) => {
+        //
+        //     var emojiTxt = emojiObjectToString(emojiResponse);
+        //
+        //     var profileMsg = {
+        //         chatId:     this.state.chat,
+        //         user:       this.state.username,
+        //         message:    emojiTxt
+        //     }
+        //
+        //     console.log(emojiTxt);
+        //     socket.emit('data:message', profileMsg);
+        // })
 
-            var emojiTxt = emojiObjectToString(emojiResponse);
+        var profileMsg = {
+            chatId:     this.state.chat,
+            user:       this.state.username,
+            message:    this.state.message,
+        }
 
-            var profileMsg = {
-                chatId:     this.state.chat,
-                user:       this.state.username,
-                message:    emojiTxt
-            }
-
-            console.log(emojiTxt);
-            socket.emit('data:message', profileMsg);
-        })
+        socket.emit('data:message', profileMsg);
 
     }
 
@@ -227,9 +237,11 @@ export default class ChatBox extends React.Component {
         // make a dummt for making requests
 
         this.setState({preview: 'checking'});
+
+
         if (msg.length > 0) {
             this._getEmoji(msg, (res) => {
-                this.setState({preview: emojiObjectToString(res)});
+                this.setState({preview: emojiObjectToString(res, 5)});
                 console.log('chat-box.js - preview emoji: ', this.state.preview);
             })
         }

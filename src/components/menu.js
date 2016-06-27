@@ -3,8 +3,6 @@ import { Link, browserHistory } from 'react-router';
 
 export default (props) => {
 
-    console.log("COMPONENT: MENU ------------------")
-
     // STATE DEPENDENCIES ----------------------------
     // - props.chats >      root: this.state.chats  Arr
     // - props.users >      root: this.state.users  Arr
