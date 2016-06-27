@@ -4,9 +4,7 @@ export default (props) => {
 
     const getMessage = (e) => {
         e.preventDefault();
-        var msg = document.getElementById("messageField").value;
-        props.sendMsgToServer(msg);
-        document.getElementById("messageField").value = '';
+        props.sendMsgToServer();
     }
 
     var preview = '';

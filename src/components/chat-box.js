@@ -194,7 +194,7 @@ export default class ChatBox extends React.Component {
         this.setState({emojiFetch: true});
     }
 
-    _sendMsgToServer(msg) {
+    _sendMsgToServer() {
         console.log('fired: sendMsgToServer')
 
         // this._getEmoji(msg, (emojiResponse) => {
@@ -217,8 +217,9 @@ export default class ChatBox extends React.Component {
             message:    this.state.preview,
         }
 
-        socket.emit('data:message', profileMsg);
-
+        if (profileMsg.message !== '' && profileMsg.message !== '...') {
+            socket.emit('data:message', profileMsg);
+        }
     }
 
     _setNewMessage() {
@@ -226,12 +227,15 @@ export default class ChatBox extends React.Component {
         socket.on('server:data', function(data) {
             console.log('message recieved from server:  ');
             console.dir(data);
-            that.setState({message: data.message}, (thing) => {
-                console.log('callback fired: ' + data.message);
-                console.log('callback property: ' + thing);
-                $('#convo').append('<p>' + data.message + '</p>');
-                $('#convo')[0].scrollTop = $('#convo')[0].scrollHeight;
-            });
+
+            $('#convo').append('<p>' + data.message + '</p>');
+            $('#convo')[0].scrollTop = $('#convo')[0].scrollHeight;
+
+            // that.setState({message: data.message}, (thing) => {
+            //     console.log('callback fired: ' + data.message);
+            //     console.log('callback property: ' + thing);
+            //
+            // });
         })
     }
 

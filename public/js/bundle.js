@@ -25255,7 +25255,7 @@ var ChatBox = function (_React$Component) {
         }
     }, {
         key: '_sendMsgToServer',
-        value: function _sendMsgToServer(msg) {
+        value: function _sendMsgToServer() {
             console.log('fired: sendMsgToServer');
 
             // this._getEmoji(msg, (emojiResponse) => {
@@ -25275,10 +25275,12 @@ var ChatBox = function (_React$Component) {
             var profileMsg = {
                 chatId: this.state.chat,
                 user: this.state.username,
-                message: this.state.message
+                message: this.state.preview
             };
 
-            socket.emit('data:message', profileMsg);
+            if (profileMsg.message !== '' && profileMsg.message !== '...') {
+                socket.emit('data:message', profileMsg);
+            }
         }
     }, {
         key: '_setNewMessage',
@@ -25288,12 +25290,14 @@ var ChatBox = function (_React$Component) {
                 console.log('message recieved from server:  ');
                 console.dir(data);
 
-                that.setState({ message: data.message }, function (thing) {
-                    console.log('callback fired: ' + data.message);
-                    console.log('callback property: ' + thing);
-                    $('#convo').append('<p>' + data.message + '</p>');
-                    $('#convo')[0].scrollTop = $('#convo')[0].scrollHeight;
-                });
+                $('#convo').append('<p>' + data.message + '</p>');
+                $('#convo')[0].scrollTop = $('#convo')[0].scrollHeight;
+
+                // that.setState({message: data.message}, (thing) => {
+                //     console.log('callback fired: ' + data.message);
+                //     console.log('callback property: ' + thing);
+                //
+                // });
             });
         }
     }, {
@@ -25388,13 +25392,13 @@ var ChatBox = function (_React$Component) {
 exports.default = ChatBox;
 
 },{"./menu.js":236,"react":228,"react-router":32}],231:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -25404,9 +25408,7 @@ exports.default = function (props) {
 
     var getMessage = function getMessage(e) {
         e.preventDefault();
-        var msg = document.getElementById("messageField").value;
-        props.sendMsgToServer(msg);
-        document.getElementById("messageField").value = '';
+        props.sendMsgToServer();
     };
 
     var preview = '';
@@ -25418,32 +25420,32 @@ exports.default = function (props) {
     };
 
     return _react2.default.createElement(
-        "div",
-        { id: "chatFormWrapper" },
+        'div',
+        { id: 'chatFormWrapper' },
         _react2.default.createElement(
-            "div",
-            { id: "preview" },
+            'div',
+            { id: 'preview' },
             props.getPreview
         ),
         _react2.default.createElement(
-            "form",
-            { className: "chatForm", onSubmit: getMessage },
+            'form',
+            { className: 'chatForm', onSubmit: getMessage },
             _react2.default.createElement(
-                "div",
-                { className: "chatFormInner" },
+                'div',
+                { className: 'chatFormInner' },
                 _react2.default.createElement(
-                    "div",
-                    { className: "messageFieldWrapper" },
-                    _react2.default.createElement("input", { id: "messageField", type: "text", onChange: handleChange, value: props.getMsg }),
-                    _react2.default.createElement("span", { className: "shade" })
+                    'div',
+                    { className: 'messageFieldWrapper' },
+                    _react2.default.createElement('input', { id: 'messageField', type: 'text', onChange: handleChange, value: props.getMsg }),
+                    _react2.default.createElement('span', { className: 'shade' })
                 ),
                 _react2.default.createElement(
-                    "button",
-                    { type: "submit", "class": "btn btn-success" },
+                    'button',
+                    { type: 'submit', 'class': 'btn btn-success' },
                     _react2.default.createElement(
-                        "i",
-                        { className: "material-icons" },
-                        "send"
+                        'i',
+                        { className: 'material-icons' },
+                        'send'
                     )
                 )
             )
