@@ -31,6 +31,7 @@ export default class ChatBox extends React.Component {
         this._sendMsgToServer = this._sendMsgToServer.bind(this);
         this._setNewMessage = this._setNewMessage.bind(this);
         this._navBack = this._navBack.bind(this);
+        this._getEmoji = this._getEmoji.bind(this);
 
     }
 
@@ -161,19 +162,40 @@ export default class ChatBox extends React.Component {
         console.log('');
     }
 
+    _getEmoji(message, callback) {
+        $.ajax({
+          url: 'http://emoji.getdango.com/api/emoji?q=' + encodeURIComponent(message),
+          success: (data) => {
+              console.log(data)
+              callback(data)
+          }
+        });
+    }
+
     _sendMsgToServer(msg) {
         console.log('fired: sendMsgToServer')
 
-        var profileMsg = {
-            chatId:     this.state.chat,
-            user:       this.state.username,
-            message:    msg
-        }
-
-        console.log(profileMsg);
 
 
-        socket.emit('data:message', profileMsg);
+        this._getEmoji(msg, (emojiResponse) => {
+
+            debugger;
+
+            var emojiTxt = emojiResponse.results
+                           .map(e => e.text)
+                           .reduce(( prev, next ) => { return prev + ' ' +  next})
+
+            var profileMsg = {
+                chatId:     this.state.chat,
+                user:       this.state.username,
+                message:    emojiTxt
+            }
+
+            console.log(emojiTxt);
+            socket.emit('data:message', profileMsg);
+        })
+
+
     }
 
     _setNewMessage() {

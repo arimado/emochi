@@ -527,9 +527,9 @@ ul.controls li a {
 }
 
 .homeContainer .logoContainer .description {
-	font-size: 20px;
+	font-size: 14px;
 	letter-spacing: 1px;
-	font-weight: 900;
+	font-weight: 500;
 }
 
 .homeContainer .homeLinks {
