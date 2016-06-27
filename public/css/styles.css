@@ -689,6 +689,7 @@ ul.controls li a {
 	flex-grow: 1;
 }
 
+
 .users ul li {
 	display: flex;
 	flex-direction: row;
@@ -708,10 +709,29 @@ ul.controls li a {
 
 /* CHATLIST ******************************************/
 
-.membersList {
+
+
+
+
+.chatListItem {
+	padding: 20px;
+	display: block;
+	text-decoration: none;
+	color: white;
+}
+
+.chatListItem:hover {
+	background: #cf8646;
+}
+
+
+.chatListTitle {
 	font-size: 12px;
 }
 
+.membersList {
+	font-size: 20px;
+}
 /* CHAT ******************************************/
 
 .convoContainer {

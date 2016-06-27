@@ -174,15 +174,22 @@ export default class ChatBox extends React.Component {
 
     _getEmoji(message, callback) {
 
+        var currentTimeoutId = '';
+
         if (this.state.emojiFetch === false) {
-            $.ajax({
-              url: 'http://emoji.getdango.com/api/emoji?q=' + encodeURIComponent(message),
-              success: (data) => {
-                  console.log(data)
-                  callback(data)
-                  this.setState({emojiFetch: false})
-              }
-            });
+            currentTimeoutId = window.setTimeout(() => {
+                this.setState({preview: '...'});
+                $.ajax({
+                  url: 'http://emoji.getdango.com/api/emoji?q=' + encodeURIComponent(message),
+                  success: (data) => {
+                      console.log(data)
+                      callback(data)
+                      this.setState({emojiFetch: false})
+                      console.log('currentTimeoutId: ', currentTimeoutId);
+                      window.clearTimeout(currentTimeoutId);
+                  }
+                });
+            }, 200);
         }
         this.setState({emojiFetch: true});
     }
@@ -207,7 +214,7 @@ export default class ChatBox extends React.Component {
         var profileMsg = {
             chatId:     this.state.chat,
             user:       this.state.username,
-            message:    this.state.message,
+            message:    this.state.preview,
         }
 
         socket.emit('data:message', profileMsg);
@@ -219,7 +226,6 @@ export default class ChatBox extends React.Component {
         socket.on('server:data', function(data) {
             console.log('message recieved from server:  ');
             console.dir(data);
-
             that.setState({message: data.message}, (thing) => {
                 console.log('callback fired: ' + data.message);
                 console.log('callback property: ' + thing);
@@ -236,7 +242,7 @@ export default class ChatBox extends React.Component {
         // probs only fire when the last has finished
         // make a dummt for making requests
 
-        this.setState({preview: 'checking'});
+        this.setState({preview: ''});
 
 
         if (msg.length > 0) {
