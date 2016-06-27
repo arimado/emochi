@@ -25404,29 +25404,33 @@ exports.default = function (props) {
     };
 
     return _react2.default.createElement(
-        "form",
-        { className: "chatForm", onSubmit: getMessage },
+        "div",
+        { id: "chatFormWrapper" },
         _react2.default.createElement(
             "div",
-            { className: "chatFormInner" },
+            { id: "preview" },
+            props.getPreview
+        ),
+        _react2.default.createElement(
+            "form",
+            { className: "chatForm", onSubmit: getMessage },
             _react2.default.createElement(
                 "div",
-                { className: "messageFieldWrapper" },
+                { className: "chatFormInner" },
                 _react2.default.createElement(
                     "div",
-                    { id: "preview" },
-                    props.getPreview
+                    { className: "messageFieldWrapper" },
+                    _react2.default.createElement("input", { id: "messageField", type: "text", onChange: handleChange, value: props.getMsg }),
+                    _react2.default.createElement("span", { className: "shade" })
                 ),
-                _react2.default.createElement("input", { id: "messageField", type: "text", onChange: handleChange, value: props.getMsg }),
-                _react2.default.createElement("span", { className: "shade" })
-            ),
-            _react2.default.createElement(
-                "button",
-                { type: "submit", "class": "btn btn-success" },
                 _react2.default.createElement(
-                    "i",
-                    { className: "material-icons" },
-                    "send"
+                    "button",
+                    { type: "submit", "class": "btn btn-success" },
+                    _react2.default.createElement(
+                        "i",
+                        { className: "material-icons" },
+                        "send"
+                    )
                 )
             )
         )

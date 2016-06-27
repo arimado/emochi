@@ -605,6 +605,13 @@ ul.controls li a {
     background: rgb(172, 172, 172);
 }
 
+/* PREVIEW STYLES */
+
+#preview {
+	height: 50px;
+	text-align: center;
+	font-size: 30px;
+}
 
 
 /* CHAT FORM */

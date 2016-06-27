@@ -18,18 +18,21 @@ export default (props) => {
     }
 
     return (
-        <form className="chatForm" onSubmit={getMessage}>
-            <div className="chatFormInner">
-                <div className="messageFieldWrapper">
-                    <div id="preview">
-                         {props.getPreview}
-                    </div>
-                    <input id="messageField" type="text" onChange={handleChange} value={props.getMsg}/><span className="shade"></span>
-                </div>
-                <button type="submit" class="btn btn-success">
-                   <i className="material-icons">send</i>
-               </button>
+        <div id="chatFormWrapper">
+            <div id="preview">
+                 {props.getPreview}
             </div>
-        </form>
+            <form className="chatForm" onSubmit={getMessage}>
+                <div className="chatFormInner">
+
+                    <div className="messageFieldWrapper">
+                        <input id="messageField" type="text" onChange={handleChange} value={props.getMsg}/><span className="shade"></span>
+                    </div>
+                    <button type="submit" class="btn btn-success">
+                       <i className="material-icons">send</i>
+                   </button>
+                </div>
+            </form>
+        </div>
     )
 }
