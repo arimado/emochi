@@ -25081,6 +25081,7 @@ var ChatBox = function (_React$Component) {
         _this._setNewMessage = _this._setNewMessage.bind(_this);
         _this._navBack = _this._navBack.bind(_this);
         _this._getEmoji = _this._getEmoji.bind(_this);
+        _this._chatInputChange = _this._chatInputChange.bind(_this);
 
         return _this;
     }
@@ -25238,8 +25239,6 @@ var ChatBox = function (_React$Component) {
 
             this._getEmoji(msg, function (emojiResponse) {
 
-                debugger;
-
                 var emojiTxt = emojiResponse.results.map(function (e) {
                     return e.text;
                 }).reduce(function (prev, next) {
@@ -25271,6 +25270,17 @@ var ChatBox = function (_React$Component) {
                     $('#convo')[0].scrollTop = $('#convo')[0].scrollHeight;
                 });
             });
+        }
+    }, {
+        key: '_chatInputChange',
+        value: function _chatInputChange(msg) {
+
+            console.log(msg);
+
+            // get emoji's
+            // render new thing
+            // probs only fire when the last has finished
+            // make a dummt for making requests
         }
     }, {
         key: '_navBack',
@@ -25309,7 +25319,8 @@ var ChatBox = function (_React$Component) {
                     setChat: _this4._setChat,
                     activeChat: _this4.state.chat,
                     sendMsgToServer: _this4._sendMsgToServer,
-                    getMsg: _this4.state.message
+                    getMsg: _this4.state.message,
+                    chatInputChange: _this4._chatInputChange
                 });
             });
 
@@ -25361,6 +25372,10 @@ exports.default = function (props) {
         document.getElementById("messageField").value = '';
     };
 
+    var handleChange = function handleChange(e) {
+        props.chatInputChange('sup');
+    };
+
     return _react2.default.createElement(
         "form",
         { className: "chatForm", onSubmit: getMessage },
@@ -25370,7 +25385,7 @@ exports.default = function (props) {
             _react2.default.createElement(
                 "div",
                 { className: "messageFieldWrapper" },
-                _react2.default.createElement("input", { id: "messageField", type: "text" }),
+                _react2.default.createElement("input", { id: "messageField", type: "text", onChange: handleChange }),
                 _react2.default.createElement("span", { className: "shade" })
             ),
             _react2.default.createElement(
@@ -25467,7 +25482,8 @@ exports.default = function (props) {
         _react2.default.createElement('div', { className: 'convo growContent', id: 'convo' }),
         _react2.default.createElement(_chatForm2.default, {
             sendMsgToServer: props.sendMsgToServer,
-            getMsg: props.getMsg
+            getMsg: props.getMsg,
+            chatInputChange: props.chatInputChange
         })
     );
 };

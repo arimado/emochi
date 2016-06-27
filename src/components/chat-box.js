@@ -32,6 +32,7 @@ export default class ChatBox extends React.Component {
         this._setNewMessage = this._setNewMessage.bind(this);
         this._navBack = this._navBack.bind(this);
         this._getEmoji = this._getEmoji.bind(this);
+        this._chatInputChange = this._chatInputChange.bind(this);
 
     }
 
@@ -129,6 +130,7 @@ export default class ChatBox extends React.Component {
         });
     }
 
+
     _setChat(chatId, done) {
 
         // this._setChat -----------------------------------
@@ -175,11 +177,7 @@ export default class ChatBox extends React.Component {
     _sendMsgToServer(msg) {
         console.log('fired: sendMsgToServer')
 
-
-
         this._getEmoji(msg, (emojiResponse) => {
-
-            debugger;
 
             var emojiTxt = emojiResponse.results
                            .map(e => e.text)
@@ -194,7 +192,6 @@ export default class ChatBox extends React.Component {
             console.log(emojiTxt);
             socket.emit('data:message', profileMsg);
         })
-
 
     }
 
@@ -211,6 +208,18 @@ export default class ChatBox extends React.Component {
                 $('#convo')[0].scrollTop = $('#convo')[0].scrollHeight;
             });
         })
+    }
+
+    _chatInputChange(msg) {
+
+
+        console.log(msg);
+
+        // get emoji's
+        // render new thing
+        // probs only fire when the last has finished
+        // make a dummt for making requests
+
     }
 
     _navBack() {
@@ -245,7 +254,8 @@ export default class ChatBox extends React.Component {
                 setChat: this._setChat,
                 activeChat: this.state.chat,
                 sendMsgToServer: this._sendMsgToServer,
-                getMsg: this.state.message
+                getMsg: this.state.message,
+                chatInputChange: this._chatInputChange,
             })
         );
 

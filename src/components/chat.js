@@ -9,11 +9,12 @@ export default (props) => {
 
     return (
         <div class="convoWrapper">
-            <div className="convo growContent" id="convo" >            
+            <div className="convo growContent" id="convo" >
             </div>
             <ChatForm
                 sendMsgToServer={props.sendMsgToServer}
                 getMsg={props.getMsg}
+                chatInputChange={props.chatInputChange}
             />
         </div>
     )

@@ -4,7 +4,8 @@
   "description": "a real-time chat application made with socket.io",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start" : "node index.js",
+    "test"  : "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jeremy Arimado",
   "license": "MIT",
