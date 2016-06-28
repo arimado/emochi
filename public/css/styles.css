@@ -784,3 +784,21 @@ ul.controls li a {
 	margin-top: 3px;
 	text-transform: capitalize;
 }
+
+/**/
+
+
+@media (max-width: 720px) {
+	#layout {
+		padding: 10px;
+	}
+	#layout .left {
+		display: none;
+	}
+	#containerOuter {
+		margin: auto;
+	}
+	#layout .right {
+		display: none;
+	}
+}

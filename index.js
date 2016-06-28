@@ -12,7 +12,8 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var session = require('express-session');
 
-var DB_URL = 'mongodb://localhost:27017/chat';
+// var DB_URL = 'mongodb://localhost:27017/chat';
+var DB_URL = 'mongodb://jarimado:chicken@ds023674.mlab.com:23674/emochi';
 var DATA_FILE = path.join(__dirname, './data/data.json');
 
 // SETUP VIEW ENGINE
@@ -30,7 +31,7 @@ app.use(function(req, res, next) {
     var err = req.session.error;
     var msg = req.session.notice;
     var success = req.session.success;
-    
+
     delete req.session.error;
     delete req.session.success;
     delete req.session.notice;
