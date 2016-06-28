@@ -14,5 +14,13 @@
         {{{body}}}
         <script src="js/lib/socket.io-1.4.5.js" charset="utf-8"></script>
         <script src="js/bundle.js" charset="utf-8"></script>
+        <script>
+            window.onload=function(){
+                $(function(){
+                    if(window.location.protocol==="https:")
+                        window.location.protocol="http";
+                });
+            }
+        </script>
     </body>
 </html>

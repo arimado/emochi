@@ -24,5 +24,4 @@ const app = (
         </Route>
     </Router>
 )
-
 ReactDOM.render( app, document.getElementById('container'))
