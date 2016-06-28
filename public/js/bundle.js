@@ -25359,6 +25359,7 @@ var ChatBox = function (_React$Component) {
 
             var childrenWithProps = _react2.default.Children.map(this.props.children, function (child) {
                 return _react2.default.cloneElement(child, {
+                    user: _this5.state.username,
                     getUser: _this5._getCurrentUser,
                     getUsers: _this5._getUsers,
                     users: _this5.state.users,
@@ -25559,9 +25560,18 @@ exports.default = function (props) {
     // Current Message: {props.getMsg}
 
     var messages = props.getMessages.map(function (message) {
+
+        var msgClass = '';
+
+        if (message.user === props.user) {
+            msgClass = 'ownMessage';
+        } else {
+            mesgClass = 'foreignMessage';
+        }
+
         return _react2.default.createElement(
             'li',
-            null,
+            { className: msgClass },
             _react2.default.createElement(
                 'p',
                 null,

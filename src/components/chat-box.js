@@ -292,6 +292,7 @@ export default class ChatBox extends React.Component {
 
         const childrenWithProps = React.Children.map(this.props.children,
             (child) => React.cloneElement(child, {
+                user: this.state.username,
                 getUser: this._getCurrentUser,
                 getUsers: this._getUsers,
                 users: this.state.users,
@@ -304,7 +305,7 @@ export default class ChatBox extends React.Component {
                 getMsg: this.state.message,
                 chatInputChange: this._chatInputChange,
                 getPreview: this.state.preview,
-                getMessages: this.state.messages, 
+                getMessages: this.state.messages,
             })
         );
 

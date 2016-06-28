@@ -8,8 +8,17 @@ export default (props) => {
     // Current Message: {props.getMsg}
 
     var messages = props.getMessages.map((message) => {
+
+        var msgClass = '';
+
+        if ( message.user === props.user ) {
+            msgClass = 'ownMessage'
+        } else {
+            mesgClass = 'foreignMessage'
+        }
+
         return (
-            <li>
+            <li className={msgClass}>
                 <p> { message.chatId } </p>
                 <p> { message.message } </p>
                 <p> { message.user } </p>
