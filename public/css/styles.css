@@ -611,8 +611,23 @@ ul.controls li a {
 	height: 50px;
 	text-align: center;
 	font-size: 30px;
+	position: relative;
+    z-index: 5;
+	padding-top: 10px;
 }
 
+
+#preview:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  pointer-events: none;
+  background-image: linear-gradient(to bottom, rgba(113, 126, 198,0), rgba(113, 126, 198, 1) 100%);
+  width: 100%;
+  height: 2em;
+  bottom: 60px;
+  z-index: -1;
+}
 
 /* CHAT FORM */
 
@@ -742,6 +757,7 @@ ul.controls li a {
 	list-style-type: none;
 	display: flex;
     flex-direction: column-reverse;
+	padding-bottom: 40px;
 }
 
 .convo li {
