@@ -60,7 +60,7 @@ export default class Register extends React.Component {
                             onChange={this._handleUsernameChange}
                         />
                         <input
-                            type="text"
+                            type="password"
                             placeholder="password"
                             className="registerField"
                             value={this.state.password}

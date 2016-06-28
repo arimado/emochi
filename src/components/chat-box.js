@@ -196,7 +196,6 @@ export default class ChatBox extends React.Component {
         }
         this.setState({emojiFetch: true});
     }
-
     _sendMsgToServer() {
         console.log('fired: sendMsgToServer')
 

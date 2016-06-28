@@ -510,6 +510,9 @@ ul.controls li a {
 .homeContainer {
 	display: flex;
 	flex-direction: column;
+	background-image: linear-gradient(to bottom, rgba(113,126,198,0.6) 0%,rgba(113,126,198,0.6) 100%), url('http://i.imgur.com/sGo4Oue.jpg');
+    background-size: cover;
+    background-position: right;
 }
 
 .homeContainer .logoContainer {

@@ -30,7 +30,7 @@ app.use(function(req, res, next) {
     var err = req.session.error;
     var msg = req.session.notice;
     var success = req.session.success;
-
+    
     delete req.session.error;
     delete req.session.success;
     delete req.session.notice;

@@ -25660,7 +25660,7 @@ var Home = function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'logo' },
-                        'Emochi'
+                        'Em😌chi'
                     ),
                     _react2.default.createElement(
                         'div',
@@ -26024,7 +26024,7 @@ var Register = function (_React$Component) {
                             onChange: this._handleUsernameChange
                         }),
                         _react2.default.createElement('input', {
-                            type: 'text',
+                            type: 'password',
                             placeholder: 'password',
                             className: 'registerField',
                             value: this.state.password,

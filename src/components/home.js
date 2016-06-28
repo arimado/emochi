@@ -12,8 +12,8 @@ export default class Home extends React.Component {
         return (
             <div className="homeContainer">
                 <div className="logoContainer">
-                    <div className="logo">Emochi</div>
-                    <div className="description"> Shh... no words. Only feels now.</div> 
+                    <div className="logo">Em😌chi</div>
+                    <div className="description"> Shh... no words. Only feels now.</div>
                 </div>
                 <div className="homeLinks">
                     <Link to="/register">Register</Link> <Link to="/login">Login</Link>
