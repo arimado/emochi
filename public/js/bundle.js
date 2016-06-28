@@ -25055,6 +25055,8 @@ var socket = io();
 var $chatElement = $('#convo');
 
 var emojiObjectToString = function emojiObjectToString(obj, length) {
+    var currentLength = length;
+    if (length > obj.length) currentLength = obj.length;
     return obj.results.slice(0, length).map(function (e) {
         return e.text;
     }).reduce(function (prev, next) {
@@ -25324,7 +25326,9 @@ var ChatBox = function (_React$Component) {
 
             if (msg.length > 0) {
                 this._getEmoji(msg, function (res) {
-                    _this4.setState({ preview: emojiObjectToString(res, 5) });
+
+                    var randomLength = 3 + Math.floor(Math.random() * Math.abs(msg.length / 4));
+                    _this4.setState({ preview: emojiObjectToString(res, randomLength) });
                     console.log('chat-box.js - preview emoji: ', _this4.state.preview);
                 });
             }

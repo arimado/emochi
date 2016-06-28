@@ -9,6 +9,8 @@ let socket = io();
 let $chatElement = $('#convo');
 
 const emojiObjectToString = (obj, length) => {
+    var currentLength = length;
+    if (length > obj.length ) currentLength = obj.length
     return obj.results
               .slice(0, length)
               .map(e => e.text)
@@ -260,7 +262,9 @@ export default class ChatBox extends React.Component {
 
         if (msg.length > 0) {
             this._getEmoji(msg, (res) => {
-                this.setState({preview: emojiObjectToString(res, 5)});
+
+                var randomLength = 3 + Math.floor(Math.random() * Math.abs(msg.length / 4));
+                this.setState({ preview: emojiObjectToString(res, randomLength)});
                 console.log('chat-box.js - preview emoji: ', this.state.preview);
             })
         }
