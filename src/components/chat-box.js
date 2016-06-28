@@ -231,7 +231,7 @@ export default class ChatBox extends React.Component {
             // console.log('that.state.messages [BEFORE]: ', that.state.messages);
 
             var updatedMessages = that.state.messages;
-            updatedMessages.push(data);
+            updatedMessages.unshift(data);
 
             that.setState({ messages: updatedMessages});
 

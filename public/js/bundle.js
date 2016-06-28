@@ -25293,7 +25293,7 @@ var ChatBox = function (_React$Component) {
                 // console.log('that.state.messages [BEFORE]: ', that.state.messages);
 
                 var updatedMessages = that.state.messages;
-                updatedMessages.push(data);
+                updatedMessages.unshift(data);
 
                 that.setState({ messages: updatedMessages });
 
@@ -25574,21 +25574,14 @@ exports.default = function (props) {
             { className: msgClass },
             _react2.default.createElement(
                 'p',
-                null,
-                ' ',
-                message.chatId,
-                ' '
-            ),
-            _react2.default.createElement(
-                'p',
-                null,
+                { className: 'content' },
                 ' ',
                 message.message,
                 ' '
             ),
             _react2.default.createElement(
                 'p',
-                null,
+                { className: 'name' },
                 ' ',
                 message.user,
                 ' '

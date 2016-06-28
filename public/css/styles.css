@@ -739,10 +739,29 @@ ul.controls li a {
 }
 
 .convo {
-
+	list-style-type: none;
+	display: flex;
+    flex-direction: column-reverse;
 }
 
-.convo p {
-    padding: 20px;
-    border-bottom: 1px solid rgb(246, 246, 246);
+.convo li {
+    padding: 20px 20px 0px 20px
+}
+
+.convo li.ownMessage {
+	text-align: right;
+}
+
+.convo li.foreignMessage {
+	text-align: left;
+}
+
+.convo li .content {
+	font-size: 25px;
+}
+
+.convo li .name {
+	font-size: 12px;
+	margin-top: 3px;
+	text-transform: capitalize;
 }

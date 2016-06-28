@@ -20,6 +20,8 @@ export default (props) => {
                 return memberName;
             });
 
+
+
             return (
                 <li key={chat._id}>
                     <Link className="chatListItem" onClick={props.setChat.bind(this, chat._id)} to={`/chats/${chat._id}`}>

@@ -19,9 +19,8 @@ export default (props) => {
 
         return (
             <li className={msgClass}>
-                <p> { message.chatId } </p>
-                <p> { message.message } </p>
-                <p> { message.user } </p>
+                <p className="content"> { message.message } </p>
+                <p className="name"> { message.user } </p>
             </li>
         )
     })
