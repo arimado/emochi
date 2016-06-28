@@ -216,6 +216,6 @@ io.on('connection', function (socket) {
 
 });
 
-http.listen(3005, function () {
-    console.log('listening on 3005');
+http.listen(3000, function () {
+    console.log('listening on 3000');
 });
