@@ -14,7 +14,7 @@ export default (props) => {
         if ( message.user === props.user ) {
             msgClass = 'ownMessage'
         } else {
-            mesgClass = 'foreignMessage'
+            msgClass = 'foreignMessage'
         }
 
         return (

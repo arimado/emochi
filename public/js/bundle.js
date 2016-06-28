@@ -25566,7 +25566,7 @@ exports.default = function (props) {
         if (message.user === props.user) {
             msgClass = 'ownMessage';
         } else {
-            mesgClass = 'foreignMessage';
+            msgClass = 'foreignMessage';
         }
 
         return _react2.default.createElement(
