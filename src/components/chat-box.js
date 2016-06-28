@@ -304,6 +304,7 @@ export default class ChatBox extends React.Component {
                 getMsg: this.state.message,
                 chatInputChange: this._chatInputChange,
                 getPreview: this.state.preview,
+                getMessages: this.state.messages, 
             })
         );
 

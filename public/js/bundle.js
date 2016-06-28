@@ -25288,17 +25288,16 @@ var ChatBox = function (_React$Component) {
         value: function _setNewMessage() {
             var that = this;
             socket.on('server:data', function (data) {
-                console.log('message recieved from server:  ');
-                console.dir(data);
-                console.log('that.state.messages [BEFORE]: ', that.state.messages);
+                // console.log('message recieved from server:  ');
+                // console.dir(data);
+                // console.log('that.state.messages [BEFORE]: ', that.state.messages);
 
                 var updatedMessages = that.state.messages;
                 updatedMessages.push(data);
 
                 that.setState({ messages: updatedMessages });
 
-                console.log('that.state.messages: [AFTER]', that.state.messages);
-                console.log(that.state.messages);
+                // console.log('that.state.messages: [AFTER]', that.state.messages);
 
                 // $('#convo').append('<p>' + data.message + '</p>');
                 // $('#convo')[0].scrollTop = $('#convo')[0].scrollHeight;
@@ -25371,7 +25370,8 @@ var ChatBox = function (_React$Component) {
                     sendMsgToServer: _this5._sendMsgToServer,
                     getMsg: _this5.state.message,
                     chatInputChange: _this5._chatInputChange,
-                    getPreview: _this5.state.preview
+                    getPreview: _this5.state.preview,
+                    getMessages: _this5.state.messages
                 });
             });
 
@@ -25558,10 +25558,42 @@ exports.default = function (props) {
     // Chat ID: {props.activeChat}
     // Current Message: {props.getMsg}
 
+    var messages = props.getMessages.map(function (message) {
+        return _react2.default.createElement(
+            'li',
+            null,
+            _react2.default.createElement(
+                'p',
+                null,
+                ' ',
+                message.chatId,
+                ' '
+            ),
+            _react2.default.createElement(
+                'p',
+                null,
+                ' ',
+                message.message,
+                ' '
+            ),
+            _react2.default.createElement(
+                'p',
+                null,
+                ' ',
+                message.user,
+                ' '
+            )
+        );
+    });
+
     return _react2.default.createElement(
         'div',
         { 'class': 'convoWrapper' },
-        _react2.default.createElement('div', { className: 'convo growContent', id: 'convo' }),
+        _react2.default.createElement(
+            'div',
+            { className: 'convo growContent', id: 'convo' },
+            messages
+        ),
         _react2.default.createElement(_chatForm2.default, {
             sendMsgToServer: props.sendMsgToServer,
             getMsg: props.getMsg,
