@@ -25077,6 +25077,7 @@ var ChatBox = function (_React$Component) {
             chat: '',
             message: '',
             preview: '',
+            messages: [],
             names: [],
             emojiFetch: false
         };
@@ -25289,9 +25290,18 @@ var ChatBox = function (_React$Component) {
             socket.on('server:data', function (data) {
                 console.log('message recieved from server:  ');
                 console.dir(data);
+                console.log('that.state.messages [BEFORE]: ', that.state.messages);
 
-                $('#convo').append('<p>' + data.message + '</p>');
-                $('#convo')[0].scrollTop = $('#convo')[0].scrollHeight;
+                var updatedMessages = that.state.messages;
+                updatedMessages.push(data);
+
+                that.setState({ messages: updatedMessages });
+
+                console.log('that.state.messages: [AFTER]', that.state.messages);
+                console.log(that.state.messages);
+
+                // $('#convo').append('<p>' + data.message + '</p>');
+                // $('#convo')[0].scrollTop = $('#convo')[0].scrollHeight;
 
                 // that.setState({message: data.message}, (thing) => {
                 //     console.log('callback fired: ' + data.message);
