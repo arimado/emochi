@@ -1,22 +1,11 @@
-#chat
+#Em😌chi
 
-A Real-time react chat application.
+http://emochi.herokuapp.com/
 
-Using: Node, Express, React, Socket.io
+An Emoji-only chat app.
 
-## Socket IO
+Using: Node, Express, MongoDB, React, Socket.io
 
-<pre><code>
-io.on('connection', function (socket) {
-    // a callback called on each connection
-    socket.on('receiveedEventIdentifier', function (eventData){
-        // emit this to all open sockets
-        // typically will be the data you receive from an open socket
-        io.emit('sendEventItenfier', sendData)
-    });
+Emoji deep-learning API from: http://getdango.com/emoji-and-deep-learning.html
 
-    // disconnect event
-    socket.on('disconnect', function (){
-    });
-})
-</code></pre>
+---
